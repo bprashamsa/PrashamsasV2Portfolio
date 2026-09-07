@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prashamsa — Portfolio</title>
+<meta name="description" content="Prashamsa's portfolio — projects, builds, and small engineering experiments.">
+
+<!--
+  ============================================================
+  EDIT GUIDE — search for these markers to update your content
+  ============================================================
+  [EDIT: BIO]        — your intro paragraph, in <section id="about">
+  [EDIT: SKILLS]      — the tag list under your bio
+  [EDIT: PROJECT n]   — four featured project cards, in <section id="projects">
+  [EDIT: WORKSHOP]    — the quick-build list, in <section id="workshop">
+  [EDIT: EMAIL]       — your email in the footer
+  Your GitHub and LinkedIn links are already wired up in the nav and footer.
+  ============================================================
+-->
+
+<style>
+  @font-face {
+    font-family: "PBHandwriting";
+    src: url("Pbhandwritingfont-Regular.otf") format("opentype"),
+         url("Pbhandwritingfont-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  :root {
+    --cream: #EDE3C6;
+    --cream-deep: #E4D7B4;
+    --ink: #2C2416;
+    --ink-soft: #56492f;
+    --matcha-deep: #3D5A2C;
+    --matcha-mid: #6F8F4C;
+    --matcha-light: #A9C17E;
+    --foam: #FFFCF2;
+    --bamboo: #B4854A;
+
+    --font: "PBHandwriting", cursive;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 1.1rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--matcha-deep); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--bamboo);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3 { font-family: var(--font); font-weight: 400; margin: 0; color: var(--ink); }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ---------- NAV ---------- */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.75rem 1.5rem 0.5rem;
+    font-size: 1.05rem;
+  }
+  nav .name { font-family: var(--font); font-size: 1.3rem; }
+  nav .links { display: flex; gap: 1.25rem; }
+  nav .links a { text-decoration: none; color: var(--ink-soft); }
+  nav .links a:hover { color: var(--matcha-deep); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    text-align: center;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .cup-wrap {
+    width: clamp(190px, 46vw, 260px);
+    margin: 0 auto 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 8vw, 3.8rem);
+    letter-spacing: -0.01em;
+  }
+
+  .hero .tagline {
+    font-size: clamp(1.15rem, 3vw, 1.3rem);
+    color: var(--ink-soft);
+    margin-top: 0.6rem;
+    max-width: 30ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero .scroll-note {
+    display: inline-block;
+    margin-top: 2.25rem;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--matcha-mid);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .hero .scroll-note:hover { color: var(--matcha-deep); border-color: var(--matcha-deep); }
+
+  /* ---------- SVG CUP ---------- */
+  .liquid-rect {
+    animation: pour 2.4s cubic-bezier(0.33, 0.02, 0.24, 1) forwards;
+    animation-delay: 0.3s;
+  }
+  @keyframes pour {
+    from { y: 232; height: 0; }
+    to   { y: 72;  height: 160; }
+  }
+  .foam-bit {
+    opacity: 0;
+    transform-origin: center;
+    animation: settle 0.7s ease-out forwards;
+  }
+  .foam-bit:nth-child(1) { animation-delay: 2.1s; }
+  .foam-bit:nth-child(2) { animation-delay: 2.25s; }
+  .foam-bit:nth-child(3) { animation-delay: 2.35s; }
+  @keyframes settle {
+    from { opacity: 0; transform: scale(0.4); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .steam {
+    opacity: 0.22;
+    animation: rise 4.5s ease-in-out infinite alternate;
+  }
+  @keyframes rise {
+    from { transform: translateY(0); opacity: 0.12; }
+    to   { transform: translateY(-6px); opacity: 0.3; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .liquid-rect { animation: none; y: 72; height: 160; }
+    .foam-bit { animation: none; opacity: 1; transform: scale(1); }
+    .steam { animation: none; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 3rem 0; }
+  section + section { border-top: 1px solid rgba(44,36,22,0.12); }
+
+  .eyebrow {
+    font-size: 0.95rem;
+    color: var(--matcha-deep);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  #about h2, #projects h2, #workshop h2 {
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
+    margin-bottom: 1rem;
+  }
+
+  #about p { max-width: 58ch; color: var(--ink-soft); }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0;
+    list-style: none;
+  }
+  .tags li {
+    background: var(--matcha-light);
+    color: var(--ink);
+    font-size: 0.95rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  /* ---------- PROJECT CARDS ---------- */
+  .project-card {
+    position: relative;
+    background: var(--foam);
+    border-left: 5px solid var(--matcha-mid);
+    padding: 1.75rem 1.75rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .project-card__badge {
+    position: absolute;
+    top: -14px;
+    right: 20px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--matcha-deep);
+    color: var(--foam);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.1;
+    font-weight: 600;
+    transform: rotate(-8deg);
+    padding: 0.2rem;
+  }
+
+  .project-card h3 {
+    font-size: 1.45rem;
+    margin-bottom: 0.35rem;
+    padding-right: 3.5rem;
+  }
+
+  .project-card .desc {
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    padding: 0;
+    list-style: none;
+  }
+  .stack li {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    border: 1px solid rgba(44,36,22,0.2);
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+  }
+
+  .pour-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--matcha-deep);
+    font-weight: 500;
+    font-size: 1.05rem;
+  }
+  .pour-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .pour-link .mini-liquid {
+    transition: y 0.5s ease, height 0.5s ease;
+  }
+  .pour-link:hover .mini-liquid,
+  .pour-link:focus-visible .mini-liquid {
+    y: 4;
+    height: 10;
+  }
+
+  /* ---------- WORKSHOP LOG ---------- */
+  .log {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  .log li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed rgba(44,36,22,0.2);
+    font-size: 1.1rem;
+  }
+  .log li:last-child { border-bottom: none; }
+  .log .item-name { font-weight: 500; white-space: nowrap; }
+  .log .dots {
+    flex: 1;
+    border-bottom: 1px dotted rgba(44,36,22,0.3);
+    height: 0.6em;
+  }
+  .log .item-note {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    padding: 3rem 0 4rem;
+    text-align: center;
+  }
+  footer h2 { font-size: clamp(1.7rem, 5vw, 2.1rem); margin-bottom: 0.5rem; }
+  footer .sub { color: var(--ink-soft); margin-bottom: 1.75rem; }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    background: var(--matcha-deep);
+    color: var(--foam);
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    font-size: 1.05rem;
+    transition: background 0.2s;
+  }
+  .footer-links a:hover { background: var(--ink); }
+  .footer-links svg { width: 16px; height: 16px; }
+
+  footer .email {
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+  }
+  footer .email a { color: var(--ink-soft); text-decoration: underline; }
+
+  footer .fine-print {
+    margin-top: 2.5rem;
+    font-size: 0.88rem;
+    color: rgba(44,36,22,0.5);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="name">Prashamsa</span>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#workshop">Workshop</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="cup-wrap">
+    <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a matcha latte being poured into a cup">
+      <!-- steam -->
+      <path class="steam" d="M140 40 C 135 30, 148 25, 143 15" stroke="var(--ink-soft)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+      <!-- saucer -->
+      <ellipse cx="150" cy="253" rx="98" ry="13" fill="var(--cream-deep)" />
+
+      <!-- cup body -->
+      <path d="M70 60 L230 60 L192 240 L108 240 Z" fill="var(--foam)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+
+      <!-- liquid, clipped by animated rect -->
+      <defs>
+        <clipPath id="cupClip">
+          <rect class="liquid-rect" x="60" width="200" y="232" height="0" />
+        </clipPath>
+        <linearGradient id="matchaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--matcha-light)" />
+          <stop offset="100%" stop-color="var(--matcha-deep)" />
+        </linearGradient>
+      </defs>
+      <path d="M78 72 L222 72 L188 232 L112 232 Z" fill="url(#matchaGrad)" clip-path="url(#cupClip)" />
+
+      <!-- foam flecks at the surface -->
+      <circle class="foam-bit" cx="118" cy="76" r="5" fill="var(--foam)" opacity="0.85"/>
+      <circle class="foam-bit" cx="150" cy="73" r="6" fill="var(--foam)" opacity="0.85"/>
+      <circle class="foam-bit" cx="180" cy="77" r="4.5" fill="var(--foam)" opacity="0.85"/>
+
+      <!-- rim -->
+      <ellipse cx="150" cy="60" rx="80" ry="12" fill="none" stroke="var(--ink)" stroke-width="3"/>
+
+      <!-- handle -->
+      <path d="M228 105 C 268 105, 268 175, 228 175" fill="none" stroke="var(--ink)" stroke-width="7" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <h1>Prashamsa</h1>
+  <p class="tagline">Building things, one small batch at a time.</p>
+  <a class="scroll-note" href="#about">see what's brewing</a>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">about</div>
+    <h2>What's in the cup</h2>
+    <!-- [EDIT: BIO] Replace this paragraph with your own intro. -->
+    <p>
+      I'm an engineer who likes taking things apart to see how they work —
+      and occasionally putting them back together better. This is where I
+      keep the projects worth showing off, and a running log of the smaller
+      builds still cooling on the workbench.
+    </p>
+    <!-- [EDIT: SKILLS] Swap these tags for your actual tools/languages -->
+    <ul class="tags">
+      <li>Python</li>
+      <li>C / C++</li>
+      <li>Arduino &amp; ESP32</li>
+      <li>CAD (Fusion 360)</li>
+      <li>PCB design</li>
+      <li>React</li>
+    </ul>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">featured</div>
+    <h2>Fully steeped</h2>
+
+    <!-- [EDIT: PROJECT 1] -->
+    <div class="project-card">
+      <div class="project-card__badge">Arduino</div>
+      <h3>Line-Following Rover</h3>
+      <p class="desc">A small two-wheeled robot that tracks a path using IR sensors, with a PID loop tuned by hand until it stopped zig-zagging.</p>
+      <ul class="stack">
+        <li>Arduino Uno</li>
+        <li>IR sensor array</li>
+        <li>PID control</li>
+      </ul>
+      <a class="pour-link" href="#" aria-label="View Line-Following Rover project">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M6 6h8l-2 10H8L6 6z" stroke="currentColor" stroke-width="1.4"/>
+          <clipPath id="c1"><rect x="6" y="6" width="8" height="0" class="mini-liquid" style="y:16;height:0"/></clipPath>
+          <path d="M6.5 7h7l-1.7 8.5H8.2L6.5 7z" fill="currentColor" clip-path="url(#c1)"/>
+        </svg>
+        view project
+      </a>
+    </div>
+
+    <!-- [EDIT: PROJECT 2] -->
+    <div class="project-card">
+      <div class="project-card__badge">ESP32</div>
+      <h3>Desk Plant Monitor</h3>
+      <p class="desc">A soil moisture sensor and ESP32 that pings my phone before my plants get dramatic about being thirsty.</p>
+      <ul class="stack">
+        <li>ESP32</li>
+        <li>Capacitive sensor</li>
+        <li>MQTT</li>
+      </ul>
+      <a class="pour-link" href="#" aria-label="View Desk Plant Monitor project">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M6 6h8l-2 10H8L6 6z" stroke="currentColor" stroke-width="1.4"/>
+          <clipPath id="c2"><rect x="6" y="6" width="8" height="0" class="mini-liquid" style="y:16;height:0"/></clipPath>
+          <path d="M6.5 7h7l-1.7 8.5H8.2L6.5 7z" fill="currentColor" clip-path="url(#c2)"/>
+        </svg>
+        view project
+      </a>
+    </div>
+
+    <!-- [EDIT: PROJECT 3] -->
+    <div class="project-card">
+      <div class="project-card__badge">PCB</div>
+      <h3>LED Matrix Display</h3>
+      <p class="desc">A custom-etched PCB driving a WS2812 grid, scrolling messages and the occasional pixel-art doodle.</p>
+      <ul class="stack">
+        <li>KiCad</li>
+        <li>WS2812</li>
+        <li>STM32</li>
+      </ul>
+      <a class="pour-link" href="#" aria-label="View LED Matrix Display project">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M6 6h8l-2 10H8L6 6z" stroke="currentColor" stroke-width="1.4"/>
+          <clipPath id="c3"><rect x="6" y="6" width="8" height="0" class="mini-liquid" style="y:16;height:0"/></clipPath>
+          <path d="M6.5 7h7l-1.7 8.5H8.2L6.5 7z" fill="currentColor" clip-path="url(#c3)"/>
+        </svg>
+        view project
+      </a>
+    </div>
+
+    <!-- [EDIT: PROJECT 4] -->
+    <div class="project-card">
+      <div class="project-card__badge">Fusion 360</div>
+      <h3>Parametric Cable Organizer</h3>
+      <p class="desc">A 3D-printed, fully parametric cable tray — resize it in one CAD sketch and it reprints to fit any desk.</p>
+      <ul class="stack">
+        <li>Fusion 360</li>
+        <li>3D printing</li>
+        <li>PLA+</li>
+      </ul>
+      <a class="pour-link" href="#" aria-label="View Parametric Cable Organizer project">
+        <svg viewBox="0 0 20 20" fill="none">
+          <path d="M6 6h8l-2 10H8L6 6z" stroke="currentColor" stroke-width="1.4"/>
+          <clipPath id="c4"><rect x="6" y="6" width="8" height="0" class="mini-liquid" style="y:16;height:0"/></clipPath>
+          <path d="M6.5 7h7l-1.7 8.5H8.2L6.5 7z" fill="currentColor" clip-path="url(#c4)"/>
+        </svg>
+        view project
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="workshop">
+  <div class="wrap">
+    <div class="eyebrow">still steeping</div>
+    <h2>Workshop log</h2>
+    <!-- [EDIT: WORKSHOP] Quick builds, tinkering, and experiments that don't need a full write-up -->
+    <ul class="log">
+      <li><span class="item-name">Bluetooth doorbell hack</span><span class="dots"></span><span class="item-note">ESP32 + relay</span></li>
+      <li><span class="item-name">Mini CNC pen plotter</span><span class="dots"></span><span class="item-note">stepper motors, GRBL</span></li>
+      <li><span class="item-name">Terminal-based pomodoro timer</span><span class="dots"></span><span class="item-note">Python, curses</span></li>
+      <li><span class="item-name">Solder-practice keychain kit</span><span class="dots"></span><span class="item-note">through-hole, blinky</span></li>
+      <li><span class="item-name">Weather station display</span><span class="dots"></span><span class="item-note">e-ink, REST API</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's get matcha</h2>
+    <p class="sub">Always up for talking through a project — or starting a new one.</p>
+    <div class="footer-links">
+      <a href="https://github.com/bprashamsa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.5 0 12.3c0 5.44 3.44 10.05 8.2 11.68.6.11.82-.27.82-.6 0-.29-.01-1.06-.02-2.08-3.34.75-4.04-1.65-4.04-1.65-.55-1.44-1.34-1.82-1.34-1.82-1.09-.77.08-.75.08-.75 1.2.09 1.84 1.27 1.84 1.27 1.07 1.87 2.81 1.33 3.5 1.02.11-.79.42-1.33.76-1.64-2.66-.31-5.47-1.36-5.47-6.05 0-1.34.46-2.43 1.22-3.29-.12-.31-.53-1.56.12-3.25 0 0 1-.33 3.3 1.25a11.2 11.2 0 0 1 6 0c2.28-1.58 3.29-1.25 3.29-1.25.65 1.69.24 2.94.12 3.25.76.86 1.22 1.95 1.22 3.29 0 4.7-2.81 5.74-5.49 6.04.43.38.81 1.13.81 2.28 0 1.64-.02 2.97-.02 3.37 0 .33.22.72.83.6C20.57 22.34 24 17.74 24 12.3 24 5.5 18.63 0 12 0z"/></svg>
+        github
+      </a>
+      <a href="https://www.linkedin.com/in/prashamsa-b-b893b1243/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        linkedin
+      </a>
+    </div>
+    <!-- [EDIT: EMAIL] -->
+    <p class="email">or reach me at <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+    <p class="fine-print">made with matcha &amp; markup</p>
+  </div>
+</footer>
+
+</body>
+</html>
