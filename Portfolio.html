@@ -114,8 +114,8 @@
 
   /* ---------- SVG CUP ---------- */
   .liquid-rect {
-    animation: pour 2.4s cubic-bezier(0.33, 0.02, 0.24, 1) forwards;
-    animation-delay: 0.3s;
+    y: 72;
+    height: 160;
   }
   @keyframes pour {
     from { y: 232; height: 0; }
@@ -129,6 +129,9 @@
   .foam-bit:nth-child(1) { animation-delay: 2.1s; }
   .foam-bit:nth-child(2) { animation-delay: 2.25s; }
   .foam-bit:nth-child(3) { animation-delay: 2.35s; }
+  .ice-cube {
+    opacity: 1;
+  }
   @keyframes settle {
     from { opacity: 0; transform: scale(0.4); }
     to   { opacity: 1; transform: scale(1); }
@@ -143,8 +146,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .liquid-rect { animation: none; y: 72; height: 160; }
+    .liquid-rect { y: 72; height: 160; }
     .foam-bit { animation: none; opacity: 1; transform: scale(1); }
+    .ice-cube { animation: none; opacity: 1; transform: scale(1); }
     .steam { animation: none; }
   }
 
@@ -432,9 +436,13 @@
 
 <section class="hero">
   <div class="cup-wrap">
-    <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a matcha latte being poured into a cup">
+    <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of an iced matcha drink with a straw">
       <!-- steam -->
       <path class="steam" d="M140 40 C 135 30, 148 25, 143 15" stroke="var(--ink-soft)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+      <!-- straw -->
+      <path d="M187 116 L210 24" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M188 112 L211 25" stroke="var(--matcha-light)" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
 
       <!-- saucer -->
       <ellipse cx="150" cy="253" rx="98" ry="13" fill="var(--cream-deep)" />
@@ -445,19 +453,21 @@
       <!-- liquid, clipped by animated rect -->
       <defs>
         <clipPath id="cupClip">
-          <rect class="liquid-rect" x="60" width="200" y="232" height="0" />
+          <rect class="liquid-rect" x="60" y="72" width="200" height="160" />
         </clipPath>
         <linearGradient id="matchaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="var(--matcha-light)" />
-          <stop offset="100%" stop-color="var(--matcha-deep)" />
+          <stop offset="0%" stop-color="var(--matcha-mid)" />
+          <stop offset="100%" stop-color="var(--matcha-mid)" stop-opacity="0.82" />
         </linearGradient>
       </defs>
       <path d="M78 72 L222 72 L188 232 L112 232 Z" fill="url(#matchaGrad)" clip-path="url(#cupClip)" />
 
-      <!-- foam flecks at the surface -->
-      <circle class="foam-bit" cx="118" cy="76" r="5" fill="var(--foam)" opacity="0.85"/>
-      <circle class="foam-bit" cx="150" cy="73" r="6" fill="var(--foam)" opacity="0.85"/>
-      <circle class="foam-bit" cx="180" cy="77" r="4.5" fill="var(--foam)" opacity="0.85"/>
+      <!-- ice cubes in the matcha -->
+      <g clip-path="url(#cupClip)" fill="var(--cream)" fill-opacity="0.68" stroke="var(--cream-deep)" stroke-width="2">
+        <polygon class="ice-cube" points="105,70 126,75 121,101 100,95" />
+        <polygon class="ice-cube" points="142,72 165,76 160,103 137,98" />
+        <polygon class="ice-cube" points="177,69 198,75 193,99 172,94" />
+      </g>
 
       <!-- rim -->
       <ellipse cx="150" cy="60" rx="80" ry="12" fill="none" stroke="var(--ink)" stroke-width="3"/>
