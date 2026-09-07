@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prashamsa — Portfolio</title>
 <meta name="description" content="Prashamsa's portfolio — projects, builds, and small engineering experiments.">
-  
+
+
 <style>
   @font-face {
     font-family: "PBHandwriting";
@@ -256,6 +257,94 @@
   .pour-link:focus-visible .mini-liquid {
     y: 4;
     height: 10;
+  }
+
+  /* ---------- PROJECT SHOWCASE ---------- */
+  .project-showcase {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    overflow: auto;
+    padding: 3rem 1.5rem;
+    background: rgba(96, 51, 20, 0.96);
+    color: var(--cream);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+  .project-showcase.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .project-showcase__close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 2;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--cream);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--cream);
+    font: inherit;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .project-showcase__inner {
+    display: grid;
+    justify-items: center;
+    width: min(100%, 760px);
+    text-align: center;
+  }
+  .project-showcase__cup {
+    width: min(82vw, 620px);
+    height: auto;
+    transform: scale(0.08) rotate(-8deg);
+    transform-origin: center;
+    transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .project-showcase.is-open .project-showcase__cup {
+    transform: scale(1) rotate(0);
+  }
+  .project-showcase__content {
+    max-width: 40rem;
+    margin-top: -1rem;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity 0.45s ease 0.35s, transform 0.45s ease 0.35s;
+  }
+  .project-showcase.is-open .project-showcase__content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .project-showcase__eyebrow {
+    margin: 0 0 0.5rem;
+    color: var(--matcha-light);
+    font-size: 0.95rem;
+  }
+  .project-showcase h2 {
+    margin: 0;
+    color: var(--cream);
+    font-size: clamp(2rem, 6vw, 3.2rem);
+  }
+  .project-showcase__description {
+    margin: 0.75rem auto 1rem;
+    color: var(--cream);
+  }
+  .project-showcase__stack {
+    margin: 0;
+    color: var(--matcha-light);
+  }
+  body.showcase-open { overflow: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-showcase,
+    .project-showcase__cup,
+    .project-showcase__content { transition: none; }
   }
 
   /* ---------- WORKSHOP LOG ---------- */
@@ -527,6 +616,86 @@
     <p class="fine-print">made with matcha &amp; markup</p>
   </div>
 </footer>
+
+<div class="project-showcase" id="project-showcase" aria-hidden="true">
+  <button class="project-showcase__close" type="button" aria-label="Close project showcase">&times;</button>
+  <div class="project-showcase__inner">
+    <svg class="project-showcase__cup" viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A glass of iced matcha">
+      <defs>
+        <linearGradient id="showcaseMatcha" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#A8B77D"/>
+          <stop offset="1" stop-color="#76845B"/>
+        </linearGradient>
+        <linearGradient id="showcaseGlass" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#D8D3B3" stop-opacity="0.72"/>
+          <stop offset="1" stop-color="#B1B7BE" stop-opacity="0.28"/>
+        </linearGradient>
+        <clipPath id="showcaseCupClip">
+          <path d="M145 150h310l-38 300H183z"/>
+        </clipPath>
+      </defs>
+      <ellipse cx="300" cy="484" rx="190" ry="25" fill="#B1B7BE" opacity="0.55"/>
+      <path d="M432 220c104-8 112 112 20 130" fill="none" stroke="#D8D3B3" stroke-width="24" stroke-linecap="round" opacity="0.8"/>
+      <path d="M145 150h310l-38 300H183z" fill="url(#showcaseGlass)" stroke="#D8D3B3" stroke-width="8"/>
+      <path d="M153 215h294l-30 235H183z" fill="url(#showcaseMatcha)" clip-path="url(#showcaseCupClip)"/>
+      <ellipse cx="300" cy="215" rx="147" ry="28" fill="#A8B77D" stroke="#D8D3B3" stroke-width="8"/>
+      <g clip-path="url(#showcaseCupClip)">
+        <g fill="#D8D3B3" fill-opacity="0.7" stroke="#B1B7BE" stroke-width="4">
+          <path d="M205 177l55 15-12 62-55-16z"/>
+          <path d="M300 169l59 18-15 65-58-19z"/>
+          <path d="M385 184l48 12-11 58-49-15z"/>
+        </g>
+        <path d="M145 300h310" stroke="#B1B7BE" stroke-width="7" opacity="0.4"/>
+        <path d="M145 350h310" stroke="#D8D3B3" stroke-width="5" opacity="0.22"/>
+      </g>
+      <path d="M177 180v250M423 180l-30 250" stroke="#D8D3B3" stroke-width="5" opacity="0.58"/>
+      <ellipse cx="300" cy="150" rx="155" ry="30" fill="none" stroke="#D8D3B3" stroke-width="8"/>
+    </svg>
+    <div class="project-showcase__content">
+      <p class="project-showcase__eyebrow">now steeping</p>
+      <h2></h2>
+      <p class="project-showcase__description"></p>
+      <p class="project-showcase__stack"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const showcase = document.querySelector('#project-showcase');
+  const showcaseTitle = showcase.querySelector('h2');
+  const showcaseDescription = showcase.querySelector('.project-showcase__description');
+  const showcaseStack = showcase.querySelector('.project-showcase__stack');
+  const closeShowcase = showcase.querySelector('.project-showcase__close');
+
+  function openShowcase(event) {
+    event.preventDefault();
+    const card = event.currentTarget.closest('.project-card');
+    const stack = [...card.querySelectorAll('.stack li')].map((item) => item.textContent).join(' · ');
+
+    showcaseTitle.textContent = card.querySelector('h3').textContent;
+    showcaseDescription.textContent = card.querySelector('.desc').textContent;
+    showcaseStack.textContent = stack;
+    showcase.classList.add('is-open');
+    showcase.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('showcase-open');
+    closeShowcase.focus();
+  }
+
+  function closeShowcasePanel() {
+    showcase.classList.remove('is-open');
+    showcase.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('showcase-open');
+  }
+
+  document.querySelectorAll('.pour-link').forEach((link) => link.addEventListener('click', openShowcase));
+  closeShowcase.addEventListener('click', closeShowcasePanel);
+  showcase.addEventListener('click', (event) => {
+    if (event.target === showcase) closeShowcasePanel();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && showcase.classList.contains('is-open')) closeShowcasePanel();
+  });
+</script>
 
 </body>
 </html>
