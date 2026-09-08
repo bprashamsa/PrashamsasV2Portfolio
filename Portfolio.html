@@ -427,35 +427,6 @@
     height: auto;
     overflow: visible;
   }
-  .p-loading__pour {
-    stroke-dasharray: 190;
-    stroke-dashoffset: 190;
-    animation: pPourStream 0.8s ease-out 0.2s forwards;
-  }
-  @keyframes pPourStream {
-    to { stroke-dashoffset: 0; }
-  }
-  .p-loading__liquid {
-    transform: translateY(255px);
-    animation: pFill 1.8s cubic-bezier(0.2, 0.78, 0.25, 1) 0.65s forwards;
-  }
-  @keyframes pFill {
-    to { transform: translateY(0); }
-  }
-  .p-loading__surface {
-    opacity: 0;
-    animation: pSurface 0.35s ease-out 2.15s forwards;
-  }
-  @keyframes pSurface {
-    to { opacity: 1; }
-  }
-  .p-loading__shine {
-    opacity: 0;
-    animation: pShine 0.45s ease-out 2.2s forwards;
-  }
-  @keyframes pShine {
-    to { opacity: 0.45; }
-  }
   .p-loading__label {
     position: absolute;
     top: calc(50% + min(30vw, 210px));
@@ -464,11 +435,6 @@
     font-size: 1rem;
   }
   @media (prefers-reduced-motion: reduce) {
-    .p-loading,
-    .p-loading__pour,
-    .p-loading__liquid,
-    .p-loading__surface,
-    .p-loading__shine { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none; }
     .p-loading { transition: none; }
   }
 
@@ -557,21 +523,9 @@
 </head>
 <body>
 
-<div class="p-loading" id="p-loading" role="status" aria-label="Pouring green coffee">
+<div class="p-loading" id="p-loading" role="status" aria-label="Preparing portfolio">
   <svg class="p-loading__art" viewBox="0 0 420 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <clipPath id="p-mug-clip">
-        <text x="210" y="385" text-anchor="middle" font-family="PBHandwriting, cursive" font-size="370" font-weight="400">P</text>
-      </clipPath>
-    </defs>
-    <path class="p-loading__pour" d="M210 22v118" fill="none" stroke="#76845B" stroke-width="18" stroke-linecap="round"/>
-    <text x="210" y="385" text-anchor="middle" font-family="PBHandwriting, cursive" font-size="370" font-weight="400" fill="#FFFFFF" stroke="#603314" stroke-width="8" paint-order="stroke" aria-hidden="true">P</text>
-    <g clip-path="url(#p-mug-clip)">
-      <rect class="p-loading__liquid" x="25" y="130" width="370" height="270" fill="#76845B"/>
-      <ellipse class="p-loading__surface" cx="210" cy="135" rx="115" ry="17" fill="#A2B473"/>
-      <ellipse class="p-loading__shine" cx="150" cy="255" rx="13" ry="72" fill="#FFFFFF" transform="rotate(12 150 255)"/>
-    </g>
-    <text x="210" y="385" text-anchor="middle" font-family="PBHandwriting, cursive" font-size="370" font-weight="400" fill="none" stroke="#603314" stroke-width="8" aria-hidden="true">P</text>
+    <text x="210" y="385" text-anchor="middle" font-family="PBHandwriting, cursive" font-size="370" font-weight="400" fill="#76845B" stroke="#603314" stroke-width="8" paint-order="stroke" aria-hidden="true">P</text>
   </svg>
   <p class="p-loading__label">brewing</p>
 </div>
@@ -824,7 +778,7 @@
   });
 
   window.addEventListener('load', () => {
-    setTimeout(() => document.querySelector('#p-loading').classList.add('is-finished'), 3100);
+    setTimeout(() => document.querySelector('#p-loading').classList.add('is-finished'), 1200);
   });
 
 </script>
