@@ -85,8 +85,10 @@
     min-height:100vh;
     padding:70px 60px 70px 96px;
     background-image:
-      repeating-linear-gradient(var(--paper) 0px, var(--paper) 34px, var(--rule-blue) 35px, var(--paper) 36px);
-    background-position: 0 90px;
+      repeating-linear-gradient(0deg, var(--rule-blue) 0px, var(--rule-blue) 1px, transparent 1px, transparent 22px),
+      repeating-linear-gradient(90deg, var(--rule-blue) 0px, var(--rule-blue) 1px, transparent 1px, transparent 22px);
+    background-color:var(--paper);
+    background-position: 0 90px, 0 0;
     border-bottom:1px solid #ded5bd;
   }
   .page::before{
