@@ -84,11 +84,10 @@
     position:relative;
     min-height:100vh;
     padding:70px 60px 70px 96px;
-    background-image:
-      repeating-linear-gradient(0deg, var(--rule-blue) 0px, var(--rule-blue) 1px, transparent 1px, transparent 22px),
-      repeating-linear-gradient(90deg, var(--rule-blue) 0px, var(--rule-blue) 1px, transparent 1px, transparent 22px);
+    background-image:url("assets/PaperBG.png");
+    background-size:cover;
+    background-repeat:repeat-y;
     background-color:var(--paper);
-    background-position: 0 90px, 0 0;
     border-bottom:1px solid #ded5bd;
   }
   .page::before{
@@ -101,7 +100,6 @@
     background:var(--margin-red);
     opacity:0.75;
   }
-  .page.no-rule{ background-image:none; }
   .page.no-rule::before{ display:none; }
 
   .page-inner{ position:relative; z-index:2; max-width:640px; }
@@ -457,7 +455,7 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="page">
+  <section id="about" class="page no-rule">
     <div class="page-inner">
       <p class="page-kicker">// entry one</p>
       <h2 class="page-title" style="font-family:'PBHandwritingThick', cursive;">about me</h2>
@@ -481,7 +479,7 @@
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="page">
+  <section id="projects" class="page no-rule">
     <div class="page-inner">
       <p class="page-kicker">// entry three</p>
       <h2 class="page-title">things I've built</h2>
@@ -550,7 +548,7 @@
   </section>
 
   <!-- TERMINAL -->
-  <section id="terminal" class="page">
+  <section id="terminal" class="page no-rule">
     <div class="page-inner">
       <p class="page-kicker">// entry four</p>
       <h2 class="page-title">a shell, of sorts</h2>
