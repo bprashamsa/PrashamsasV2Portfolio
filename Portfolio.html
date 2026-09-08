@@ -405,39 +405,6 @@
   }
   body.showcase-open { overflow: hidden; }
 
-  /* ---------- P-MUG LOADING SCREEN ---------- */
-  .p-loading {
-    position: fixed;
-    inset: 0;
-    z-index: 20;
-    display: grid;
-    place-items: center;
-    background: #FFFFFF;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-  }
-  .p-loading.is-finished {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-  .p-loading__art {
-    width: min(62vw, 420px);
-    height: auto;
-    overflow: visible;
-  }
-  .p-loading__label {
-    position: absolute;
-    top: calc(50% + min(30vw, 210px));
-    margin: 0;
-    color: var(--matcha-mid);
-    font-size: 1rem;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .p-loading { transition: none; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .project-showcase,
     .project-showcase__cup,
@@ -522,13 +489,6 @@
 </style>
 </head>
 <body>
-
-<div class="p-loading" id="p-loading" role="status" aria-label="Preparing portfolio">
-  <svg class="p-loading__art" viewBox="0 0 420 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <text x="210" y="385" text-anchor="middle" font-family="PBHandwriting, cursive" font-size="370" font-weight="400" fill="#76845B" stroke="#603314" stroke-width="8" paint-order="stroke" aria-hidden="true">P</text>
-  </svg>
-  <p class="p-loading__label">brewing</p>
-</div>
 
 <nav>
   <span class="name">Prashamsa</span>
@@ -775,10 +735,6 @@
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && showcase.classList.contains('is-open')) closeShowcasePanel();
-  });
-
-  window.addEventListener('load', () => {
-    setTimeout(() => document.querySelector('#p-loading').classList.add('is-finished'), 1200);
   });
 
 </script>
