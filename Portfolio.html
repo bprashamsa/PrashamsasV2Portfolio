@@ -7,6 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  @font-face{
+    font-family:'PBHandwritingThick';
+    src:url("assets/PBHandwritingThick.ttf") format("truetype");
+    font-weight:normal;
+    font-style:normal;
+    font-display:swap;
+  }
   :root{
     --paper:#faf6ec;
     --paper-shadow:#ece5d3;
@@ -169,7 +176,7 @@
     min-height:100vh;
   }
   .cover-title{
-    font-family:'Kalam', cursive;
+    font-family:'PBHandwritingThick', cursive;
     font-weight:700;
     font-size:clamp(38px, 6vw, 64px);
     line-height:1.1;
@@ -256,36 +263,6 @@
     transform:translateY(0) rotate(-1deg);
   }
 
-  /* ---------- skills constellation ---------- */
-  #skills-canvas-wrap{
-    position:relative;
-    width:100%;
-    max-width:640px;
-    margin-top:20px;
-  }
-  #skills-canvas-wrap svg{ width:100%; height:auto; display:block; }
-  .skill-node{ cursor:pointer; }
-  .skill-node circle{
-    fill:var(--paper);
-    stroke:var(--ink);
-    stroke-width:1.6;
-    transition:fill 0.2s ease, r 0.2s ease;
-  }
-  .skill-node text{
-    font-family:'Kalam', cursive;
-    font-size:12.5px;
-    fill:var(--ink);
-    pointer-events:none;
-  }
-  .skill-node.active circle{ fill:var(--highlighter); }
-  .skill-link{
-    stroke:var(--graphite);
-    stroke-width:1;
-    opacity:0.35;
-    stroke-dasharray:3 3;
-    transition:opacity 0.2s ease, stroke 0.2s ease;
-  }
-  .skill-link.lit{ opacity:0.9; stroke:var(--redpen); stroke-dasharray:none; }
   #skill-caption{
     font-family:'Kalam', cursive;
     font-size:15px;
@@ -468,7 +445,6 @@
 <nav class="tabs" aria-label="Notebook sections">
   <button data-target="cover">cover</button>
   <button data-target="about">about</button>
-  <button data-target="skills">skills</button>
   <button data-target="projects">projects</button>
   <button data-target="terminal">shell</button>
   <button data-target="contact">contact</button>
@@ -496,7 +472,7 @@
   <section id="about" class="page">
     <div class="page-inner">
       <p class="page-kicker">// entry one</p>
-      <h2 class="page-title">about me</h2>
+      <h2 class="page-title" style="font-family:'PBHandwritingThick', cursive;">about me</h2>
       <p>
         I'm a student at the University of Washington studying Data Science and Cybersecurity — two fields that,
         on the surface, look like they pull in opposite directions. One is about finding the signal in the noise.
@@ -514,20 +490,6 @@
       </p>
     </div>
     <div class="folio">page 2</div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="page">
-    <div class="page-inner">
-      <p class="page-kicker">// entry two</p>
-      <h2 class="page-title">a map of skills</h2>
-      <p>Everything here is connected to something else. Click a node to trace the lines.</p>
-      <div id="skills-canvas-wrap">
-        <svg viewBox="0 0 620 380" id="skills-svg"></svg>
-      </div>
-      <p id="skill-caption">tap a node to see how it connects</p>
-    </div>
-    <div class="folio">page 3</div>
   </section>
 
   <!-- PROJECTS -->
@@ -596,7 +558,7 @@
 
       </div>
     </div>
-    <div class="folio">page 4</div>
+    <div class="folio">page 3</div>
   </section>
 
   <!-- TERMINAL -->
@@ -615,7 +577,7 @@
       </div>
       <p class="term-hint">try: whoami · help · ls · cat resume.txt</p>
     </div>
-    <div class="folio">page 5</div>
+    <div class="folio">page 4</div>
   </section>
 
   <!-- CONTACT -->
@@ -628,14 +590,14 @@
         <span class="label">email</span>
         <a href="mailto:prashamsa@uw.edu">prashamsa@uw.edu</a>
         <span class="label">github</span>
-        <a href="#" onclick="return false;">github.com/&lt;add-your-handle&gt;</a>
+        <a href="https://github.com/bprashamsa" target="_blank" rel="noopener noreferrer">github.com/bprashamsa</a>
         <span class="label">linkedin</span>
-        <a href="#" onclick="return false;">linkedin.com/in/&lt;add-your-handle&gt;</a>
+        <a href="https://www.linkedin.com/in/prashamsa-b-b893b1243/" target="_blank" rel="noopener noreferrer">linkedin.com/in/prashamsa-b-b893b1243</a>
         <div class="coffee-ring"></div>
       </div>
       <p class="signoff">— thanks for reading through to the last page.</p>
     </div>
-    <div class="folio">page 6</div>
+    <div class="folio">page 5</div>
   </section>
 
 </div>
@@ -681,72 +643,6 @@
     });
   }, {threshold:0.5});
   sections.forEach(s=>obs.observe(s));
-})();
-
-// ---------- skills constellation ----------
-(function(){
-  const svg = document.getElementById('skills-svg');
-  const caption = document.getElementById('skill-caption');
-  const NS = 'http://www.w3.org/2000/svg';
-
-  const nodes = [
-    {id:'python', label:'Python', x:80, y:180, note:'The language everything else here is written in.'},
-    {id:'ml', label:'Machine Learning', x:230, y:90, note:'Random forests, logistic regression, and knowing when not to use either.'},
-    {id:'stats', label:'Statistics', x:230, y:270, note:'The math that keeps the models honest.'},
-    {id:'sql', label:'SQL', x:120, y:330, note:'For asking data questions directly, no model required.'},
-    {id:'netsec', label:'Network Security', x:400, y:70, note:'Reading traffic the way others read text.'},
-    {id:'crypto', label:'Cryptography', x:470, y:180, note:'The math behind keeping secrets — and breaking them, ethically.'},
-    {id:'linux', label:'Linux', x:400, y:300, note:'The environment almost everything above actually runs in.'},
-    {id:'tools', label:'Wireshark / Nmap', x:540, y:330, note:'The tools for seeing a network as it actually behaves.'},
-    {id:'cloud', label:'Cloud (AWS)', x:330, y:190, note:'Where models and monitoring both end up living.'},
-  ];
-  const links = [
-    ['python','ml'],['python','stats'],['python','sql'],
-    ['ml','stats'],['ml','cloud'],
-    ['netsec','crypto'],['netsec','linux'],['netsec','tools'],
-    ['linux','tools'],['crypto','cloud'],['cloud','sql'],['linux','python']
-  ];
-
-  links.forEach(([a,b])=>{
-    const na = nodes.find(n=>n.id===a), nb = nodes.find(n=>n.id===b);
-    const line = document.createElementNS(NS,'line');
-    line.setAttribute('x1', na.x); line.setAttribute('y1', na.y);
-    line.setAttribute('x2', nb.x); line.setAttribute('y2', nb.y);
-    line.setAttribute('class','skill-link');
-    line.dataset.a = a; line.dataset.b = b;
-    svg.appendChild(line);
-  });
-
-  nodes.forEach(n=>{
-    const g = document.createElementNS(NS,'g');
-    g.setAttribute('class','skill-node');
-    g.setAttribute('tabindex','0');
-    g.setAttribute('role','button');
-    g.setAttribute('aria-label', n.label);
-    g.dataset.id = n.id;
-
-    const circle = document.createElementNS(NS,'circle');
-    circle.setAttribute('cx', n.x); circle.setAttribute('cy', n.y); circle.setAttribute('r', 34);
-    g.appendChild(circle);
-
-    const text = document.createElementNS(NS,'text');
-    text.setAttribute('x', n.x); text.setAttribute('y', n.y+4);
-    text.setAttribute('text-anchor','middle');
-    text.textContent = n.label;
-    g.appendChild(text);
-
-    function activate(){
-      document.querySelectorAll('.skill-node').forEach(el=>el.classList.remove('active'));
-      document.querySelectorAll('.skill-link').forEach(el=>el.classList.remove('lit'));
-      g.classList.add('active');
-      document.querySelectorAll(`.skill-link[data-a="${n.id}"], .skill-link[data-b="${n.id}"]`)
-        .forEach(el=>el.classList.add('lit'));
-      caption.textContent = n.label + ' — ' + n.note;
-    }
-    g.addEventListener('click', activate);
-    g.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate(); }});
-    svg.appendChild(g);
-  });
 })();
 
 // ---------- flip cards ----------
