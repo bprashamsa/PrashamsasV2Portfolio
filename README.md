@@ -1,2 +1,2 @@
 # PrashamsasV2Portfolio
-My portfolio (version 2, different design, playing with layout options)
+This is not my portfolio, but me testing out a bunch of things with HTML :) Figuring out what works best for me and what I like
