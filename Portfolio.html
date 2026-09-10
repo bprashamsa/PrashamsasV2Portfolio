@@ -3,674 +3,729 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prashamsa Bandarapu — Notebook</title>
+<title>Prashamsa Bandarapu — Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#faf6ec;
-    --paper-shadow:#ece5d3;
-    --rule-blue:#a9c6e0;
-    --margin-red:#e0a3a3;
-    --ink:#1f3a5f;
-    --ink-soft:#3a5578;
-    --graphite:#4a4a48;
-    --highlighter:#ffe66d;
-    --redpen:#c1443c;
-    --terminal-green:#3f9e73;
-    --hole:#e4dcc8;
-    --hole-shadow:#c9bfa5;
+    --ink: #16181D;
+    --ink-soft: #5B5F6B;
+    --paper: #FAFAF8;
+    --accent: #1F3A5F;
+    --accent-soft: #EEF2F6;
+    --line: #E3E1DA;
+    --glass: rgba(255,255,255,0.55);
+    --glass-line: rgba(255,255,255,0.35);
   }
-
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-
-  body{
-    margin:0;
-    background:#3c3833;
-    font-family:'Literata', serif;
-    color:var(--ink);
-    cursor:default;
-  }
-
-  ::selection{ background:var(--highlighter); color:var(--ink); }
 
   @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+    *{ animation: none !important; transition: none !important; }
   }
 
-  a{ color:var(--ink); }
-  :focus-visible{ outline:3px solid var(--redpen); outline-offset:3px; }
+  *{ box-sizing: border-box; }
 
-  /* ---------- book shell ---------- */
-  .book{
-    max-width:920px;
-    margin:0 auto;
-    background:var(--paper);
-    position:relative;
-    box-shadow:0 0 60px rgba(0,0,0,0.45);
+  html, body{
+    margin:0; padding:0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Public Sans', -apple-system, sans-serif;
+    color: var(--ink);
   }
 
-  /* spiral binding, fixed within book, runs whole height */
-  .spiral{
-    position:absolute;
-    left:0; top:0; bottom:0;
-    width:56px;
-    z-index:20;
-    pointer-events:none;
-    background:linear-gradient(90deg, rgba(0,0,0,0.06), transparent 60%);
-  }
-  .spiral .hole{
-    position:absolute;
-    left:20px;
-    width:17px; height:17px;
-    border-radius:50%;
-    background:var(--paper);
-    box-shadow:
-      inset 0 1.5px 2.5px rgba(0,0,0,0.28),
-      inset 0 -1px 1.5px rgba(255,255,255,0.6),
-      0 1px 0 rgba(255,255,255,0.5);
+  .serif{ font-family: 'Fraunces', Georgia, serif; }
+
+  /* ---------------- desktop / wallpaper ---------------- */
+  .desktop{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background:
+      radial-gradient(ellipse 900px 500px at 20% 15%, rgba(255,255,255,0.55), transparent 60%),
+      radial-gradient(ellipse 700px 400px at 75% 8%, rgba(255,255,255,0.4), transparent 55%),
+      linear-gradient(180deg, #AFCBEF 0%, #CFE3F5 38%, #EAF2F8 60%, #F3EFD9 72%, #D9E9BC 78%, #9FC77C 100%);
+    overflow: hidden;
   }
 
-  /* page content sits right of spiral */
-  .page{
-    position:relative;
-    min-height:100vh;
-    padding:70px 60px 70px 96px;
-    background-color:var(--paper);
-    border-bottom:1px solid #ded5bd;
-  }
-  .page::before{
-    /* red margin line */
-    content:"";
-    position:absolute;
-    top:0; bottom:0;
-    left:126px;
-    width:1px;
-    background:var(--margin-red);
-    opacity:0.75;
-  }
-  .page.no-rule::before{ display:none; }
-
-  .page-inner{ position:relative; z-index:2; max-width:640px; }
-
-  /* page number, like a real book */
-  .folio{
-    position:absolute;
-    bottom:28px; right:40px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:17px;
-    color:var(--graphite);
-    opacity:0.6;
-    z-index:2;
-  }
-
-  /* ---------- fixed tab navigation, like index tabs sticking out ---------- */
-  .tabs{
-    position:fixed;
-    right:0;
-    top:50%;
-    transform:translateY(-50%);
-    z-index:100;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-  }
-  .tabs button{
-    font-family:'Kalam', cursive;
-    font-size:25px;
-    border:none;
-    padding:10px 14px 10px 18px;
-    border-radius:6px 0 0 6px;
-    cursor:pointer;
-    text-align:left;
-    box-shadow:-2px 2px 5px rgba(0,0,0,0.25);
-    transform:translateX(38px);
-    transition:transform 0.25s ease;
-    color:#2b2b2b;
-  }
-  .tabs button:hover, .tabs button:focus-visible, .tabs button.active{
-    transform:translateX(0);
-  }
-  .tabs button:nth-child(1){ background:#e7c8c8; }
-  .tabs button:nth-child(2){ background:#f2dca0; }
-  .tabs button:nth-child(3){ background:#bcdccb; }
-  .tabs button:nth-child(4){ background:#b9d4ea; }
-  .tabs button:nth-child(5){ background:#cfc2e0; }
-  .tabs button:nth-child(6){ background:#e6c9e8; }
-
-  @media (max-width:720px){
-    .tabs{ display:none; }
-  }
-
-  /* ---------- cover page ---------- */
-  #cover{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:flex-start;
-    min-height:100vh;
-  }
-  .cover-title{
-    font-family:'Kalam', cursive;
-    font-weight:700;
-    font-size:clamp(43px, 6vw, 69px);
-    line-height:1.1;
-    margin:0 0 14px;
-    color:var(--ink);
-  }
-  .cover-sub{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:20px;
-    color:var(--ink-soft);
-    letter-spacing:0.02em;
-    margin:0 0 30px;
-  }
-  .cover-sub .sep{ color:var(--redpen); margin:0 8px; }
-
-  .doodle-underline{
-    display:block;
-    width:210px;
-    height:14px;
-    margin-top:2px;
-  }
-
-  .scroll-hint{
-    margin-top:70px;
-    font-family:'Kalam', cursive;
-    font-size:21px;
-    color:var(--graphite);
+  /* ---------------- menu bar ---------------- */
+  .menubar{
+    position: absolute;
+    top:0; left:0; right:0;
+    height: 30px;
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
     display:flex;
     align-items:center;
-    gap:8px;
+    justify-content: space-between;
+    padding: 0 16px;
+    font-size: 13px;
+    color: #22252C;
+    z-index: 500;
   }
-  .scroll-hint svg{ animation:bob 1.6s ease-in-out infinite; }
-  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
-
-  /* ---------- headings shared ---------- */
-  h2.page-title{
-    font-family:'Kalam', cursive;
-    font-weight:700;
-    font-size:39px;
-    margin:0 0 8px;
-    color:var(--ink);
-    position:relative;
-    display:inline-block;
-  }
-  .page-kicker{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:17px;
-    color:var(--redpen);
-    text-transform:lowercase;
-    margin:0 0 4px;
-  }
-  p{ line-height:1.75; font-size:22px; }
-
-  /* margin annotation (handwritten note that appears near text) */
-  .margin-note{
-    font-family:'Kalam', cursive;
-    color:var(--redpen);
-    font-size:19px;
-    position:relative;
-    display:inline-block;
-    cursor:help;
-    border-bottom:1px dashed var(--redpen);
-  }
-  .margin-note .bubble{
-    position:absolute;
-    bottom:130%;
-    left:0;
-    background:#fff9df;
-    border:1px solid #d8c98a;
-    padding:8px 12px;
-    width:220px;
-    font-size:18px;
-    color:#5a4c1f;
-    border-radius:3px;
-    box-shadow:2px 3px 6px rgba(0,0,0,0.2);
-    opacity:0;
-    pointer-events:none;
-    transform:translateY(6px) rotate(-1deg);
-    transition:opacity 0.2s ease, transform 0.2s ease;
-    z-index:5;
-  }
-  .margin-note:hover .bubble, .margin-note:focus .bubble{
-    opacity:1;
-    transform:translateY(0) rotate(-1deg);
-  }
-
-  #skill-caption{
-    font-family:'Kalam', cursive;
-    font-size:20px;
-    color:var(--ink-soft);
-    min-height:24px;
-    margin-top:6px;
-  }
-
-  /* ---------- project sticky notes ---------- */
-  .project-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:26px;
-    margin-top:18px;
-    perspective:1200px;
-  }
-  @media (max-width:640px){ .project-grid{ grid-template-columns:1fr; } }
-
-  .flip-card{
-    position:relative;
-    height:200px;
-    cursor:pointer;
-  }
-  .flip-card-inner{
-    position:relative;
-    width:100%; height:100%;
-    transition:transform 0.55s cubic-bezier(.4,.2,.2,1);
-    transform-style:preserve-3d;
-  }
-  .flip-card.flipped .flip-card-inner{ transform:rotateY(180deg); }
-  .flip-front, .flip-back{
-    position:absolute; inset:0;
-    backface-visibility:hidden;
-    border-radius:2px;
-    padding:18px 20px;
-    box-shadow:2px 4px 10px rgba(0,0,0,0.22);
-  }
-  .flip-front{
-    background:var(--highlighter);
-    transform:rotate(-1.2deg);
+  .menu-left, .menu-right{
     display:flex;
-    flex-direction:column;
-    justify-content:space-between;
+    align-items:center;
+    gap: 18px;
   }
-  .flip-front:nth-of-type(1){}
-  .flip-card:nth-child(2) .flip-front{ background:#bcdccb; transform:rotate(1deg); }
-  .flip-card:nth-child(3) .flip-front{ background:#b9d4ea; transform:rotate(-0.8deg); }
-  .flip-card:nth-child(4) .flip-front{ background:#e7c8c8; transform:rotate(1.3deg); }
+  .menu-mark{
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    background: var(--accent);
+    display:inline-block;
+  }
+  .menu-left span:not(.menu-mark), .menu-right span{
+    opacity: 0.85;
+  }
+  .brand-name{ font-weight: 600; }
+  .menu-right svg{ display:block; }
 
-  .flip-front h3{
-    font-family:'Kalam', cursive;
-    font-size:24px;
-    margin:0 0 6px;
+  /* ---------------- desktop icons (top-left) ---------------- */
+  .desktop-icons{
+    position: absolute;
+    top: 54px; left: 26px;
+    display:flex;
+    flex-direction: column;
+    gap: 26px;
+    z-index: 20;
   }
-  .flip-front .tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:16px;
-    color:#333;
-    opacity:0.65;
+  .dicon{
+    width: 84px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Public Sans', sans-serif;
   }
-  .flip-front .tap{
-    align-self:flex-end;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:16px;
-    opacity:0.6;
+  .dicon .folder{
+    width: 54px; height: 42px;
+    position: relative;
   }
-  .flip-back{
-    background:#fffdf6;
-    border:1px solid #ded5bd;
-    transform:rotateY(180deg);
-    overflow-y:auto;
+  .dicon .folder::before{
+    content:"";
+    position:absolute;
+    top:-7px; left:0;
+    width: 26px; height: 9px;
+    background: var(--folder-c, var(--accent));
+    border-radius: 3px 6px 0 0;
   }
-  .flip-back h4{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:17px;
-    color:var(--redpen);
-    margin:0 0 6px;
+  .dicon .folder::after{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: var(--folder-c, var(--accent));
+    border-radius: 2px 6px 6px 6px;
+    opacity: 0.92;
   }
-  .flip-back p{ font-size:19px; line-height:1.55; margin:0 0 8px; }
-  .flip-back .stack{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:16px;
-    color:var(--ink-soft);
+  .dicon span{
+    font-size: 12.5px;
+    color: #1B1E24;
+    text-shadow: 0 1px 3px rgba(255,255,255,0.6);
+    text-align: center;
   }
 
-  /* ---------- terminal ---------- */
-  .terminal{
-    background:#152018;
-    border-radius:6px;
-    padding:18px 20px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:18.5px;
-    color:#d3f5df;
-    box-shadow: inset 0 0 0 6px #0e1712, 3px 5px 14px rgba(0,0,0,0.4);
-    max-width:640px;
-    margin-top:16px;
+  /* ---------------- status widget (top-right) ---------------- */
+  .widget{
+    position: absolute;
+    top: 46px; right: 26px;
+    width: 220px;
+    background: rgba(20,28,44,0.72);
+    backdrop-filter: blur(10px);
+    color: #EDEFF4;
+    border-radius: 14px;
+    padding: 16px 18px;
+    z-index: 20;
   }
-  .terminal .bar{
-    display:flex; gap:6px; margin-bottom:12px;
+  .widget .wtitle{
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    color: #B8C0D6;
+    margin-bottom: 6px;
   }
-  .terminal .dot{ width:10px; height:10px; border-radius:50%; }
-  .terminal .dot.r{ background:#e5716c; }
-  .terminal .dot.y{ background:#eac35d; }
-  .terminal .dot.g{ background:#6fcf97; }
-  #term-output{ white-space:pre-wrap; line-height:1.6; min-height:120px; }
-  #term-output .prompt{ color:var(--terminal-green); }
-  #term-output .cmd-echo{ color:#e8f5ea; }
-  .term-input-row{ display:flex; align-items:center; margin-top:6px; }
-  .term-input-row span{ color:var(--terminal-green); margin-right:8px; }
-  #term-input{
-    background:transparent;
-    border:none;
-    color:#e8f5ea;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:18.5px;
+  .widget .wmain{
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .widget .wsub{
+    font-size: 12.5px;
+    color: #B8C0D6;
+  }
+
+  /* ---------------- windows ---------------- */
+  .window{
+    position: absolute;
+    width: 560px;
+    max-width: 90vw;
+    background: var(--paper);
+    border-radius: 10px;
+    box-shadow: 0 24px 60px rgba(10,14,24,0.35), 0 2px 8px rgba(10,14,24,0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 100;
+  }
+  .window.open{ display:flex; }
+
+  .window-bar{
+    height: 40px;
+    background: #EFEEE9;
+    border-bottom: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    padding: 0 14px;
+    gap: 8px;
+    cursor: grab;
+    flex-shrink: 0;
+  }
+  .window-bar:active{ cursor: grabbing; }
+  .traffic{
+    width: 12px; height:12px;
+    border-radius: 50%;
+    border: none;
+    padding:0;
+    cursor: pointer;
+  }
+  .traffic.red{ background: #EE6A5F; }
+  .traffic.yellow{ background: #F4BE4F; }
+  .traffic.green{ background: #61C454; }
+  .window-title{
     flex:1;
-    outline:none;
-  }
-  .term-hint{
-    font-family:'Kalam', cursive;
-    font-size:18px;
-    color:var(--graphite);
-    margin-top:10px;
+    text-align:center;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-right: 54px;
   }
 
-  /* ---------- contact page ---------- */
-  .note-card{
-    background:#fffdf3;
-    border:1px solid #e3d9b8;
-    box-shadow:3px 5px 12px rgba(0,0,0,0.2);
-    padding:26px 30px;
-    max-width:420px;
-    transform:rotate(-1deg);
-    position:relative;
-    margin-top:20px;
+  .window-body{
+    padding: 30px 32px;
+    overflow-y: auto;
+    max-height: 62vh;
   }
-  .paperclip{
-    position:absolute;
-    top:-22px; left:24px;
-    width:34px; height:56px;
+
+  /* about window */
+  .about-head{
+    display:flex;
+    align-items:center;
+    gap: 18px;
+    margin-bottom: 20px;
   }
-  .coffee-ring{
-    position:absolute;
-    width:130px; height:130px;
-    border:8px solid rgba(120,74,30,0.18);
-    border-radius:50%;
-    right:-30px; bottom:-40px;
-    pointer-events:none;
+  .avatar{
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    flex-shrink: 0;
   }
-  .note-card a{
-    display:block;
-    font-family:'Kalam', cursive;
-    font-size:23px;
-    color:var(--ink);
+  .about-head h3{
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 3px;
+  }
+  .about-head p{
+    margin:0;
+    font-size: 13.5px;
+    color: var(--accent);
+  }
+  .window-body p.body-text{
+    font-size: 15.5px;
+    color: #2A2D34;
+    line-height: 1.65;
+    margin: 0 0 14px;
+  }
+
+  /* skills window */
+  .skill-group{ margin-bottom: 22px; }
+  .skill-group:last-child{ margin-bottom: 0; }
+  .skill-group h4{
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .pills{ display:flex; flex-wrap: wrap; gap: 8px; }
+  .pill{
+    font-size: 13px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+
+  /* projects window (finder-list style) */
+  .flist{ border-top: 1px solid var(--line); }
+  .frow{
+    display:flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ficon{
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    margin-top: 2px;
+  }
+  .fmeta{ flex:1; min-width:0; }
+  .fmeta .fname{
+    font-weight: 500;
+    font-size: 15px;
+    margin: 0 0 4px;
+  }
+  .fmeta .fdesc{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .ftags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .ftags span{
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  /* experience window (doc style) */
+  .doc-line{
+    display:flex;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 14.5px;
+  }
+  .doc-line:last-child{ border-bottom: none; }
+  .doc-date{
+    width: 100px;
+    flex-shrink:0;
+    color: var(--ink-soft);
+    font-size: 13px;
+    padding-top: 1px;
+  }
+  .doc-main .dtitle{ font-weight: 500; margin: 0 0 3px; }
+  .doc-main .ddesc{ color: var(--ink-soft); font-size: 13.5px; margin:0; }
+
+  /* contact window (mail-compose style) */
+  .mail-field{
+    display:flex;
+    border-bottom: 1px solid var(--line);
+    padding: 9px 0;
+    font-size: 14px;
+  }
+  .mail-field .mlabel{
+    width: 64px;
+    color: var(--ink-soft);
+    flex-shrink:0;
+  }
+  .mail-body-text{
+    padding: 18px 0 6px;
+    font-size: 14.5px;
+    color: #2A2D34;
+    line-height: 1.6;
+  }
+  .send-btn{
+    margin-top: 14px;
+    display:inline-block;
+    background: var(--accent);
+    color: #fff;
     text-decoration:none;
-    margin:10px 0;
-    border-bottom:1px solid transparent;
+    font-size: 13.5px;
+    padding: 9px 18px;
+    border-radius: 6px;
   }
-  .note-card a:hover{ border-bottom-color:var(--redpen); }
-  .note-card .label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:16px;
-    color:var(--redpen);
-    text-transform:lowercase;
-    display:block;
-    margin-top:14px;
-  }
-  .note-card .label:first-of-type{ margin-top:0; }
 
-  .signoff{
-    font-family:'Kalam', cursive;
-    font-size:21px;
-    color:var(--ink-soft);
-    margin-top:34px;
+  /* resume window */
+  .resume-box{
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 26px;
+    text-align:center;
+    color: var(--ink-soft);
+    font-size: 13.5px;
+  }
+  .resume-box a{
+    display:inline-block;
+    margin-top: 12px;
+    background: var(--accent);
+    color:#fff;
+    text-decoration:none;
+    font-size: 13.5px;
+    padding: 9px 18px;
+    border-radius: 6px;
+  }
+
+  /* ---------------- dock ---------------- */
+  .dock-wrap{
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    display:flex;
+    justify-content:center;
+    z-index: 400;
+  }
+  .dock{
+    display:flex;
+    align-items: flex-end;
+    gap: 12px;
+    background: var(--glass);
+    backdrop-filter: blur(18px);
+    border: 1px solid var(--glass-line);
+    border-radius: 18px;
+    padding: 9px 12px;
+  }
+  .dock-item{
+    position: relative;
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--item-c, var(--accent));
+    display:flex; align-items:center; justify-content:center;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.12s ease;
+    flex-shrink: 0;
+  }
+  .dock-item:hover{ transform: translateY(-10px) scale(1.08); }
+  .dock-item svg{ width: 22px; height: 22px; }
+  .dock-item .tip{
+    position:absolute;
+    bottom: 60px; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20,20,24,0.85);
+    color:#fff;
+    font-size: 11.5px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s ease;
+  }
+  .dock-item:hover .tip{ opacity: 1; }
+  .dock-sep{
+    width: 1px;
+    align-self: stretch;
+    background: rgba(0,0,0,0.14);
+    margin: 6px 2px;
+  }
+
+  @media (max-width: 720px){
+    .widget{ display:none; }
+    .desktop-icons{ top:44px; left:14px; gap:18px; }
+    .dicon{ width:64px; }
+    .window{ width: 94vw; }
+    .window-body{ padding: 22px 20px; max-height: 58vh; }
+    .dock{ gap: 8px; padding: 7px 9px; }
+    .dock-item{ width:42px; height:42px; }
+    .doc-line{ flex-direction: column; gap: 4px; }
+    .doc-date{ width:auto; }
   }
 </style>
 </head>
 <body>
 
-<nav class="tabs" aria-label="Notebook sections">
-  <button data-target="cover">cover</button>
-  <button data-target="about">about</button>
-  <button data-target="projects">projects</button>
-  <button data-target="terminal">shell</button>
-  <button data-target="contact">contact</button>
-</nav>
+<div class="desktop" id="desktop">
 
-<div class="book" id="book">
-  <div class="spiral" id="spiral" aria-hidden="true"></div>
-
-  <!-- COVER -->
-  <section id="cover" class="page no-rule">
-    <div class="page-inner">
-      <p class="cover-sub">university of washington<span class="sep">·</span>class of 2027</p>
-      <h1 class="cover-title">Prashamsa<br>Bandarapu</h1>
-      <svg class="doodle-underline" viewBox="0 0 210 14"><path d="M2 8 C 40 2, 80 12, 120 6 S 180 2, 208 8" stroke="#1f3a5f" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
-      <p class="cover-sub" style="margin-top:22px;">data science<span class="sep">×</span>cybersecurity</p>
-      <div class="scroll-hint">
-        <svg width="20" height="24" viewBox="0 0 20 24" fill="none"><path d="M10 1v20M2 14l8 8 8-8" stroke="#4a4a48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        turn the page
-      </div>
+  <div class="menubar">
+    <div class="menu-left">
+      <span class="menu-mark"></span>
+      <span class="brand-name">Prashamsa Bandarapu</span>
+      <span>File</span><span>Edit</span><span>View</span><span>Window</span>
     </div>
-    <div class="folio">page 1</div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="page no-rule">
-    <div class="page-inner">
-      <p class="page-kicker">// entry one</p>
-      <h2 class="page-title">about me</h2>
-      <p>
-        I'm a student at the University of Washington studying Data Science and Cybersecurity — two fields that,
-        on the surface, look like they pull in opposite directions. One is about finding the signal in the noise.
-        The other is about finding the person trying to hide in it.
-        <span class="margin-note" tabindex="0">turns out that's the same skill<span class="bubble">Both are pattern recognition under uncertainty — just pointed at different questions.</span></span>
-      </p>
-      <p>
-        I like problems that sit at that intersection: building models that hold up under adversarial pressure,
-        reading logs the way other people read novels, and asking not just "what does the data say" but
-        "can I trust the data at all."
-      </p>
-      <p>
-        Outside of coursework, I spend a lot of time in notebooks — the paper kind and the Jupyter kind —
-        sketching out systems before I build them. This site is more or less what those margins look like.
-      </p>
+    <div class="menu-right">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 4.5C4 1.8 12 1.8 15 4.5M3.3 7C5.4 5.2 10.6 5.2 12.7 7M5.7 9.3C6.9 8.3 9.1 8.3 10.3 9.3" stroke="#22252C" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="1" y="1" width="14" height="9" rx="1.5" stroke="#22252C" stroke-width="1.2"/><rect x="2.3" y="2.3" width="9" height="6.4" fill="#22252C"/><rect x="16" y="3.5" width="1.4" height="3" rx="0.6" fill="#22252C"/></svg>
+      <span id="clock">7:45 PM</span>
     </div>
-    <div class="folio">page 2</div>
-  </section>
+  </div>
 
-  <!-- PROJECTS -->
-  <section id="projects" class="page no-rule">
-    <div class="page-inner">
-      <p class="page-kicker">// entry three</p>
-      <h2 class="page-title">things I've built</h2>
-      <p>Flip a note to read more.</p>
-      <div class="project-grid" id="project-grid">
+  <div class="desktop-icons">
+    <button class="dicon" onclick="openWindow('win-projects')">
+      <span class="folder" style="--folder-c:#1F3A5F"></span>
+      <span>Projects</span>
+    </button>
+    <button class="dicon" onclick="openWindow('win-about')">
+      <span class="folder" style="--folder-c:#6B7A93"></span>
+      <span>About Me</span>
+    </button>
+    <button class="dicon" onclick="openWindow('win-resume')">
+      <span class="folder" style="--folder-c:#8B9A6B"></span>
+      <span>Resume</span>
+    </button>
+  </div>
 
-        <div class="flip-card" tabindex="0" role="button" aria-label="Flip card: Network Intrusion Detector">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div><h3>Network Intrusion Detector</h3><span class="tag">ml + network security</span></div>
-              <span class="tap">flip →</span>
-            </div>
-            <div class="flip-back">
-              <h4>details</h4>
-              <p>A classifier trained on packet-flow features to flag anomalous traffic in near real time, benchmarked against a hand-labeled attack dataset to cut false positives.</p>
-              <p class="stack">random forest · scapy · pandas · scikit-learn</p>
-            </div>
-          </div>
-        </div>
+  <div class="widget">
+    <div class="wtitle">STATUS</div>
+    <div class="wmain">Open to internships<br>— Summer 2026</div>
+    <div class="wsub">Seattle, WA · replies within a day</div>
+  </div>
 
-        <div class="flip-card" tabindex="0" role="button" aria-label="Flip card: Phishing Email Classifier">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div><h3>Phishing Email Classifier</h3><span class="tag">nlp + social engineering</span></div>
-              <span class="tap">flip →</span>
-            </div>
-            <div class="flip-back">
-              <h4>details</h4>
-              <p>A text classifier that scores incoming email for phishing markers — urgency language, spoofed sender patterns, mismatched links — and explains its own reasoning.</p>
-              <p class="stack">python · nltk · logistic regression</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card" tabindex="0" role="button" aria-label="Flip card: Campus Network Dashboard">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div><h3>Campus Network Dashboard</h3><span class="tag">data viz + monitoring</span></div>
-              <span class="tap">flip →</span>
-            </div>
-            <div class="flip-back">
-              <h4>details</h4>
-              <p>A live dashboard visualizing traffic patterns across a simulated campus network, built to make anomalies visible before they become incidents.</p>
-              <p class="stack">python · plotly · sql</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card" tabindex="0" role="button" aria-label="Flip card: CTF Writeups">
-          <div class="flip-card-inner">
-            <div class="flip-front">
-              <div><h3>CTF Writeups</h3><span class="tag">applied security</span></div>
-              <span class="tap">flip →</span>
-            </div>
-            <div class="flip-back">
-              <h4>details</h4>
-              <p>A running collection of write-ups from Capture The Flag competitions — reverse engineering, crypto, and web exploitation challenges, documented step by step.</p>
-              <p class="stack">linux · wireshark · burp suite</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <!-- ABOUT WINDOW -->
+  <div class="window" id="win-about" style="top:14%; left:8%;">
+    <div class="window-bar">
+      <button class="traffic red" onclick="closeWindow('win-about')"></button>
+      <button class="traffic yellow" onclick="closeWindow('win-about')"></button>
+      <button class="traffic green" onclick="closeWindow('win-about')"></button>
+      <div class="window-title">About Me</div>
     </div>
-    <div class="folio">page 3</div>
-  </section>
-
-  <!-- TERMINAL -->
-  <section id="terminal" class="page no-rule">
-    <div class="page-inner">
-      <p class="page-kicker">// entry four</p>
-      <h2 class="page-title">a shell, of sorts</h2>
-      <p>This corner of the notebook talks back. Try a command.</p>
-      <div class="terminal">
-        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
-        <div id="term-output"></div>
-        <div class="term-input-row">
-          <span>prashamsa@uw:~$</span>
-          <input id="term-input" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal command input">
+    <div class="window-body">
+      <div class="about-head">
+        <div class="avatar serif">PB</div>
+        <div>
+          <h3 class="serif">Prashamsa Bandarapu</h3>
+          <p>Data Science &amp; Cybersecurity</p>
         </div>
       </div>
-      <p class="term-hint">try: whoami · help · ls · cat resume.txt</p>
+      <p class="body-text">I'm a student studying computer science with a focus on data science and cybersecurity. I'm drawn to problems where the two overlap — using machine learning to make sense of security data, and thinking carefully about security when building models.</p>
+      <p class="body-text">Most of my recent work has been in anomaly detection and threat analysis. Replace this paragraph with what you've actually built and what you're currently exploring.</p>
     </div>
-    <div class="folio">page 4</div>
-  </section>
+  </div>
 
-  <!-- CONTACT -->
-  <section id="contact" class="page no-rule">
-    <div class="page-inner">
-      <p class="page-kicker">// last entry</p>
-      <h2 class="page-title">get in touch</h2>
-      <div class="note-card">
-        <svg class="paperclip" viewBox="0 0 34 56" aria-hidden="true"><path d="M9 14 V40 a8 8 0 0 0 16 0 V10 a5 5 0 0 0-10 0 v26" fill="none" stroke="#8a8a8a" stroke-width="4" stroke-linecap="round"/></svg>
-        <span class="label">email</span>
-        <a href="mailto:prashamsa@uw.edu">prashamsa@uw.edu</a>
-        <span class="label">github</span>
-        <a href="https://github.com/bprashamsa" target="_blank" rel="noopener noreferrer">github.com/bprashamsa</a>
-        <span class="label">linkedin</span>
-        <a href="https://www.linkedin.com/in/prashamsa-b-b893b1243/" target="_blank" rel="noopener noreferrer">linkedin.com/in/prashamsa-b-b893b1243</a>
-        <div class="coffee-ring"></div>
-      </div>
-      <p class="signoff">— thanks for reading through to the last page.</p>
+  <!-- SKILLS WINDOW -->
+  <div class="window" id="win-skills" style="top:20%; left:34%;">
+    <div class="window-bar">
+      <button class="traffic red" onclick="closeWindow('win-skills')"></button>
+      <button class="traffic yellow" onclick="closeWindow('win-skills')"></button>
+      <button class="traffic green" onclick="closeWindow('win-skills')"></button>
+      <div class="window-title">Skills</div>
     </div>
-    <div class="folio">page 5</div>
-  </section>
+    <div class="window-body">
+      <div class="skill-group">
+        <h4>Data Science</h4>
+        <div class="pills">
+          <span class="pill">Python</span>
+          <span class="pill">pandas / NumPy</span>
+          <span class="pill">scikit-learn</span>
+          <span class="pill">PyTorch</span>
+          <span class="pill">SQL</span>
+          <span class="pill">Data visualization</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Cybersecurity</h4>
+        <div class="pills">
+          <span class="pill">Network security</span>
+          <span class="pill">SIEM / SOC tools</span>
+          <span class="pill">Applied cryptography</span>
+          <span class="pill">Linux &amp; scripting</span>
+          <span class="pill">Incident analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS WINDOW -->
+  <div class="window" id="win-projects" style="top:12%; left:20%; width:600px;">
+    <div class="window-bar">
+      <button class="traffic red" onclick="closeWindow('win-projects')"></button>
+      <button class="traffic yellow" onclick="closeWindow('win-projects')"></button>
+      <button class="traffic green" onclick="closeWindow('win-projects')"></button>
+      <div class="window-title">Projects</div>
+    </div>
+    <div class="window-body">
+      <div class="flist">
+        <div class="frow">
+          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1F3A5F" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="fmeta">
+            <p class="fname">Network Intrusion Detection</p>
+            <p class="fdesc">A classifier trained on flow-level network traffic to flag anomalous behavior in near real time. Replace with your real approach and results.</p>
+            <div class="ftags"><span>Random forest</span><span>Feature engineering</span><span>NetFlow</span></div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1F3A5F" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="fmeta">
+            <p class="fname">Phishing URL Classifier</p>
+            <p class="fdesc">Lexical and structural features used to catch phishing links before a click. Swap in your real metrics and findings.</p>
+            <div class="ftags"><span>NLP</span><span>Logistic regression</span><span>Chrome extension</span></div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1F3A5F" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="fmeta">
+            <p class="fname">Security Log Anomaly Pipeline</p>
+            <p class="fdesc">A streaming pipeline that ingests security logs and clusters outlier behavior for analyst review.</p>
+            <div class="ftags"><span>Clustering</span><span>Streaming data</span><span>Dashboards</span></div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1F3A5F" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="fmeta">
+            <p class="fname">CTF Write-ups</p>
+            <p class="fdesc">A running collection of capture-the-flag solutions across web, cryptography, and forensics categories.</p>
+            <div class="ftags"><span>Forensics</span><span>Cryptography</span><span>Web exploitation</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE WINDOW -->
+  <div class="window" id="win-experience" style="top:22%; left:12%;">
+    <div class="window-bar">
+      <button class="traffic red" onclick="closeWindow('win-experience')"></button>
+      <button class="traffic yellow" onclick="closeWindow('win-experience')"></button>
+      <button class="traffic green" onclick="closeWindow('win-experience')"></button>
+      <div class="window-title">Experience.txt</div>
+    </div>
+    <div class="window-body">
+      <div class="doc-line">
+        <div class="doc-date">2023 — Present</div>
+        <div class="doc-main">
+          <p class="dtitle">B.S. Computer Science, Data Science &amp; Cybersecurity focus</p>
+          <p class="ddesc">University name here. Add relevant coursework, honors, or GPA if you'd like it visible.</p>
+        </div>
+      </div>
+      <div class="doc-line">
+        <div class="doc-date">Summer 2025</div>
+        <div class="doc-main">
+          <p class="dtitle">Internship — role, company</p>
+          <p class="ddesc">One or two lines on what you actually shipped or investigated.</p>
+        </div>
+      </div>
+      <div class="doc-line">
+        <div class="doc-date">2024</div>
+        <div class="doc-main">
+          <p class="dtitle">Cybersecurity Club — officer</p>
+          <p class="ddesc">Organized CTF practice, workshops, or led a project team.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT WINDOW -->
+  <div class="window" id="win-contact" style="top:24%; left:30%;">
+    <div class="window-bar">
+      <button class="traffic red" onclick="closeWindow('win-contact')"></button>
+      <button class="traffic yellow" onclick="closeWindow('win-contact')"></button>
+      <button class="traffic green" onclick="closeWindow('win-contact')"></button>
+      <div class="window-title">New Message</div>
+    </div>
+    <div class="window-body">
+      <div class="mail-field"><span class="mlabel">To:</span> prashamsa@example.com</div>
+      <div class="mail-field"><span class="mlabel">GitHub:</span> github.com/yourusername</div>
+      <div class="mail-field"><span class="mlabel">LinkedIn:</span> linkedin.com/in/yourusername</div>
+      <p class="mail-body-text">Say hello about a project, an internship, or anything data-security related.</p>
+      <a class="send-btn" href="mailto:prashamsa@example.com">Send an email</a>
+    </div>
+  </div>
+
+  <!-- RESUME WINDOW -->
+  <div class="window" id="win-resume" style="top:16%; left:26%;">
+    <div class="window-bar">
+      <button class="traffic red" onclick="closeWindow('win-resume')"></button>
+      <button class="traffic yellow" onclick="closeWindow('win-resume')"></button>
+      <button class="traffic green" onclick="closeWindow('win-resume')"></button>
+      <div class="window-title">Resume.pdf</div>
+    </div>
+    <div class="window-body">
+      <div class="resume-box">
+        Add a link to your resume PDF here.
+        <br>
+        <a href="#">Download resume</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dock-wrap">
+    <div class="dock" id="dock">
+      <button class="dock-item" style="--item-c:#6B7A93" onclick="openWindow('win-about')">
+        <span class="tip">About</span>
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.4" stroke="#fff" stroke-width="1.6"/><path d="M5 19c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button class="dock-item" style="--item-c:#1F3A5F" onclick="openWindow('win-skills')">
+        <span class="tip">Skills</span>
+        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="12" width="3.4" height="8" rx="0.8" fill="#fff"/><rect x="10.3" y="7" width="3.4" height="13" rx="0.8" fill="#fff"/><rect x="16.6" y="4" width="3.4" height="16" rx="0.8" fill="#fff"/></svg>
+      </button>
+      <button class="dock-item" style="--item-c:#8B9A6B" onclick="openWindow('win-projects')">
+        <span class="tip">Projects</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 8.2c0-.9.8-1.7 1.7-1.7H10l1.8 2.2h7.5c.9 0 1.7.8 1.7 1.7v7.1c0 .9-.8 1.7-1.7 1.7H4.7C3.8 19.2 3 18.4 3 17.5V8.2z" fill="#fff"/></svg>
+      </button>
+      <button class="dock-item" style="--item-c:#B98A4E" onclick="openWindow('win-experience')">
+        <span class="tip">Experience</span>
+        <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3.5" width="14" height="17" rx="1.4" stroke="#fff" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="dock-sep"></div>
+      <button class="dock-item" style="--item-c:#C15B4A" onclick="openWindow('win-contact')">
+        <span class="tip">Contact</span>
+        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="12" rx="1.6" stroke="#fff" stroke-width="1.6"/><path d="M4.5 7l7.5 6 7.5-6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="dock-item" style="--item-c:#3E4A63" onclick="openWindow('win-resume')">
+        <span class="tip">Resume</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v11" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path d="M7.5 10.5 12 15l4.5-4.5" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 18.5h14" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
 
 </div>
 
 <script>
-// ---------- spiral binding holes ----------
-(function(){
-  const spiral = document.getElementById('spiral');
-  const book = document.getElementById('book');
-  function buildHoles(){
-    spiral.innerHTML = '';
-    const height = book.scrollHeight;
-    const gap = 280;
-    const count = Math.ceil(height / gap);
-    for(let i=0;i<count;i++){
-      const hole = document.createElement('div');
-      hole.className = 'hole';
-      hole.style.top = (i*gap + 130) + 'px';
-      spiral.appendChild(hole);
-    }
-  }
-  buildHoles();
-  window.addEventListener('resize', buildHoles);
-  setTimeout(buildHoles, 400);
-})();
+  let zTop = 100;
 
-// ---------- tab navigation ----------
-(function(){
-  const buttons = document.querySelectorAll('.tabs button');
-  const sections = [...buttons].map(b => document.getElementById(b.dataset.target));
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth'});
-    });
-  });
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        buttons.forEach(b=>b.classList.remove('active'));
-        const match = document.querySelector(`.tabs button[data-target="${e.target.id}"]`);
-        if(match) match.classList.add('active');
-      }
-    });
-  }, {threshold:0.5});
-  sections.forEach(s=>obs.observe(s));
-})();
-
-// ---------- flip cards ----------
-(function(){
-  document.querySelectorAll('.flip-card').forEach(card=>{
-    function toggle(){ card.classList.toggle('flipped'); }
-    card.addEventListener('click', toggle);
-    card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(); }});
-  });
-})();
-
-// ---------- terminal ----------
-(function(){
-  const output = document.getElementById('term-output');
-  const input = document.getElementById('term-input');
-
-  const responses = {
-    whoami: "prashamsa — data science & cybersecurity student, university of washington.",
-    help: "available commands: whoami, ls, cat resume.txt, cat about.txt, sudo, clear",
-    ls: "about.txt   resume.txt   projects/   skills.map",
-    'cat resume.txt': "resume available on request — see the contact page for email.",
-    'cat about.txt': "see the 'about me' page a few sheets back. short version: data + defense.",
-    sudo: "nice try. permission denied — this notebook stays user-level.",
-    clear: null,
-  };
-
-  function printLine(text, cls){
-    const line = document.createElement('div');
-    if(cls) line.className = cls;
-    line.textContent = text;
-    output.appendChild(line);
+  function openWindow(id){
+    const w = document.getElementById(id);
+    if (!w) return;
+    w.classList.add('open');
+    zTop += 1;
+    w.style.zIndex = zTop;
   }
 
-  printLine('welcome. type "help" to see what this does.');
+  function closeWindow(id){
+    const w = document.getElementById(id);
+    if (w) w.classList.remove('open');
+  }
 
-  input.addEventListener('keydown', (e)=>{
-    if(e.key !== 'Enter') return;
-    const raw = input.value.trim();
-    if(!raw) return;
-    printLine('prashamsa@uw:~$ ' + raw, 'cmd-echo');
-    const key = raw.toLowerCase();
-    if(key === 'clear'){
-      output.innerHTML = '';
-    } else if(responses.hasOwnProperty(key)){
-      printLine(responses[key], 'prompt');
-    } else {
-      printLine(`command not found: ${raw} — try "help"`, 'prompt');
-    }
-    input.value = '';
-    output.scrollTop = output.scrollHeight;
+  // bring-to-front + drag
+  document.querySelectorAll('.window').forEach(win => {
+    const bar = win.querySelector('.window-bar');
+    let dragging = false, offX = 0, offY = 0;
+
+    win.addEventListener('mousedown', () => {
+      zTop += 1;
+      win.style.zIndex = zTop;
+    });
+
+    bar.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('traffic')) return;
+      dragging = true;
+      const rect = win.getBoundingClientRect();
+      offX = e.clientX - rect.left;
+      offY = e.clientY - rect.top;
+      win.style.left = rect.left + 'px';
+      win.style.top = rect.top + 'px';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      win.style.left = (e.clientX - offX) + 'px';
+      win.style.top = (e.clientY - offY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => { dragging = false; });
   });
-})();
+
+  function updateClock(){
+    const el = document.getElementById('clock');
+    const now = new Date();
+    let h = now.getHours();
+    const m = now.getMinutes().toString().padStart(2,'0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if (h === 0) h = 12;
+    el.textContent = `${h}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 15000);
+
+  // open About by default so the desktop doesn't look empty
+  openWindow('win-about');
 </script>
 
 </body>
