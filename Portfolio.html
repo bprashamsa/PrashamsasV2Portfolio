@@ -156,30 +156,61 @@
     transform-origin:50% 100%;
     animation:run-to-tree 9s ease-in-out infinite;
   }
-  .runner-leg{ transform-box:fill-box; transform-origin:50% 0; animation:run-cycle .45s ease-in-out infinite alternate; }
-  .runner-leg.back{ animation-delay:-.22s; }
+  .runner-leg{ transform-box:fill-box; transform-origin:50% 0; animation:run-cycle 9s ease-in-out infinite; }
+  .runner-leg.back{ animation-name:run-cycle-back; }
   @keyframes run-to-tree{
     0%, 5%{ transform:translateX(-150px); }
     30%, 58%{ transform:translateX(55px); }
     62%, 100%{ transform:translateX(-150px); }
   }
   @keyframes run-cycle{
-    from{ transform:rotate(-22deg); }
-    to{ transform:rotate(22deg); }
+    0%, 5%, 15%, 25%{ transform:rotate(-22deg); }
+    10%, 20%{ transform:rotate(22deg); }
+    30%, 100%{ transform:rotate(0deg); }
+  }
+  @keyframes run-cycle-back{
+    0%, 5%, 15%, 25%{ transform:rotate(22deg); }
+    10%, 20%{ transform:rotate(-22deg); }
+    30%, 100%{ transform:rotate(0deg); }
   }
 
   .orange-stem{ stroke:#384b49; stroke-width:4; stroke-linecap:round; }
-  .fruit{ animation:orange-drop 9s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
-  .fruit:nth-of-type(2){ animation-delay:.35s; }
-  .fruit:nth-of-type(3){ animation-delay:.7s; }
-  .fruit:nth-of-type(4){ animation-delay:1.05s; }
-  @keyframes orange-drop{
-    0%, 38%, 100%{ transform:translateY(0) rotate(0deg); }
-    45%{ transform:translateY(38px) rotate(10deg); }
-    53%{ transform:translateY(180px) rotate(24deg); }
-    62%{ transform:translateY(210px) rotate(35deg); opacity:0; }
-    68%{ transform:translateY(0) rotate(0deg); opacity:0; }
-    74%{ opacity:1; }
+  .fruit{ transform-box:fill-box; transform-origin:center; }
+  .fruit-about{ animation:orange-drop-about 9s ease-in-out infinite; }
+  .fruit-work{ animation:orange-drop-work 9s ease-in-out infinite .35s; }
+  .fruit-skills{ animation:orange-drop-skills 9s ease-in-out infinite .7s; }
+  .fruit-contact{ animation:orange-drop-contact 9s ease-in-out infinite 1.05s; }
+  @keyframes orange-drop-about{
+    0%, 40%, 100%{ transform:translate(0,0) rotate(0deg); opacity:1; }
+    48%{ transform:translate(26px,70px) rotate(10deg); }
+    58%{ transform:translate(116px,348px) rotate(25deg); }
+    64%{ transform:translate(116px,348px) rotate(25deg); opacity:1; }
+    70%{ transform:translate(0,0) rotate(0deg); opacity:0; }
+    76%{ opacity:1; }
+  }
+  @keyframes orange-drop-work{
+    0%, 40%, 100%{ transform:translate(0,0) rotate(0deg); opacity:1; }
+    48%{ transform:translate(-8px,90px) rotate(-8deg); }
+    58%{ transform:translate(-25px,430px) rotate(-22deg); }
+    64%{ transform:translate(-25px,430px) rotate(-22deg); opacity:1; }
+    70%{ transform:translate(0,0) rotate(0deg); opacity:0; }
+    76%{ opacity:1; }
+  }
+  @keyframes orange-drop-skills{
+    0%, 40%, 100%{ transform:translate(0,0) rotate(0deg); opacity:1; }
+    48%{ transform:translate(-30px,75px) rotate(-10deg); }
+    58%{ transform:translate(-145px,358px) rotate(-28deg); }
+    64%{ transform:translate(-145px,358px) rotate(-28deg); opacity:1; }
+    70%{ transform:translate(0,0) rotate(0deg); opacity:0; }
+    76%{ opacity:1; }
+  }
+  @keyframes orange-drop-contact{
+    0%, 40%, 100%{ transform:translate(0,0) rotate(0deg); opacity:1; }
+    48%{ transform:translate(18px,55px) rotate(8deg); }
+    58%{ transform:translate(65px,188px) rotate(20deg); }
+    64%{ transform:translate(65px,188px) rotate(20deg); opacity:1; }
+    70%{ transform:translate(0,0) rotate(0deg); opacity:0; }
+    76%{ opacity:1; }
   }
 
   .fruit{ cursor:pointer; }
@@ -398,22 +429,22 @@
             </g>
 
             <!-- interactive fruit / nav -->
-            <a href="#about" class="fruit" aria-label="Go to About section">
+            <a href="#about" class="fruit fruit-about" aria-label="Go to About section">
               <path class="orange-stem" d="M218 191v-13"/>
               <circle class="block" cx="218" cy="210" r="19" fill="var(--orange)" style="animation-delay:.52s"/>
               <text class="fruit-label" x="218" y="160" text-anchor="middle">about</text>
             </a>
-            <a href="#work" class="fruit" aria-label="Go to Work section">
+            <a href="#work" class="fruit fruit-work" aria-label="Go to Work section">
               <path class="orange-stem" d="M360 108V94"/>
               <circle class="block" cx="360" cy="128" r="20" fill="var(--orange)" style="animation-delay:.56s"/>
               <text class="fruit-label" x="360" y="76" text-anchor="middle">work</text>
             </a>
-            <a href="#skills" class="fruit" aria-label="Go to Skills section">
+            <a href="#skills" class="fruit fruit-skills" aria-label="Go to Skills section">
               <path class="orange-stem" d="M480 181v-13"/>
               <circle class="block" cx="480" cy="200" r="19" fill="var(--orange)" style="animation-delay:.60s"/>
               <text class="fruit-label" x="480" y="150" text-anchor="middle">skills</text>
             </a>
-            <a href="#contact" class="fruit" aria-label="Go to Contact section">
+            <a href="#contact" class="fruit fruit-contact" aria-label="Go to Contact section">
               <path class="orange-stem" d="M270 351v-13"/>
               <circle class="block" cx="270" cy="370" r="19" fill="var(--orange)" style="animation-delay:.64s"/>
               <text class="fruit-label" x="270" y="414" text-anchor="middle">contact</text>
@@ -433,6 +464,11 @@
           <path d="M220 556l55 12" stroke="#fe9b33" stroke-width="8" stroke-linecap="round"/>
           <circle cx="260" cy="548" r="5" fill="#fe9b33"/>
           <circle cx="275" cy="568" r="5" fill="#fe9b33"/>
+          <g aria-label="basket">
+            <path d="M255 570 Q270 540 285 570" fill="none" stroke="#384b49" stroke-width="5" stroke-linecap="round"/>
+            <path d="M250 568 Q270 575 290 568 L284 600 Q270 607 256 600 Z" fill="#b14b34" stroke="#384b49" stroke-width="3"/>
+            <path d="M254 577h32M256 586h27" stroke="#fe9b33" stroke-width="3" stroke-linecap="round"/>
+          </g>
           <path class="runner-leg" d="M201 590l-18 32" stroke="#b14b34" stroke-width="9" stroke-linecap="round"/>
           <path class="runner-leg back" d="M218 590l23 27" stroke="#b14b34" stroke-width="9" stroke-linecap="round"/>
           <path d="M178 624h-12M241 617h12" stroke="#1a1c20" stroke-width="5" stroke-linecap="round"/>
