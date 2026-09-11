@@ -6,18 +6,18 @@
 <title>Prashamsa Bandarapu — Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Press+Start+2P&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #244653;
-    --ink-soft: #58727A;
-    --paper: #FFF9E7;
-    --accent: #238B8D;
-    --accent-soft: #DDF3EF;
-    --line: #245B63;
-    --glass: rgba(255,249,231,0.9);
-    --glass-line: #245B63;
-    --pixel-shadow: 6px 6px 0 #245B63;
+    --ink: #173A5E;
+    --ink-soft: #55718D;
+    --paper: #F5FBFF;
+    --accent: #087EBD;
+    --accent-soft: #DDF3FF;
+    --line: #7A9DB7;
+    --glass: rgba(225,245,255,0.88);
+    --glass-line: #FFFFFF;
+    --pixel-shadow: 0 8px 18px rgba(20,74,112,0.35);
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -35,20 +35,18 @@
   }
 
   .serif{ font-family: 'Fraunces', Georgia, serif; }
-  .pixel{ font-family: 'Press Start 2P', monospace; }
+  .pixel{ font-family: Verdana, Geneva, sans-serif; }
 
   /* ---------------- desktop / wallpaper ---------------- */
   .desktop{
     position: relative;
     height: 100vh;
     width: 100vw;
-    background-color: #A7E3F2;
+    background-color: #9EDCF4;
     background-image:
-      radial-gradient(circle at 82% 16%, #FFF3A6 0 54px, rgba(255,243,166,0.5) 55px, transparent 110px),
-      linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px),
-      linear-gradient(rgba(255,255,255,0.14) 1px, transparent 1px),
-      linear-gradient(180deg, #71C8EA 0%, #B9EBF2 58%, #A9D878 58%, #78B957 100%);
-    background-size: 24px 24px, 24px 24px, 100% 100%;
+      radial-gradient(ellipse at 25% 10%, rgba(255,255,255,0.9) 0 8%, transparent 25%),
+      radial-gradient(ellipse at 78% 15%, rgba(255,255,255,0.72) 0 6%, transparent 20%),
+      linear-gradient(180deg, #73C9F0 0%, #C5F0FA 62%, #8FCE70 62%, #5BA84E 100%);
     overflow: hidden;
   }
 
@@ -57,8 +55,8 @@
     position: absolute;
     top:0; left:0; right:0;
     height: 30px;
-    background: #FFF9E7;
-    border-bottom: 4px solid var(--line);
+    background: linear-gradient(#FFFFFF 0%, #D7EAF5 48%, #A8C4D5 50%, #F8FDFF 100%);
+    border-bottom: 1px solid #668BA6;
     display:flex;
     align-items:center;
     justify-content: space-between;
@@ -75,8 +73,9 @@
   .menu-mark{
     width: 15px; height: 15px;
     border-radius: 2px;
-    background: #F4A261;
-    border: 3px solid var(--line);
+    background: linear-gradient(#FFB36B, #E97838);
+    border: 2px solid #A84D22;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
     display:inline-block;
   }
   .menu-left span:not(.menu-mark), .menu-right span{
@@ -115,22 +114,23 @@
     top:-7px; left:0;
     width: 26px; height: 9px;
     background: var(--folder-c, var(--accent));
-    border-radius: 3px 3px 0 0;
+    border-radius: 5px 9px 0 0;
   }
   .dicon .folder::after{
     content:"";
     position:absolute;
     top:0; left:0; right:0; bottom:0;
     background: var(--folder-c, var(--accent));
-    border: 3px solid var(--line);
-    border-radius: 2px 5px 5px 5px;
+    border: 2px solid #356A9A;
+    border-radius: 3px 8px 8px 8px;
     opacity: 0.92;
+    box-shadow: inset 0 3px 0 rgba(255,255,255,0.42), 0 4px 7px rgba(30,74,100,0.25);
   }
   .dicon span{
     font-size: 12.5px;
-    color: var(--ink);
+    color: #173A5E;
     font-weight: 700;
-    text-shadow: 2px 2px 0 rgba(255,255,255,0.7);
+    text-shadow: 0 1px 0 #fff;
     text-align: center;
   }
 
@@ -139,30 +139,30 @@
     position: absolute;
     top: 46px; right: 26px;
     width: 220px;
-    background: #238B8D;
-    color: #FFF9E7;
-    border: 4px solid var(--line);
-    border-radius: 4px;
-    box-shadow: var(--pixel-shadow);
+    background: linear-gradient(135deg, rgba(15,121,177,0.92), rgba(34,171,190,0.86));
+    color: #FFFFFF;
+    border: 1px solid #07567E;
+    border-radius: 12px;
+    box-shadow: var(--pixel-shadow), inset 0 1px 0 rgba(255,255,255,0.55);
     padding: 16px 18px;
     z-index: 20;
   }
   .widget .wtitle{
     font-size: 11px;
     letter-spacing: 0.08em;
-    font-family: 'Press Start 2P', monospace;
-    color: #FFF3A6;
+    font-family: Verdana, Geneva, sans-serif;
+    color: #DDF5FF;
     margin-bottom: 6px;
   }
   .widget .wmain{
-    font-family: 'Press Start 2P', monospace;
+    font-family: Georgia, serif;
     font-size: 20px;
     line-height: 1.3;
     margin-bottom: 8px;
   }
   .widget .wsub{
     font-size: 12.5px;
-    color: #FFF9E7;
+    color: #DDF5FF;
   }
 
   /* ---------------- windows ---------------- */
@@ -171,9 +171,9 @@
     width: 560px;
     max-width: 90vw;
     background: var(--paper);
-    border: 4px solid var(--line);
-    border-radius: 4px;
-    box-shadow: var(--pixel-shadow);
+    border: 1px solid #6B91AC;
+    border-radius: 12px;
+    box-shadow: var(--pixel-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
     display: none;
     flex-direction: column;
     overflow: hidden;
@@ -183,8 +183,8 @@
 
   .window-bar{
     height: 40px;
-    background: #F4A261;
-    border-bottom: 4px solid var(--line);
+    background: linear-gradient(#64C8EE 0%, #1D91C7 48%, #0B6EA6 50%, #4FBCE5 100%);
+    border-bottom: 1px solid #07567E;
     display:flex;
     align-items:center;
     padding: 0 14px;
@@ -195,9 +195,9 @@
   .window-bar:active{ cursor: grabbing; }
   .traffic{
     width: 12px; height:12px;
-    border-radius: 2px;
-    border: none;
-    box-shadow: 2px 2px 0 var(--line);
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.25);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.2);
     padding:0;
     cursor: pointer;
   }
@@ -207,9 +207,10 @@
   .window-title{
     flex:1;
     text-align:center;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    color: var(--ink);
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
     margin-right: 54px;
   }
 
@@ -268,9 +269,9 @@
     background: var(--accent-soft);
     color: var(--accent);
     padding: 6px 12px;
-    border: 2px solid var(--accent);
-    border-radius: 3px;
-    box-shadow: 2px 2px 0 var(--accent);
+    border: 1px solid #83B8D0;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 #FFFFFF;
   }
 
   /* projects window (finder-list style) */
@@ -284,8 +285,9 @@
   }
   .ficon{
     width: 34px; height: 34px;
-    border: 2px solid var(--accent);
-    border-radius: 3px;
+    border: 1px solid #83B8D0;
+    border-radius: 7px;
+    box-shadow: inset 0 1px 0 #FFFFFF;
     background: var(--accent-soft);
     flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
@@ -306,9 +308,9 @@
   .ftags span{
     font-size: 11.5px;
     color: var(--ink-soft);
-    border: 2px solid var(--line);
+    border: 1px solid #9BB6C8;
     padding: 3px 8px;
-    border-radius: 3px;
+    border-radius: 10px;
   }
 
   /* experience window (doc style) */
@@ -351,22 +353,23 @@
   .send-btn{
     margin-top: 14px;
     display:inline-block;
-    background: #238B8D;
-    border: 3px solid var(--line);
-    box-shadow: 3px 3px 0 var(--line);
+    background: linear-gradient(#54C7ED, #087EBD 52%, #056494);
+    border: 1px solid #07567E;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(20,74,112,0.25);
     color: #fff;
     text-decoration:none;
     font-size: 13.5px;
     padding: 9px 18px;
-    border-radius: 3px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
+    border-radius: 6px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
   }
 
   /* resume window */
   .resume-box{
-    border: 3px dashed var(--line);
-    border-radius: 3px;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
     padding: 26px;
     text-align:center;
     color: var(--ink-soft);
@@ -375,16 +378,17 @@
   .resume-box a{
     display:inline-block;
     margin-top: 12px;
-    background: #238B8D;
-    border: 3px solid var(--line);
-    box-shadow: 3px 3px 0 var(--line);
+    background: linear-gradient(#54C7ED, #087EBD 52%, #056494);
+    border: 1px solid #07567E;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(20,74,112,0.25);
     color:#fff;
     text-decoration:none;
     font-size: 13.5px;
     padding: 9px 18px;
-    border-radius: 3px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
+    border-radius: 6px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
   }
 
   /* ---------------- dock ---------------- */
@@ -400,20 +404,20 @@
     align-items: flex-end;
     gap: 12px;
     background: var(--glass);
-    border: 4px solid var(--glass-line);
-    border-radius: 4px;
-    box-shadow: var(--pixel-shadow);
+    border: 1px solid #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(20,74,112,0.3), inset 0 1px 0 #FFFFFF;
     padding: 9px 12px;
   }
   .dock-item{
     position: relative;
     width: 48px; height: 48px;
-    border: 3px solid var(--line);
-    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 10px;
     background: var(--item-c, var(--accent));
     display:flex; align-items:center; justify-content:center;
     cursor: pointer;
-    border: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 2px 4px rgba(20,74,112,0.25);
     transition: transform 0.12s ease;
     flex-shrink: 0;
   }
@@ -423,13 +427,13 @@
     position:absolute;
     bottom: 60px; left: 50%;
     transform: translateX(-50%);
-    background: var(--line);
-    color: #FFF9E7;
+    background: #173A5E;
+    color: #FFFFFF;
     font-size: 11.5px;
     padding: 4px 9px;
-    border-radius: 3px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
+    border-radius: 5px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
