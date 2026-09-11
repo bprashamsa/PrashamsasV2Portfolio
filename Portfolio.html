@@ -9,15 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Press+Start+2P&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #20203A;
-    --ink-soft: #55516D;
-    --paper: #FFF8D8;
-    --accent: #5146A5;
-    --accent-soft: #E7DEFF;
-    --line: #302A59;
-    --glass: rgba(255,248,216,0.88);
-    --glass-line: #302A59;
-    --pixel-shadow: 6px 6px 0 #302A59;
+    --ink: #244653;
+    --ink-soft: #58727A;
+    --paper: #FFF9E7;
+    --accent: #238B8D;
+    --accent-soft: #DDF3EF;
+    --line: #245B63;
+    --glass: rgba(255,249,231,0.9);
+    --glass-line: #245B63;
+    --pixel-shadow: 6px 6px 0 #245B63;
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -42,11 +42,12 @@
     position: relative;
     height: 100vh;
     width: 100vw;
-    background-color: #8ED8C4;
+    background-color: #A7E3F2;
     background-image:
-      linear-gradient(90deg, rgba(255,255,255,0.16) 1px, transparent 1px),
-      linear-gradient(rgba(255,255,255,0.16) 1px, transparent 1px),
-      linear-gradient(180deg, #76C9E8 0%, #A9E3E1 58%, #F8D77A 58%, #F6B86B 100%);
+      radial-gradient(circle at 82% 16%, #FFF3A6 0 54px, rgba(255,243,166,0.5) 55px, transparent 110px),
+      linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.14) 1px, transparent 1px),
+      linear-gradient(180deg, #71C8EA 0%, #B9EBF2 58%, #A9D878 58%, #78B957 100%);
     background-size: 24px 24px, 24px 24px, 100% 100%;
     overflow: hidden;
   }
@@ -56,7 +57,7 @@
     position: absolute;
     top:0; left:0; right:0;
     height: 30px;
-    background: #FFF8D8;
+    background: #FFF9E7;
     border-bottom: 4px solid var(--line);
     display:flex;
     align-items:center;
@@ -74,7 +75,7 @@
   .menu-mark{
     width: 15px; height: 15px;
     border-radius: 2px;
-    background: #F05A78;
+    background: #F4A261;
     border: 3px solid var(--line);
     display:inline-block;
   }
@@ -103,7 +104,6 @@
     background: none;
     border: none;
     font-family: 'Public Sans', sans-serif;
-    filter: drop-shadow(4px 4px 0 rgba(48,42,89,0.55));
   }
   .dicon .folder{
     width: 54px; height: 42px;
@@ -139,8 +139,8 @@
     position: absolute;
     top: 46px; right: 26px;
     width: 220px;
-    background: #5146A5;
-    color: #FFF8D8;
+    background: #238B8D;
+    color: #FFF9E7;
     border: 4px solid var(--line);
     border-radius: 4px;
     box-shadow: var(--pixel-shadow);
@@ -151,7 +151,7 @@
     font-size: 11px;
     letter-spacing: 0.08em;
     font-family: 'Press Start 2P', monospace;
-    color: #F8D77A;
+    color: #FFF3A6;
     margin-bottom: 6px;
   }
   .widget .wmain{
@@ -162,7 +162,7 @@
   }
   .widget .wsub{
     font-size: 12.5px;
-    color: #FFF8D8;
+    color: #FFF9E7;
   }
 
   /* ---------------- windows ---------------- */
@@ -183,7 +183,7 @@
 
   .window-bar{
     height: 40px;
-    background: #F05A78;
+    background: #F4A261;
     border-bottom: 4px solid var(--line);
     display:flex;
     align-items:center;
