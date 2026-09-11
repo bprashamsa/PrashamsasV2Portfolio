@@ -9,15 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #173A5E;
-    --ink-soft: #55718D;
-    --paper: #F5FBFF;
-    --accent: #087EBD;
-    --accent-soft: #DDF3FF;
-    --line: #7A9DB7;
-    --glass: rgba(225,245,255,0.88);
-    --glass-line: #FFFFFF;
-    --pixel-shadow: 0 8px 18px rgba(20,74,112,0.35);
+    --ink: #2c2d32;
+    --ink-soft: #263437;
+    --paper: #FFFFFF;
+    --accent: #b62779;
+    --accent-soft: #5a293c;
+    --line: #1b4b4b;
+    --glass: rgba(38,52,55,0.88);
+    --glass-line: #b62779;
+    --pixel-shadow: 0 8px 18px rgba(44,45,50,0.35);
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -42,11 +42,11 @@
     position: relative;
     height: 100vh;
     width: 100vw;
-    background-color: #9EDCF4;
+    background-color: #2c2d32;
     background-image:
-      radial-gradient(ellipse at 25% 10%, rgba(255,255,255,0.9) 0 8%, transparent 25%),
-      radial-gradient(ellipse at 78% 15%, rgba(255,255,255,0.72) 0 6%, transparent 20%),
-      linear-gradient(180deg, #73C9F0 0%, #C5F0FA 62%, #8FCE70 62%, #5BA84E 100%);
+      radial-gradient(ellipse at 25% 10%, rgba(182,39,121,0.32) 0 8%, transparent 25%),
+      radial-gradient(ellipse at 78% 15%, rgba(27,75,75,0.62) 0 6%, transparent 20%),
+      linear-gradient(180deg, #2c2d32 0%, #263437 62%, #5a293c 62%, #1b4b4b 100%);
     overflow: hidden;
   }
 
@@ -55,8 +55,8 @@
     position: absolute;
     top:0; left:0; right:0;
     height: 30px;
-    background: linear-gradient(#FFFFFF 0%, #D7EAF5 48%, #A8C4D5 50%, #F8FDFF 100%);
-    border-bottom: 1px solid #668BA6;
+    background: linear-gradient(#FFFFFF 0%, #263437 48%, #1b4b4b 50%, #FFFFFF 100%);
+    border-bottom: 1px solid #1b4b4b;
     display:flex;
     align-items:center;
     justify-content: space-between;
@@ -73,8 +73,8 @@
   .menu-mark{
     width: 15px; height: 15px;
     border-radius: 2px;
-    background: linear-gradient(#FFB36B, #E97838);
-    border: 2px solid #A84D22;
+    background: linear-gradient(#b62779, #5a293c);
+    border: 2px solid #1b4b4b;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
     display:inline-block;
   }
@@ -118,7 +118,7 @@
     top:-7px; left:0;
     width: 26px; height: 9px;
     background: linear-gradient(180deg, rgba(255,255,255,0.7) 0 35%, transparent 36%), var(--folder-c, var(--accent));
-    border: 2px solid #356A9A;
+    border: 2px solid #1b4b4b;
     border-bottom: none;
     border-radius: 7px 10px 0 0;
   }
@@ -127,7 +127,7 @@
     position:absolute;
     top:0; left:0; right:0; bottom:0;
     background: linear-gradient(180deg, rgba(255,255,255,0.72) 0 10%, rgba(255,255,255,0.18) 11% 25%, transparent 26%), var(--folder-c, var(--accent));
-    border: 2px solid #356A9A;
+    border: 2px solid #1b4b4b;
     border-radius: 3px 8px 8px 8px;
     opacity: 0.92;
     box-shadow: inset 0 -3px 0 rgba(0,50,90,0.16), inset 0 2px 0 rgba(255,255,255,0.42);
@@ -145,9 +145,9 @@
     position: absolute;
     top: 46px; right: 26px;
     width: 220px;
-    background: linear-gradient(135deg, rgba(15,121,177,0.92), rgba(34,171,190,0.86));
+    background: linear-gradient(135deg, rgba(90,41,60,0.96), rgba(27,75,75,0.92));
     color: #FFFFFF;
-    border: 1px solid #07567E;
+    border: 1px solid #b62779;
     border-radius: 12px;
     box-shadow: var(--pixel-shadow), inset 0 1px 0 rgba(255,255,255,0.55);
     padding: 16px 18px;
@@ -157,7 +157,7 @@
     font-size: 11px;
     letter-spacing: 0.08em;
     font-family: Verdana, Geneva, sans-serif;
-    color: #DDF5FF;
+    color: #FFFFFF;
     margin-bottom: 6px;
   }
   .widget .wmain{
@@ -168,7 +168,7 @@
   }
   .widget .wsub{
     font-size: 12.5px;
-    color: #DDF5FF;
+    color: #FFFFFF;
   }
 
   /* ---------------- windows ---------------- */
@@ -177,7 +177,7 @@
     width: 560px;
     max-width: 90vw;
     background: var(--paper);
-    border: 1px solid #6B91AC;
+    border: 1px solid #1b4b4b;
     border-radius: 12px;
     box-shadow: var(--pixel-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
     display: none;
@@ -189,8 +189,8 @@
 
   .window-bar{
     height: 40px;
-    background: linear-gradient(#64C8EE 0%, #1D91C7 48%, #0B6EA6 50%, #4FBCE5 100%);
-    border-bottom: 1px solid #07567E;
+    background: linear-gradient(#b62779 0%, #5a293c 48%, #1b4b4b 50%, #b62779 100%);
+    border-bottom: 1px solid #1b4b4b;
     display:flex;
     align-items:center;
     padding: 0 14px;
@@ -255,7 +255,7 @@
   }
   .window-body p.body-text{
     font-size: 15.5px;
-    color: #2A2D34;
+    color: #2c2d32;
     line-height: 1.65;
     margin: 0 0 14px;
   }
@@ -275,7 +275,7 @@
     background: var(--accent-soft);
     color: var(--accent);
     padding: 6px 12px;
-    border: 1px solid #83B8D0;
+    border: 1px solid #1b4b4b;
     border-radius: 12px;
     box-shadow: inset 0 1px 0 #FFFFFF;
   }
@@ -291,7 +291,7 @@
   }
   .ficon{
     width: 34px; height: 34px;
-    border: 1px solid #83B8D0;
+    border: 1px solid #1b4b4b;
     border-radius: 7px;
     box-shadow: inset 0 1px 0 #FFFFFF;
     background: var(--accent-soft);
@@ -314,7 +314,7 @@
   .ftags span{
     font-size: 11.5px;
     color: var(--ink-soft);
-    border: 1px solid #9BB6C8;
+    border: 1px solid #5a293c;
     padding: 3px 8px;
     border-radius: 10px;
   }
@@ -353,15 +353,15 @@
   .mail-body-text{
     padding: 18px 0 6px;
     font-size: 14.5px;
-    color: #2A2D34;
+    color: #2c2d32;
     line-height: 1.6;
   }
   .send-btn{
     margin-top: 14px;
     display:inline-block;
-    background: linear-gradient(#54C7ED, #087EBD 52%, #056494);
-    border: 1px solid #07567E;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(20,74,112,0.25);
+    background: linear-gradient(#b62779, #5a293c 52%, #1b4b4b);
+    border: 1px solid #1b4b4b;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(44,45,50,0.25);
     color: #fff;
     text-decoration:none;
     font-size: 13.5px;
@@ -384,9 +384,9 @@
   .resume-box a{
     display:inline-block;
     margin-top: 12px;
-    background: linear-gradient(#54C7ED, #087EBD 52%, #056494);
-    border: 1px solid #07567E;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(20,74,112,0.25);
+    background: linear-gradient(#b62779, #5a293c 52%, #1b4b4b);
+    border: 1px solid #1b4b4b;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(44,45,50,0.25);
     color:#fff;
     text-decoration:none;
     font-size: 13.5px;
@@ -410,9 +410,9 @@
     align-items: flex-end;
     gap: 12px;
     background: var(--glass);
-    border: 1px solid #FFFFFF;
+    border: 1px solid #b62779;
     border-radius: 16px;
-    box-shadow: 0 5px 18px rgba(20,74,112,0.3), inset 0 1px 0 #FFFFFF;
+    box-shadow: 0 5px 18px rgba(44,45,50,0.3), inset 0 1px 0 #FFFFFF;
     padding: 9px 12px;
   }
   .dock-item{
@@ -433,7 +433,7 @@
     position:absolute;
     bottom: 60px; left: 50%;
     transform: translateX(-50%);
-    background: #173A5E;
+    background: #2c2d32;
     color: #FFFFFF;
     font-size: 11.5px;
     padding: 4px 9px;
