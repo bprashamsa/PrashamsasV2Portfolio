@@ -169,8 +169,6 @@
   }
 
   .orange-stem{ stroke:#384b49; stroke-width:4; stroke-linecap:round; }
-  .orange-leaf{ fill:var(--canopy); stroke:var(--ink); stroke-width:1.5; }
-  .orange-highlight{ fill:#ffd477; opacity:.7; pointer-events:none; }
   .fruit{ animation:orange-drop 9s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
   .fruit:nth-of-type(2){ animation-delay:.35s; }
   .fruit:nth-of-type(3){ animation-delay:.7s; }
@@ -402,30 +400,22 @@
             <!-- interactive fruit / nav -->
             <a href="#about" class="fruit" aria-label="Go to About section">
               <path class="orange-stem" d="M218 191v-13"/>
-              <ellipse class="orange-leaf" cx="227" cy="181" rx="10" ry="5" transform="rotate(-22 227 181)"/>
               <circle class="block" cx="218" cy="210" r="19" fill="var(--orange)" style="animation-delay:.52s"/>
-              <ellipse class="orange-highlight" cx="212" cy="203" rx="5" ry="3" transform="rotate(-35 212 203)"/>
               <text class="fruit-label" x="218" y="160" text-anchor="middle">about</text>
             </a>
             <a href="#work" class="fruit" aria-label="Go to Work section">
               <path class="orange-stem" d="M360 108V94"/>
-              <ellipse class="orange-leaf" cx="370" cy="99" rx="10" ry="5" transform="rotate(-22 370 99)"/>
               <circle class="block" cx="360" cy="128" r="20" fill="var(--orange)" style="animation-delay:.56s"/>
-              <ellipse class="orange-highlight" cx="354" cy="120" rx="5" ry="3" transform="rotate(-35 354 120)"/>
               <text class="fruit-label" x="360" y="76" text-anchor="middle">work</text>
             </a>
             <a href="#skills" class="fruit" aria-label="Go to Skills section">
               <path class="orange-stem" d="M480 181v-13"/>
-              <ellipse class="orange-leaf" cx="489" cy="171" rx="10" ry="5" transform="rotate(-22 489 171)"/>
               <circle class="block" cx="480" cy="200" r="19" fill="var(--orange)" style="animation-delay:.60s"/>
-              <ellipse class="orange-highlight" cx="474" cy="193" rx="5" ry="3" transform="rotate(-35 474 193)"/>
               <text class="fruit-label" x="480" y="150" text-anchor="middle">skills</text>
             </a>
             <a href="#contact" class="fruit" aria-label="Go to Contact section">
               <path class="orange-stem" d="M270 351v-13"/>
-              <ellipse class="orange-leaf" cx="279" cy="341" rx="10" ry="5" transform="rotate(-22 279 341)"/>
               <circle class="block" cx="270" cy="370" r="19" fill="var(--orange)" style="animation-delay:.64s"/>
-              <ellipse class="orange-highlight" cx="264" cy="363" rx="5" ry="3" transform="rotate(-35 264 363)"/>
               <text class="fruit-label" x="270" y="414" text-anchor="middle">contact</text>
             </a>
 
