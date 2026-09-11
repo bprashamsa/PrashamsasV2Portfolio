@@ -3,761 +3,514 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prashamsa Bandarapu — Portfolio</title>
+<title>Prashamsa Bandarapu — Security, Data & Engineering</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #2c2d32;
-    --ink-soft: #263437;
-    --paper: #FFFFFF;
-    --accent: #b62779;
-    --accent-soft: #5a293c;
-    --line: #1b4b4b;
-    --glass: rgba(38,52,55,0.88);
-    --glass-line: #b62779;
-    --pixel-shadow: 0 8px 18px rgba(44,45,50,0.35);
+    --bg:        #292c33;
+    --canopy:    #313e35;
+    --rust:      #b14b34;
+    --orange:    #e86726;
+    --gold:      #fe9b33;
+    --ink:       #e9e7df;
+    --ink-dim:   #9aa19b;
+    --line:      #454b4f;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--orange); color:#1a1c20; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(41,44,51,0.86);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px; max-width:1080px; margin:0 auto;
+  }
+  .mark{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; }
+  .mark-box{ width:20px; height:20px; background:var(--orange); transform:rotate(-4deg); }
+  nav ul{ list-style:none; display:flex; gap:30px; font-size:14px; }
+  nav a{ position:relative; color:var(--ink-dim); transition:color .15s ease; }
+  nav a:hover{ color:var(--gold); }
+  nav a:focus-visible, a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:150px 32px 80px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .hero-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:32px;
+    width:100%;
+  }
+  .hero-copy{
+    flex:0 0 auto;
+    max-width:440px;
+    text-align:left;
+  }
+  .hero-copy h1{ font-size:clamp(2.1rem, 4vw, 3.1rem); }
+  .hero-copy .role{
+    margin-top:10px;
+    color:var(--gold);
+    font-family:'JetBrains Mono', monospace;
+    font-size:13.5px;
+    letter-spacing:.02em;
+  }
+  .hero-copy p.tag{ margin-top:18px; color:var(--ink-dim); font-size:16px; max-width:44ch; }
+  .hero-copy .cta-row{ margin-top:32px; display:flex; gap:16px; flex-wrap:wrap; }
+
+  .btn{
+    display:inline-block; padding:13px 24px;
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14px;
+    background:var(--orange); color:#1a1a1a;
+    box-shadow:6px 6px 0 var(--rust);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{ transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--rust); }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--line); box-shadow:none; }
+  .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); transform:none; box-shadow:none; }
+
+  .tree-holder{
+    flex:1 1 auto;
+    display:flex;
+    justify-content:center;
+    max-width:640px;
+    min-width:0;
+    cursor:default;
+  }
+  .tree-holder svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+  .block{
+    transform-origin:center;
+    opacity:0;
+    animation:rise .6s cubic-bezier(.2,.9,.3,1) forwards;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(16px) scale(.92); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  #parallax-group{ transition:transform .25s cubic-bezier(.2,.7,.3,1); }
+  #sway-group{
+    transform-box:fill-box;
+    transform-origin:50% 100%;
+    animation:sway 7s ease-in-out infinite alternate;
+  }
+  @keyframes sway{
+    from{ transform:rotate(-1.1deg); }
+    to{ transform:rotate(1.1deg); }
+  }
+
+  .fruit{ cursor:pointer; }
+  .fruit circle{ transition:transform .2s cubic-bezier(.34,1.56,.64,1); transform-origin:center; transform-box:fill-box; }
+  .fruit:hover circle{ transform:scale(1.28); }
+  .fruit.pulse circle{ animation:pulse .5s ease; }
+  @keyframes pulse{
+    0%{ transform:scale(1); }
+    40%{ transform:scale(1.5); }
+    100%{ transform:scale(1); }
+  }
+  .fruit-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    fill:var(--ink);
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity .15s ease, transform .15s ease;
+    pointer-events:none;
+  }
+  .fruit:hover .fruit-label{ opacity:1; transform:translateY(0); }
+
+  .scroll-cue{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim);
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .scroll-cue .stick{ width:1px; height:26px; background:var(--line); }
+  .hero{ position:relative; }
+
+  /* ---------- sections ---------- */
+  section{ padding:100px 0; position:relative; }
+  section:not(.hero)::before{
+    content:""; position:absolute; top:0; left:32px; right:32px;
+    max-width:1016px; margin:0 auto; height:1px; background:var(--line);
+  }
+  .eyebrow{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--gold); margin-bottom:14px; display:block; }
+  .section-head{ display:grid; grid-template-columns:1fr 1.5fr; gap:40px; margin-bottom:56px; align-items:start; }
+  .section-head h2{ font-size:clamp(1.6rem,3vw,2.2rem); }
+  .section-head .lede{ color:var(--ink-dim); font-size:15.5px; max-width:46ch; }
+
+  /* about */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .about-copy p{ color:var(--ink-dim); margin-bottom:16px; font-size:15.5px; max-width:52ch; }
+  .about-copy p strong{ color:var(--ink); font-weight:600; }
+
+  .domain-graphic{ display:flex; flex-direction:column; gap:14px; }
+  .domain-row{
+    display:flex; align-items:center; gap:16px;
+    padding:18px 20px;
+    background:var(--canopy);
+    position:relative;
+  }
+  .domain-row:nth-child(1){ box-shadow:6px 6px 0 var(--rust); }
+  .domain-row:nth-child(2){ box-shadow:6px 6px 0 var(--orange); }
+  .domain-row:nth-child(3){ box-shadow:6px 6px 0 var(--gold); }
+  .domain-row .dot{ width:12px; height:12px; border-radius:50%; flex:none; }
+  .domain-row:nth-child(1) .dot{ background:var(--rust); }
+  .domain-row:nth-child(2) .dot{ background:var(--orange); }
+  .domain-row:nth-child(3) .dot{ background:var(--gold); }
+  .domain-row .label{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; }
+  .domain-row .sub{ margin-left:auto; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-dim); }
+
+  /* work */
+  .work-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; }
+  .card{ background:var(--canopy); padding:28px 24px 26px; position:relative; }
+  .card:nth-child(1){ box-shadow:7px 7px 0 var(--rust); }
+  .card:nth-child(2){ box-shadow:7px 7px 0 var(--orange); }
+  .card:nth-child(3){ box-shadow:7px 7px 0 var(--gold); }
+  .card .fruit-dot{ width:14px; height:14px; margin-bottom:18px; border-radius:50%; }
+  .card:nth-child(1) .fruit-dot{ background:var(--rust); }
+  .card:nth-child(2) .fruit-dot{ background:var(--orange); }
+  .card:nth-child(3) .fruit-dot{ background:var(--gold); }
+  .card .domain-tag{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--gold); margin-bottom:8px; display:block; }
+  .card h3{ font-size:18px; margin-bottom:10px; }
+  .card p{ color:var(--ink-dim); font-size:14.5px; margin-bottom:18px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .tags span{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--ink-dim); border:1px solid var(--line); padding:4px 9px; }
+  .card .link{ font-family:'Space Grotesk', sans-serif; font-size:13.5px; font-weight:600; color:var(--gold); display:inline-flex; align-items:center; gap:6px; }
+
+  /* skills */
+  .skills-columns{ display:grid; grid-template-columns:repeat(3, 1fr); gap:36px; }
+  .skills-col h3{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; font-weight:500;
+    color:var(--ink-dim); margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .skills-col:nth-child(1) h3{ color:var(--rust); }
+  .skills-col:nth-child(2) h3{ color:var(--orange); }
+  .skills-col:nth-child(3) h3{ color:var(--gold); }
+  .skills-cluster{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; padding:8px 14px;
+    background:transparent; border:1.5px solid var(--line); color:var(--ink-dim);
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .skills-col:nth-child(1) .chip:hover{ border-color:var(--rust); color:var(--ink); background:rgba(177,75,52,0.12); }
+  .skills-col:nth-child(2) .chip:hover{ border-color:var(--orange); color:var(--ink); background:rgba(232,103,38,0.12); }
+  .skills-col:nth-child(3) .chip:hover{ border-color:var(--gold); color:var(--ink); background:rgba(254,155,51,0.12); }
+
+  /* contact */
+  .contact-box{ display:grid; grid-template-columns:1.3fr 1fr; gap:50px; align-items:center; }
+  .contact-box h2{ font-size:clamp(1.8rem,4vw,2.6rem); margin-bottom:18px; }
+  .contact-box p{ color:var(--ink-dim); max-width:44ch; margin-bottom:28px; }
+  .contact-links{ display:flex; flex-direction:column; gap:2px; }
+  .contact-links a{
+    display:flex; justify-content:space-between; align-items:center; padding:16px 4px;
+    border-bottom:1px solid var(--line); font-family:'Space Grotesk', sans-serif; font-weight:500; font-size:15px;
+    transition:padding-left .15s ease, color .15s ease;
+  }
+  .contact-links a:hover{ padding-left:10px; color:var(--gold); }
+  .contact-links a span.tag{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim); }
+
+  footer{ padding:32px 0 40px; text-align:center; color:var(--ink-dim); font-family:'JetBrains Mono', monospace; font-size:12px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    .hero-inner{ flex-direction:column-reverse; text-align:center; }
+    .hero-copy{ max-width:520px; text-align:center; }
+    .hero-copy .cta-row{ justify-content:center; }
+    .tree-holder{ max-width:520px; }
+    .section-head{ grid-template-columns:1fr; gap:14px; }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+    .work-grid{ grid-template-columns:1fr; }
+    .skills-columns{ grid-template-columns:1fr; gap:30px; }
+    .contact-box{ grid-template-columns:1fr; }
+    nav ul{ display:none; }
   }
 
   @media (prefers-reduced-motion: reduce){
-    *{ animation: none !important; transition: none !important; }
-  }
-
-  *{ box-sizing: border-box; }
-
-  html, body{
-    margin:0; padding:0;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Public Sans', -apple-system, sans-serif;
-    color: var(--ink);
-  }
-
-  .serif{ font-family: 'Fraunces', Georgia, serif; }
-  .pixel{ font-family: Verdana, Geneva, sans-serif; }
-
-  /* ---------------- desktop / wallpaper ---------------- */
-  .desktop{
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    background-color: #2c2d32;
-    background-image:
-      radial-gradient(ellipse at 25% 10%, rgba(182,39,121,0.32) 0 8%, transparent 25%),
-      radial-gradient(ellipse at 78% 15%, rgba(27,75,75,0.62) 0 6%, transparent 20%),
-      linear-gradient(180deg, #2c2d32 0%, #263437 62%, #5a293c 62%, #1b4b4b 100%);
-    overflow: hidden;
-  }
-
-  /* ---------------- menu bar ---------------- */
-  .menubar{
-    position: absolute;
-    top:0; left:0; right:0;
-    height: 30px;
-    background: linear-gradient(#FFFFFF 0%, #263437 48%, #1b4b4b 50%, #FFFFFF 100%);
-    border-bottom: 1px solid #1b4b4b;
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    padding: 0 16px;
-    font-size: 13px;
-    color: var(--ink);
-    z-index: 500;
-  }
-  .menu-left, .menu-right{
-    display:flex;
-    align-items:center;
-    gap: 18px;
-  }
-  .menu-mark{
-    width: 15px; height: 15px;
-    border-radius: 2px;
-    background: linear-gradient(#b62779, #5a293c);
-    border: 2px solid #1b4b4b;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
-    display:inline-block;
-  }
-  .menu-left span:not(.menu-mark), .menu-right span{
-    opacity: 0.85;
-  }
-  .brand-name{ font-weight: 600; }
-  .menu-right svg{ display:block; }
-
-  /* ---------------- desktop icons (top-left) ---------------- */
-  .desktop-icons{
-    position: absolute;
-    top: 54px; left: 26px;
-    display:flex;
-    flex-direction: column;
-    gap: 26px;
-    z-index: 20;
-  }
-  .dicon{
-    width: 84px;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-family: 'Public Sans', sans-serif;
-  }
-  .dicon .folder{
-    width: 54px; height: 42px;
-    position: relative;
-    transition: transform 0.15s ease;
-  }
-  .dicon:hover .folder{
-    transform: translateY(-3px) scale(1.04);
-  }
-  .dicon .folder::before{
-    content:"";
-    position:absolute;
-    top:-7px; left:0;
-    width: 26px; height: 9px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.7) 0 35%, transparent 36%), var(--folder-c, var(--accent));
-    border: 2px solid #1b4b4b;
-    border-bottom: none;
-    border-radius: 7px 10px 0 0;
-  }
-  .dicon .folder::after{
-    content:"";
-    position:absolute;
-    top:0; left:0; right:0; bottom:0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.72) 0 10%, rgba(255,255,255,0.18) 11% 25%, transparent 26%), var(--folder-c, var(--accent));
-    border: 2px solid #1b4b4b;
-    border-radius: 3px 8px 8px 8px;
-    opacity: 0.92;
-    box-shadow: inset 0 -3px 0 rgba(0,50,90,0.16), inset 0 2px 0 rgba(255,255,255,0.42);
-  }
-  .dicon span{
-    font-size: 12.5px;
-    color: #2c2d32;
-    font-weight: 700;
-    text-shadow: 0 1px 0 #fff;
-    text-align: center;
-  }
-
-  /* ---------------- status widget (top-right) ---------------- */
-  .widget{
-    position: absolute;
-    top: 46px; right: 26px;
-    width: 220px;
-    background: linear-gradient(135deg, rgba(90,41,60,0.96), rgba(27,75,75,0.92));
-    color: #FFFFFF;
-    border: 1px solid #b62779;
-    border-radius: 12px;
-    box-shadow: var(--pixel-shadow), inset 0 1px 0 rgba(255,255,255,0.55);
-    padding: 16px 18px;
-    z-index: 20;
-  }
-  .widget .wtitle{
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    font-family: Verdana, Geneva, sans-serif;
-    color: #FFFFFF;
-    margin-bottom: 6px;
-  }
-  .widget .wmain{
-    font-family: Georgia, serif;
-    font-size: 20px;
-    line-height: 1.3;
-    margin-bottom: 8px;
-  }
-  .widget .wsub{
-    font-size: 12.5px;
-    color: #FFFFFF;
-  }
-
-  /* ---------------- windows ---------------- */
-  .window{
-    position: absolute;
-    width: 560px;
-    max-width: 90vw;
-    background: var(--paper);
-    border: 1px solid #1b4b4b;
-    border-radius: 12px;
-    box-shadow: var(--pixel-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 100;
-  }
-  .window.open{ display:flex; }
-
-  .window-bar{
-    height: 40px;
-    background: linear-gradient(#b62779 0%, #5a293c 48%, #1b4b4b 50%, #b62779 100%);
-    border-bottom: 1px solid #1b4b4b;
-    display:flex;
-    align-items:center;
-    padding: 0 14px;
-    gap: 8px;
-    cursor: grab;
-    flex-shrink: 0;
-  }
-  .window-bar:active{ cursor: grabbing; }
-  .traffic{
-    width: 12px; height:12px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.25);
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.2);
-    padding:0;
-    cursor: pointer;
-  }
-  .traffic.red{ background: #5a293c; }
-  .traffic.yellow{ background: #b62779; }
-  .traffic.green{ background: #1b4b4b; }
-  .window-title{
-    flex:1;
-    text-align:center;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: #FFFFFF;
-    margin-right: 54px;
-  }
-
-  .window-body{
-    padding: 30px 32px;
-    overflow-y: auto;
-    max-height: 62vh;
-  }
-
-  /* about window */
-  .about-head{
-    display:flex;
-    align-items:center;
-    gap: 18px;
-    margin-bottom: 20px;
-  }
-  .avatar{
-    width: 58px; height: 58px;
-    border-radius: 50%;
-    background: var(--accent-soft);
-    color: var(--accent);
-    display:flex; align-items:center; justify-content:center;
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-  .about-head h3{
-    font-weight: 400;
-    font-size: 22px;
-    margin: 0 0 3px;
-  }
-  .about-head p{
-    margin:0;
-    font-size: 13.5px;
-    color: var(--accent);
-  }
-  .window-body p.body-text{
-    font-size: 15.5px;
-    color: #2c2d32;
-    line-height: 1.65;
-    margin: 0 0 14px;
-  }
-
-  /* skills window */
-  .skill-group{ margin-bottom: 22px; }
-  .skill-group:last-child{ margin-bottom: 0; }
-  .skill-group h4{
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--ink-soft);
-    margin: 0 0 12px;
-  }
-  .pills{ display:flex; flex-wrap: wrap; gap: 8px; }
-  .pill{
-    font-size: 13px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    padding: 6px 12px;
-    border: 1px solid #1b4b4b;
-    border-radius: 12px;
-    box-shadow: inset 0 1px 0 #FFFFFF;
-  }
-
-  /* projects window (finder-list style) */
-  .flist{ border-top: 1px solid var(--line); }
-  .frow{
-    display:flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .ficon{
-    width: 34px; height: 34px;
-    border: 1px solid #1b4b4b;
-    border-radius: 7px;
-    box-shadow: inset 0 1px 0 #FFFFFF;
-    background: var(--accent-soft);
-    flex-shrink:0;
-    display:flex; align-items:center; justify-content:center;
-    margin-top: 2px;
-  }
-  .fmeta{ flex:1; min-width:0; }
-  .fmeta .fname{
-    font-weight: 500;
-    font-size: 15px;
-    margin: 0 0 4px;
-  }
-  .fmeta .fdesc{
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    margin: 0 0 8px;
-  }
-  .ftags{ display:flex; flex-wrap:wrap; gap:6px; }
-  .ftags span{
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    border: 1px solid #5a293c;
-    padding: 3px 8px;
-    border-radius: 10px;
-  }
-
-  /* experience window (doc style) */
-  .doc-line{
-    display:flex;
-    gap: 18px;
-    padding: 14px 0;
-    border-bottom: 1px dashed var(--line);
-    font-size: 14.5px;
-  }
-  .doc-line:last-child{ border-bottom: none; }
-  .doc-date{
-    width: 100px;
-    flex-shrink:0;
-    color: var(--ink-soft);
-    font-size: 13px;
-    padding-top: 1px;
-  }
-  .doc-main .dtitle{ font-weight: 500; margin: 0 0 3px; }
-  .doc-main .ddesc{ color: var(--ink-soft); font-size: 13.5px; margin:0; }
-
-  /* contact window (mail-compose style) */
-  .mail-field{
-    display:flex;
-    border-bottom: 1px solid var(--line);
-    padding: 9px 0;
-    font-size: 14px;
-  }
-  .mail-field .mlabel{
-    width: 64px;
-    color: var(--ink-soft);
-    flex-shrink:0;
-  }
-  .mail-body-text{
-    padding: 18px 0 6px;
-    font-size: 14.5px;
-    color: #2c2d32;
-    line-height: 1.6;
-  }
-  .send-btn{
-    margin-top: 14px;
-    display:inline-block;
-    background: linear-gradient(#b62779, #5a293c 52%, #1b4b4b);
-    border: 1px solid #1b4b4b;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(44,45,50,0.25);
-    color: #fff;
-    text-decoration:none;
-    font-size: 13.5px;
-    padding: 9px 18px;
-    border-radius: 6px;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 13.5px;
-    font-weight: 700;
-  }
-
-  /* resume window */
-  .resume-box{
-    border: 1px dashed var(--line);
-    border-radius: 8px;
-    padding: 26px;
-    text-align:center;
-    color: var(--ink-soft);
-    font-size: 13.5px;
-  }
-  .resume-box a{
-    display:inline-block;
-    margin-top: 12px;
-    background: linear-gradient(#b62779, #5a293c 52%, #1b4b4b);
-    border: 1px solid #1b4b4b;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 2px 4px rgba(44,45,50,0.25);
-    color:#fff;
-    text-decoration:none;
-    font-size: 13.5px;
-    padding: 9px 18px;
-    border-radius: 6px;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 13.5px;
-    font-weight: 700;
-  }
-
-  /* ---------------- dock ---------------- */
-  .dock-wrap{
-    position: absolute;
-    bottom: 14px; left: 0; right: 0;
-    display:flex;
-    justify-content:center;
-    z-index: 400;
-  }
-  .dock{
-    display:flex;
-    align-items: flex-end;
-    gap: 12px;
-    background: var(--glass);
-    border: 1px solid #b62779;
-    border-radius: 16px;
-    box-shadow: 0 5px 18px rgba(44,45,50,0.3), inset 0 1px 0 #FFFFFF;
-    padding: 9px 12px;
-  }
-  .dock-item{
-    position: relative;
-    width: 48px; height: 48px;
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 10px;
-    background: var(--item-c, var(--accent));
-    display:flex; align-items:center; justify-content:center;
-    cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 2px 4px rgba(20,74,112,0.25);
-    transition: transform 0.12s ease;
-    flex-shrink: 0;
-  }
-  .dock-item:hover{ transform: translateY(-10px) scale(1.08); }
-  .dock-item svg{ width: 22px; height: 22px; }
-  .dock-item .tip{
-    position:absolute;
-    bottom: 60px; left: 50%;
-    transform: translateX(-50%);
-    background: #2c2d32;
-    color: #FFFFFF;
-    font-size: 11.5px;
-    padding: 4px 9px;
-    border-radius: 5px;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 11px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.12s ease;
-  }
-  .dock-item:hover .tip{ opacity: 1; }
-  .dock-sep{
-    width: 1px;
-    align-self: stretch;
-    background: rgba(0,0,0,0.14);
-    margin: 6px 2px;
-  }
-
-  @media (max-width: 720px){
-    .widget{ display:none; }
-    .desktop-icons{ top:44px; left:14px; gap:18px; }
-    .dicon{ width:64px; }
-    .window{ width: 94vw; }
-    .window-body{ padding: 22px 20px; max-height: 58vh; }
-    .dock{ gap: 8px; padding: 7px 9px; }
-    .dock-item{ width:42px; height:42px; }
-    .doc-line{ flex-direction: column; gap: 4px; }
-    .doc-date{ width:auto; }
+    .block{ animation:none; opacity:1; }
+    #sway-group{ animation:none; }
+    #parallax-group{ transition:none; }
+    html{ scroll-behavior:auto; }
   }
 </style>
 </head>
 <body>
 
-<div class="desktop" id="desktop">
-
-  <div class="menubar">
-    <div class="menu-left">
-      <span class="menu-mark"></span>
-      <span class="brand-name">Prashamsa Bandarapu</span>
-      <span>File</span><span>Edit</span><span>View</span><span>Window</span>
-    </div>
-    <div class="menu-right">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 4.5C4 1.8 12 1.8 15 4.5M3.3 7C5.4 5.2 10.6 5.2 12.7 7M5.7 9.3C6.9 8.3 9.1 8.3 10.3 9.3" stroke="#2c2d32" stroke-width="1.3" stroke-linecap="round"/></svg>
-      <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="1" y="1" width="14" height="9" rx="1.5" stroke="#2c2d32" stroke-width="1.2"/><rect x="2.3" y="2.3" width="9" height="6.4" fill="#2c2d32"/><rect x="16" y="3.5" width="1.4" height="3" rx="0.6" fill="#2c2d32"/></svg>
-      <span id="clock">7:45 PM</span>
-    </div>
+<header>
+  <div class="header-row">
+    <div class="mark"><span class="mark-box"></span>Prashamsa Bandarapu</div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
 
-  <div class="desktop-icons">
-    <button class="dicon" onclick="openWindow('win-projects')">
-      <span class="folder" style="--folder-c:#1b4b4b"></span>
-      <span>Projects</span>
-    </button>
-    <button class="dicon" onclick="openWindow('win-about')">
-      <span class="folder" style="--folder-c:#b62779"></span>
-      <span>About Me</span>
-    </button>
-    <button class="dicon" onclick="openWindow('win-resume')">
-      <span class="folder" style="--folder-c:#5a293c"></span>
-      <span>Resume</span>
-    </button>
-  </div>
-
-  <div class="widget">
-    <div class="wtitle">STATUS</div>
-    <div class="wmain">Hi! I'm Prashamsa</div>
-    <div class="wsub">Seattle, WA</div>
-  </div>
-
-  <!-- ABOUT WINDOW -->
-  <div class="window" id="win-about" style="top:14%; left:8%;">
-    <div class="window-bar">
-      <button class="traffic red" onclick="closeWindow('win-about')"></button>
-      <button class="traffic yellow" onclick="closeWindow('win-about')"></button>
-      <button class="traffic green" onclick="closeWindow('win-about')"></button>
-      <div class="window-title">About Me</div>
-    </div>
-    <div class="window-body">
-      <div class="about-head">
-        <div class="avatar serif">PB</div>
-        <div>
-          <h3 class="serif">Prashamsa Bandarapu</h3>
-          <p>Data Science &amp; Cybersecurity</p>
-        </div>
-      </div>
-      <p class="body-text">I'm a student studying computer science with a focus on data science and cybersecurity. I'm drawn to problems where the two overlap — using machine learning to make sense of security data, and thinking carefully about security when building models.</p>
-      <p class="body-text">Most of my recent work has been in anomaly detection and threat analysis. Replace this paragraph with what you've actually built and what you're currently exploring.</p>
-    </div>
-  </div>
-
-  <!-- SKILLS WINDOW -->
-  <div class="window" id="win-skills" style="top:20%; left:34%;">
-    <div class="window-bar">
-      <button class="traffic red" onclick="closeWindow('win-skills')"></button>
-      <button class="traffic yellow" onclick="closeWindow('win-skills')"></button>
-      <button class="traffic green" onclick="closeWindow('win-skills')"></button>
-      <div class="window-title">Skills</div>
-    </div>
-    <div class="window-body">
-      <div class="skill-group">
-        <h4>Data Science</h4>
-        <div class="pills">
-          <span class="pill">Python</span>
-          <span class="pill">pandas / NumPy</span>
-          <span class="pill">scikit-learn</span>
-          <span class="pill">PyTorch</span>
-          <span class="pill">SQL</span>
-          <span class="pill">Data visualization</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Cybersecurity</h4>
-        <div class="pills">
-          <span class="pill">Network security</span>
-          <span class="pill">SIEM / SOC tools</span>
-          <span class="pill">Applied cryptography</span>
-          <span class="pill">Linux &amp; scripting</span>
-          <span class="pill">Incident analysis</span>
-        </div>
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <h1>Prashamsa Bandarapu</h1>
+      <div class="role mono">cybersecurity · data science · engineering</div>
+      <p class="tag">I defend systems, model the data that runs through them, and engineer the infrastructure that holds it all up. Move the cursor around the tree — the fruit link out to what I do.</p>
+      <div class="cta-row">
+        <a class="btn" href="#work">See the work</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
       </div>
     </div>
+
+    <div class="tree-holder" id="tree-holder">
+      <svg viewBox="0 0 640 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An illustrated tree with four pieces of fruit, each linking to a section of the site">
+        <g id="parallax-group">
+          <g id="sway-group">
+
+            <!-- trunk -->
+            <g>
+              <rect class="block" x="295" y="560" width="90" height="58" rx="16" fill="#313e35" style="animation-delay:.02s"/>
+              <rect class="block" x="302" y="505" width="74" height="60" rx="16" fill="#313e35" transform="rotate(-1.5 339 535)" style="animation-delay:.06s"/>
+              <rect class="block" x="296" y="450" width="82" height="60" rx="16" fill="#313e35" transform="rotate(1.5 337 480)" style="animation-delay:.10s"/>
+              <rect class="block" x="304" y="400" width="66" height="56" rx="16" fill="#313e35" transform="rotate(-2 337 428)" style="animation-delay:.14s"/>
+            </g>
+
+            <!-- canopy: rounder, denser, softer edges -->
+            <g>
+              <rect class="block" x="150" y="230" width="94" height="84" rx="20" fill="#313e35" opacity=".95" transform="rotate(-4 197 272)" style="animation-delay:.18s"/>
+              <rect class="block" x="190" y="168" width="98" height="88" rx="20" fill="#313e35" transform="rotate(3 239 212)" style="animation-delay:.20s"/>
+              <rect class="block" x="252" y="118" width="102" height="92" rx="22" fill="#313e35" transform="rotate(-2 303 164)" style="animation-delay:.22s"/>
+              <rect class="block" x="322" y="90"  width="108" height="96" rx="22" fill="#313e35" transform="rotate(2 376 138)" style="animation-delay:.24s"/>
+              <rect class="block" x="392" y="106" width="98" height="90" rx="20" fill="#313e35" transform="rotate(-3 441 151)" style="animation-delay:.26s"/>
+              <rect class="block" x="447" y="150" width="92" height="86" rx="20" fill="#313e35" opacity=".95" transform="rotate(4 493 193)" style="animation-delay:.28s"/>
+              <rect class="block" x="482" y="212" width="88" height="82" rx="20" fill="#313e35" transform="rotate(-2 526 253)" style="animation-delay:.30s"/>
+              <rect class="block" x="472" y="272" width="92" height="86" rx="20" fill="#313e35" transform="rotate(3 518 315)" style="animation-delay:.32s"/>
+              <rect class="block" x="432" y="322" width="92" height="86" rx="20" fill="#313e35" opacity=".95" transform="rotate(-3 478 365)" style="animation-delay:.34s"/>
+              <rect class="block" x="372" y="342" width="98" height="82" rx="22" fill="#313e35" transform="rotate(2 421 383)" style="animation-delay:.36s"/>
+              <rect class="block" x="302" y="347" width="94" height="82" rx="22" fill="#313e35" transform="rotate(-2 349 388)" style="animation-delay:.38s"/>
+              <rect class="block" x="237" y="332" width="90" height="82" rx="20" fill="#313e35" transform="rotate(3 282 373)" style="animation-delay:.40s"/>
+              <rect class="block" x="187" y="292" width="86" height="82" rx="20" fill="#313e35" opacity=".95" transform="rotate(-3 230 333)" style="animation-delay:.42s"/>
+              <rect class="block" x="274" y="202" width="104" height="98" rx="24" fill="#313e35" transform="rotate(1 326 251)" style="animation-delay:.44s"/>
+              <rect class="block" x="344" y="222" width="104" height="98" rx="24" fill="#313e35" transform="rotate(-1.5 396 271)" style="animation-delay:.46s"/>
+              <rect class="block" x="308" y="272" width="98" height="90" rx="22" fill="#313e35" opacity=".97" transform="rotate(1.5 357 317)" style="animation-delay:.48s"/>
+            </g>
+
+            <!-- decorative small fruit -->
+            <circle class="block" cx="405" cy="300" r="11" fill="#fe9b33" style="animation-delay:.66s"/>
+            <circle class="block" cx="295" cy="155" r="10" fill="#b14b34" style="animation-delay:.68s"/>
+            <circle class="block" cx="485" cy="255" r="12" fill="#e86726" style="animation-delay:.70s"/>
+            <circle class="block" cx="230" cy="255" r="10" fill="#fe9b33" style="animation-delay:.72s"/>
+
+            <!-- interactive fruit / nav -->
+            <a href="#about" class="fruit" aria-label="Go to About section">
+              <circle class="block" cx="218" cy="210" r="19" fill="#e86726" style="animation-delay:.52s"/>
+              <text class="fruit-label" x="218" y="182" text-anchor="middle">about</text>
+            </a>
+            <a href="#work" class="fruit" aria-label="Go to Work section">
+              <circle class="block" cx="360" cy="128" r="20" fill="#fe9b33" style="animation-delay:.56s"/>
+              <text class="fruit-label" x="360" y="98" text-anchor="middle">work</text>
+            </a>
+            <a href="#skills" class="fruit" aria-label="Go to Skills section">
+              <circle class="block" cx="480" cy="200" r="19" fill="#b14b34" style="animation-delay:.60s"/>
+              <text class="fruit-label" x="480" y="172" text-anchor="middle">skills</text>
+            </a>
+            <a href="#contact" class="fruit" aria-label="Go to Contact section">
+              <circle class="block" cx="270" cy="370" r="19" fill="#e86726" style="animation-delay:.64s"/>
+              <text class="fruit-label" x="270" y="414" text-anchor="middle">contact</text>
+            </a>
+
+          </g>
+        </g>
+      </svg>
+    </div>
   </div>
 
-  <!-- PROJECTS WINDOW -->
-  <div class="window" id="win-projects" style="top:12%; left:20%; width:600px;">
-    <div class="window-bar">
-      <button class="traffic red" onclick="closeWindow('win-projects')"></button>
-      <button class="traffic yellow" onclick="closeWindow('win-projects')"></button>
-      <button class="traffic green" onclick="closeWindow('win-projects')"></button>
-      <div class="window-title">Projects</div>
-    </div>
-    <div class="window-body">
-      <div class="flist">
-        <div class="frow">
-          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1b4b4b" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-          <div class="fmeta">
-            <p class="fname">Network Intrusion Detection</p>
-            <p class="fdesc">A classifier trained on flow-level network traffic to flag anomalous behavior in near real time. Replace with your real approach and results.</p>
-            <div class="ftags"><span>Random forest</span><span>Feature engineering</span><span>NetFlow</span></div>
-          </div>
-        </div>
-        <div class="frow">
-          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1b4b4b" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-          <div class="fmeta">
-            <p class="fname">Phishing URL Classifier</p>
-            <p class="fdesc">Lexical and structural features used to catch phishing links before a click. Swap in your real metrics and findings.</p>
-            <div class="ftags"><span>NLP</span><span>Logistic regression</span><span>Chrome extension</span></div>
-          </div>
-        </div>
-        <div class="frow">
-          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1b4b4b" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-          <div class="fmeta">
-            <p class="fname">Security Log Anomaly Pipeline</p>
-            <p class="fdesc">A streaming pipeline that ingests security logs and clusters outlier behavior for analyst review.</p>
-            <div class="ftags"><span>Clustering</span><span>Streaming data</span><span>Dashboards</span></div>
-          </div>
-        </div>
-        <div class="frow">
-          <div class="ficon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 3h14M1 8h14M1 13h9" stroke="#1b4b4b" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-          <div class="fmeta">
-            <p class="fname">CTF Write-ups</p>
-            <p class="fdesc">A running collection of capture-the-flag solutions across web, cryptography, and forensics categories.</p>
-            <div class="ftags"><span>Forensics</span><span>Cryptography</span><span>Web exploitation</span></div>
-          </div>
-        </div>
+  <div class="scroll-cue"><span class="stick"></span>scroll</div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-copy">
+        <span class="eyebrow">about</span>
+        <h2 style="margin-bottom:20px;">Three disciplines, one way of thinking.</h2>
+        <p><strong>Prashamsa Bandarapu</strong> works at the intersection of cybersecurity, data science, and engineering — thinking like an attacker, reasoning like an analyst, and building like someone who has to maintain the thing at 2am.</p>
+        <p>On the security side: hardening systems, reading logs for the story they're telling, and modeling how things actually break. On the data side: turning raw, messy signals into models and dashboards people can act on. On the engineering side: the pipelines, infrastructure, and automation that keep it all running.</p>
+        <p>Currently sharpening skills across threat detection, applied machine learning, and cloud infrastructure.</p>
+      </div>
+      <div class="domain-graphic" aria-hidden="true">
+        <div class="domain-row"><span class="dot"></span><span class="label">Security</span><span class="sub">defend &amp; detect</span></div>
+        <div class="domain-row"><span class="dot"></span><span class="label">Data Science</span><span class="sub">model &amp; predict</span></div>
+        <div class="domain-row"><span class="dot"></span><span class="label">Engineering</span><span class="sub">build &amp; automate</span></div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- EXPERIENCE WINDOW -->
-  <div class="window" id="win-experience" style="top:22%; left:12%;">
-    <div class="window-bar">
-      <button class="traffic red" onclick="closeWindow('win-experience')"></button>
-      <button class="traffic yellow" onclick="closeWindow('win-experience')"></button>
-      <button class="traffic green" onclick="closeWindow('win-experience')"></button>
-      <div class="window-title">Experience.txt</div>
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">work</span>
+      <div>
+        <h2>A few things I've built.</h2>
+        <p class="lede">Replace these with your own projects — case studies, research, or systems you're proud to show.</p>
+      </div>
     </div>
-    <div class="window-body">
-      <div class="doc-line">
-        <div class="doc-date">2023 — Present</div>
-        <div class="doc-main">
-          <p class="dtitle">B.S. Computer Science, Data Science &amp; Cybersecurity focus</p>
-          <p class="ddesc">University name here. Add relevant coursework, honors, or GPA if you'd like it visible.</p>
+    <div class="work-grid">
+      <div class="card">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">security</span>
+        <h3>Intrusion detection pipeline</h3>
+        <p>A short description of the threat this addressed, how detection works, and the outcome — false-positive rate, coverage, time-to-detect.</p>
+        <div class="tags"><span>Python</span><span>Suricata</span><span>ELK Stack</span></div>
+        <a class="link" href="#">View project ↗</a>
+      </div>
+      <div class="card">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">data science</span>
+        <h3>Anomaly detection model</h3>
+        <p>A short description of the dataset, the modeling approach, and the measurable impact — accuracy, precision/recall, or business result.</p>
+        <div class="tags"><span>Python</span><span>scikit-learn</span><span>Pandas</span></div>
+        <a class="link" href="#">View project ↗</a>
+      </div>
+      <div class="card">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">engineering</span>
+        <h3>Infrastructure automation</h3>
+        <p>A short description of what was automated, the systems involved, and the time or risk it removed from the team's plate.</p>
+        <div class="tags"><span>Terraform</span><span>AWS</span><span>Kubernetes</span></div>
+        <a class="link" href="#">View project ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">skills</span>
+      <div>
+        <h2>Tools I reach for.</h2>
+        <p class="lede">Grouped by discipline — swap in whatever's true for your own stack.</p>
+      </div>
+    </div>
+    <div class="skills-columns">
+      <div class="skills-col">
+        <h3>security</h3>
+        <div class="skills-cluster">
+          <span class="chip">Network Security</span>
+          <span class="chip">SIEM</span>
+          <span class="chip">Penetration Testing</span>
+          <span class="chip">Threat Modeling</span>
+          <span class="chip">Incident Response</span>
         </div>
       </div>
-      <div class="doc-line">
-        <div class="doc-date">Summer 2025</div>
-        <div class="doc-main">
-          <p class="dtitle">Internship — role, company</p>
-          <p class="ddesc">One or two lines on what you actually shipped or investigated.</p>
+      <div class="skills-col">
+        <h3>data science</h3>
+        <div class="skills-cluster">
+          <span class="chip">Python</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Pandas</span>
+          <span class="chip">scikit-learn</span>
+          <span class="chip">Machine Learning</span>
         </div>
       </div>
-      <div class="doc-line">
-        <div class="doc-date">2024</div>
-        <div class="doc-main">
-          <p class="dtitle">Cybersecurity Club — officer</p>
-          <p class="ddesc">Organized CTF practice, workshops, or led a project team.</p>
+      <div class="skills-col">
+        <h3>engineering</h3>
+        <div class="skills-cluster">
+          <span class="chip">AWS</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Kubernetes</span>
+          <span class="chip">Terraform</span>
+          <span class="chip">CI/CD</span>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- CONTACT WINDOW -->
-  <div class="window" id="win-contact" style="top:24%; left:30%;">
-    <div class="window-bar">
-      <button class="traffic red" onclick="closeWindow('win-contact')"></button>
-      <button class="traffic yellow" onclick="closeWindow('win-contact')"></button>
-      <button class="traffic green" onclick="closeWindow('win-contact')"></button>
-      <div class="window-title">New Message</div>
-    </div>
-    <div class="window-body">
-      <div class="mail-field"><span class="mlabel">To:</span> prashamsa@example.com</div>
-      <div class="mail-field"><span class="mlabel">GitHub:</span> github.com/bprashamsa</div>
-      <div class="mail-field"><span class="mlabel">LinkedIn:</span> https://www.linkedin.com/in/prashamsa-b-b893b1243/</div>
-      <p class="mail-body-text">Say hello about a project, an internship, or anything data-security related.</p>
-      <a class="send-btn" href="mailto:prashamsa@example.com">Send an email</a>
-    </div>
-  </div>
-
-  <!-- RESUME WINDOW -->
-  <div class="window" id="win-resume" style="top:16%; left:26%;">
-    <div class="window-bar">
-      <button class="traffic red" onclick="closeWindow('win-resume')"></button>
-      <button class="traffic yellow" onclick="closeWindow('win-resume')"></button>
-      <button class="traffic green" onclick="closeWindow('win-resume')"></button>
-      <div class="window-title">Resume.pdf</div>
-    </div>
-    <div class="window-body">
-      <div class="resume-box">
-        Add a link to your resume PDF here.
-        <br>
-        <a href="#">Download resume</a>
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <div>
+        <span class="eyebrow">contact</span>
+        <h2>Let's build something secure.</h2>
+        <p>Open to new roles, research collaborations, or just talking shop about security, data, or infrastructure. Reach out through whichever channel is easiest.</p>
+        <a class="btn" href="mailto:prashamsa@example.com">Email me</a>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:prashamsa@example.com">Email <span class="tag">mail</span></a>
+        <a href="#">GitHub <span class="tag">code</span></a>
+        <a href="#">LinkedIn <span class="tag">profile</span></a>
+        <a href="#">Resume <span class="tag">pdf</span></a>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="dock-wrap">
-    <div class="dock" id="dock">
-      <button class="dock-item" style="--item-c:#1b4b4b" onclick="openWindow('win-about')">
-        <span class="tip">About</span>
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.4" stroke="#fff" stroke-width="1.6"/><path d="M5 19c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
-      </button>
-      <button class="dock-item" style="--item-c:#b62779" onclick="openWindow('win-skills')">
-        <span class="tip">Skills</span>
-        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="12" width="3.4" height="8" rx="0.8" fill="#fff"/><rect x="10.3" y="7" width="3.4" height="13" rx="0.8" fill="#fff"/><rect x="16.6" y="4" width="3.4" height="16" rx="0.8" fill="#fff"/></svg>
-      </button>
-      <button class="dock-item" style="--item-c:#5a293c" onclick="openWindow('win-projects')">
-        <span class="tip">Projects</span>
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 8.2c0-.9.8-1.7 1.7-1.7H10l1.8 2.2h7.5c.9 0 1.7.8 1.7 1.7v7.1c0 .9-.8 1.7-1.7 1.7H4.7C3.8 19.2 3 18.4 3 17.5V8.2z" fill="#fff"/></svg>
-      </button>
-      <button class="dock-item" style="--item-c:#1b4b4b" onclick="openWindow('win-experience')">
-        <span class="tip">Experience</span>
-        <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3.5" width="14" height="17" rx="1.4" stroke="#fff" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-      <div class="dock-sep"></div>
-      <button class="dock-item" style="--item-c:#b62779" onclick="openWindow('win-contact')">
-        <span class="tip">Contact</span>
-        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="12" rx="1.6" stroke="#fff" stroke-width="1.6"/><path d="M4.5 7l7.5 6 7.5-6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </div>
-
-</div>
+<footer>Prashamsa Bandarapu — grown, not templated.</footer>
 
 <script>
-  let zTop = 100;
+  // gentle cursor parallax on the tree
+  const holder = document.getElementById('tree-holder');
+  const parallax = document.getElementById('parallax-group');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function openWindow(id){
-    const w = document.getElementById(id);
-    if (!w) return;
-    w.classList.add('open');
-    zTop += 1;
-    w.style.zIndex = zTop;
+  if (holder && parallax && !reduceMotion) {
+    holder.addEventListener('mousemove', (e) => {
+      const rect = holder.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      const tx = px * 16;
+      const ty = py * 10;
+      const rot = px * 2.2;
+      parallax.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+    });
+    holder.addEventListener('mouseleave', () => {
+      parallax.style.transform = 'translate(0px, 0px) rotate(0deg)';
+    });
   }
 
-  function closeWindow(id){
-    const w = document.getElementById(id);
-    if (w) w.classList.remove('open');
-  }
-
-  // bring-to-front + drag
-  document.querySelectorAll('.window').forEach(win => {
-    const bar = win.querySelector('.window-bar');
-    let dragging = false, offX = 0, offY = 0;
-
-    win.addEventListener('mousedown', () => {
-      zTop += 1;
-      win.style.zIndex = zTop;
+  // little harvest pulse when a fruit is clicked
+  document.querySelectorAll('.fruit').forEach((fruit) => {
+    fruit.addEventListener('click', () => {
+      fruit.classList.add('pulse');
+      setTimeout(() => fruit.classList.remove('pulse'), 500);
     });
-
-    bar.addEventListener('mousedown', (e) => {
-      if (e.target.classList.contains('traffic')) return;
-      dragging = true;
-      const rect = win.getBoundingClientRect();
-      offX = e.clientX - rect.left;
-      offY = e.clientY - rect.top;
-      win.style.left = rect.left + 'px';
-      win.style.top = rect.top + 'px';
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!dragging) return;
-      win.style.left = (e.clientX - offX) + 'px';
-      win.style.top = (e.clientY - offY) + 'px';
-    });
-
-    document.addEventListener('mouseup', () => { dragging = false; });
   });
-
-  function updateClock(){
-    const el = document.getElementById('clock');
-    const now = new Date();
-    let h = now.getHours();
-    const m = now.getMinutes().toString().padStart(2,'0');
-    const ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12; if (h === 0) h = 12;
-    el.textContent = `${h}:${m} ${ampm}`;
-  }
-  updateClock();
-  setInterval(updateClock, 15000);
-
-  // open About by default so the desktop doesn't look empty
-  openWindow('win-about');
 </script>
 
 </body>
