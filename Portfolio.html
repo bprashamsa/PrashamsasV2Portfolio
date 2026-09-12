@@ -151,6 +151,15 @@
     to{ stroke-dashoffset:-280; }
   }
 
+  .board-bulb{ filter:drop-shadow(0 0 6px var(--gold)); pointer-events:none; }
+  .board-bulb-glow{ fill:var(--gold); opacity:.35; animation:bulb-glow 1.4s ease-in-out infinite alternate; }
+  .board-bulb-glass{ fill:var(--gold); stroke:var(--orange); stroke-width:2; }
+  .board-bulb-base{ stroke:var(--orange); stroke-width:4; stroke-linecap:round; }
+  @keyframes bulb-glow{
+    from{ opacity:.2; transform:scale(.85); transform-origin:center; }
+    to{ opacity:.5; transform:scale(1.15); transform-origin:center; }
+  }
+
   /* chip at the center */
   .chip-body{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
   .chip-pin{ stroke:var(--line); stroke-width:3; stroke-linecap:round; }
@@ -322,6 +331,7 @@
     .block{ animation:none; opacity:1; }
     .trace-flow{ animation:none; stroke-dasharray:none; }
     .chip-pulse{ animation:none; opacity:0; }
+    .board-bulb{ display:none; }
     .node{ animation:none; }
     html{ scroll-behavior:auto; }
   }
@@ -361,6 +371,7 @@
           <pattern id="board-dots" width="40" height="40" patternUnits="userSpaceOnUse">
             <circle cx="2" cy="2" r="1.6" fill="var(--line)" opacity=".45"/>
           </pattern>
+          <path id="bulb-route" d="M285 282 L285 235 L225 175 L150 175 M285 282 L340 280 L340 150 L360 130 L360 108 M370 305 L430 305 L470 265 L500 265 L500 220 M310 380 L310 500 L320 510 L320 555"/>
         </defs>
         <g id="parallax-group">
 
@@ -390,6 +401,15 @@
 
           <path class="block trace" d="M310,380 L310,500 L320,510 L320,555" style="animation-delay:.20s"/>
           <path class="block trace-flow" d="M310,380 L310,500 L320,510 L320,555" stroke="var(--gold)" style="animation-delay:1.8s"/>
+
+          <g class="board-bulb" aria-label="Animated lightbulb following the circuit traces">
+            <circle class="board-bulb-glow" cx="0" cy="0" r="13"/>
+            <path class="board-bulb-glass" d="M0-9a9 9 0 1 0 0 18c-3 0-4 2-4 4h8c0-2-1-4-4-4a9 9 0 0 0 0-18z"/>
+            <path class="board-bulb-base" d="M-4 13h8M-3 17h6"/>
+            <animateMotion dur="8s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#bulb-route"/>
+            </animateMotion>
+          </g>
 
           <!-- chip -->
           <line class="block chip-pin" x1="290" y1="280" x2="290" y2="266" style="animation-delay:.22s"/>
