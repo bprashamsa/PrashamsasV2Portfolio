@@ -9,14 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:        #65881A;
-    --canopy:    #D24C28;
-    --rust:      #D24C28;
-    --orange:    #E78E17;
-    --gold:      #C5CF5E;
-    --ink:       #DFE1B5;
-    --ink-dim:   #C5CF5E;
-    --line:      #C5CF5E;
+    --bg:        #11222c;
+    --canopy:    #1c5858;
+    --rust:      #f69000;
+    --orange:    #f69000;
+    --gold:      #f6c624;
+    --ink:       #53b1b1;
+    --ink-dim:   #53b1b1;
+    --line:      #1c5858;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -44,7 +44,7 @@
   /* ---------- header ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(101,136,26,0.86);
+    background:rgba(17,34,44,0.86);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
   }
@@ -57,8 +57,8 @@
     width:20px; height:20px; border-radius:50%; background:var(--orange);
     position:relative; flex:none;
   }
-  .header-orange::before{ content:""; position:absolute; width:2px; height:7px; background:var(--bg); top:-5px; left:10px; transform:rotate(18deg); }
-  .header-orange::after{ content:""; position:absolute; width:8px; height:4px; border-radius:100% 0; background:var(--bg); top:-3px; left:12px; transform:rotate(-24deg); }
+  .header-orange::before{ content:""; position:absolute; width:2px; height:7px; background:var(--canopy); top:-5px; left:10px; transform:rotate(18deg); }
+  .header-orange::after{ content:""; position:absolute; width:8px; height:4px; border-radius:100% 0; background:var(--canopy); top:-3px; left:12px; transform:rotate(-24deg); }
   nav ul{ list-style:none; display:flex; gap:30px; font-size:14px; }
   nav a{ position:relative; color:var(--ink-dim); transition:color .15s ease; }
   nav a:hover{ color:var(--gold); }
@@ -174,7 +174,7 @@
     30%, 100%{ transform:rotate(0deg); }
   }
 
-  .orange-stem{ stroke:var(--bg); stroke-width:4; stroke-linecap:round; }
+  .orange-stem{ stroke:var(--canopy); stroke-width:4; stroke-linecap:round; }
   .fruit{ cursor:pointer; }
   .fruit-motion{ transform-box:view-box; transform-origin:0 0; }
 
@@ -270,9 +270,9 @@
     background:transparent; border:1.5px solid var(--line); color:var(--ink-dim);
     transition:border-color .15s ease, color .15s ease, background .15s ease;
   }
-  .skills-col:nth-child(1) .chip:hover{ border-color:var(--rust); color:var(--ink); background:rgba(210,76,40,0.12); }
-  .skills-col:nth-child(2) .chip:hover{ border-color:var(--orange); color:var(--ink); background:rgba(231,142,23,0.12); }
-  .skills-col:nth-child(3) .chip:hover{ border-color:var(--gold); color:var(--ink); background:rgba(197,207,94,0.12); }
+  .skills-col:nth-child(1) .chip:hover{ border-color:var(--rust); color:var(--ink); background:rgba(246,144,0,0.12); }
+  .skills-col:nth-child(2) .chip:hover{ border-color:var(--orange); color:var(--ink); background:rgba(246,144,0,0.12); }
+  .skills-col:nth-child(3) .chip:hover{ border-color:var(--gold); color:var(--ink); background:rgba(246,198,36,0.12); }
 
   /* contact */
   .contact-box{ display:grid; grid-template-columns:1.3fr 1fr; gap:50px; align-items:center; }
@@ -445,8 +445,8 @@
           <circle cx="245" cy="548" r="5" fill="var(--gold)"/>
           <circle cx="260" cy="568" r="5" fill="var(--gold)"/>
           <g aria-label="basket">
-            <path d="M220 570 Q240 540 260 570" fill="none" stroke="var(--bg)" stroke-width="5" stroke-linecap="round"/>
-            <path d="M215 568 Q240 575 265 568 L258 600 Q240 607 222 600 Z" fill="var(--rust)" stroke="var(--bg)" stroke-width="3"/>
+            <path d="M220 570 Q240 540 260 570" fill="none" stroke="var(--canopy)" stroke-width="5" stroke-linecap="round"/>
+            <path d="M215 568 Q240 575 265 568 L258 600 Q240 607 222 600 Z" fill="var(--rust)" stroke="var(--canopy)" stroke-width="3"/>
             <path d="M220 577h40M222 586h35" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
           </g>
           <path class="runner-leg" d="M201 590l-18 32" stroke="var(--rust)" stroke-width="9" stroke-linecap="round"/>
