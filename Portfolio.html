@@ -9,14 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:        #292c33;
-    --canopy:    #313e35;
-    --rust:      #b14b34;
-    --orange:    #e86726;
-    --gold:      #fe9b33;
-    --ink:       #e9e7df;
-    --ink-dim:   #9aa19b;
-    --line:      #454b4f;
+    --bg:        #65881A;
+    --canopy:    #D24C28;
+    --rust:      #D24C28;
+    --orange:    #E78E17;
+    --gold:      #C5CF5E;
+    --ink:       #DFE1B5;
+    --ink-dim:   #C5CF5E;
+    --line:      #C5CF5E;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -37,14 +37,14 @@
   }
   .mono{ font-family:'JetBrains Mono', monospace; }
   a{ color:inherit; text-decoration:none; }
-  ::selection{ background:var(--orange); color:#1a1c20; }
+  ::selection{ background:var(--orange); color:var(--bg); }
 
   .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
 
   /* ---------- header ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(41,44,51,0.86);
+    background:rgba(101,136,26,0.86);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
   }
@@ -57,8 +57,8 @@
     width:20px; height:20px; border-radius:50%; background:var(--orange);
     position:relative; flex:none;
   }
-  .header-orange::before{ content:""; position:absolute; width:2px; height:7px; background:#384b49; top:-5px; left:10px; transform:rotate(18deg); }
-  .header-orange::after{ content:""; position:absolute; width:8px; height:4px; border-radius:100% 0; background:#384b49; top:-3px; left:12px; transform:rotate(-24deg); }
+  .header-orange::before{ content:""; position:absolute; width:2px; height:7px; background:var(--bg); top:-5px; left:10px; transform:rotate(18deg); }
+  .header-orange::after{ content:""; position:absolute; width:8px; height:4px; border-radius:100% 0; background:var(--bg); top:-3px; left:12px; transform:rotate(-24deg); }
   nav ul{ list-style:none; display:flex; gap:30px; font-size:14px; }
   nav a{ position:relative; color:var(--ink-dim); transition:color .15s ease; }
   nav a:hover{ color:var(--gold); }
@@ -99,7 +99,7 @@
   .btn{
     display:inline-block; padding:13px 24px;
     font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14px;
-    background:var(--orange); color:#1a1a1a;
+    background:var(--orange); color:var(--bg);
     box-shadow:6px 6px 0 var(--rust);
     transition:transform .15s ease, box-shadow .15s ease;
   }
@@ -174,7 +174,7 @@
     30%, 100%{ transform:rotate(0deg); }
   }
 
-  .orange-stem{ stroke:#384b49; stroke-width:4; stroke-linecap:round; }
+  .orange-stem{ stroke:var(--bg); stroke-width:4; stroke-linecap:round; }
   .fruit{ cursor:pointer; }
   .fruit-motion{ transform-box:view-box; transform-origin:0 0; }
 
@@ -270,9 +270,9 @@
     background:transparent; border:1.5px solid var(--line); color:var(--ink-dim);
     transition:border-color .15s ease, color .15s ease, background .15s ease;
   }
-  .skills-col:nth-child(1) .chip:hover{ border-color:var(--rust); color:var(--ink); background:rgba(177,75,52,0.12); }
-  .skills-col:nth-child(2) .chip:hover{ border-color:var(--orange); color:var(--ink); background:rgba(232,103,38,0.12); }
-  .skills-col:nth-child(3) .chip:hover{ border-color:var(--gold); color:var(--ink); background:rgba(254,155,51,0.12); }
+  .skills-col:nth-child(1) .chip:hover{ border-color:var(--rust); color:var(--ink); background:rgba(210,76,40,0.12); }
+  .skills-col:nth-child(2) .chip:hover{ border-color:var(--orange); color:var(--ink); background:rgba(231,142,23,0.12); }
+  .skills-col:nth-child(3) .chip:hover{ border-color:var(--gold); color:var(--ink); background:rgba(197,207,94,0.12); }
 
   /* contact */
   .contact-box{ display:grid; grid-template-columns:1.3fr 1fr; gap:50px; align-items:center; }
@@ -348,30 +348,30 @@
 
             <!-- trunk -->
             <g>
-              <rect class="block" x="295" y="560" width="90" height="58" rx="16" fill="#313e35" style="animation-delay:.02s"/>
-              <rect class="block" x="302" y="505" width="74" height="60" rx="16" fill="#313e35" transform="rotate(-1.5 339 535)" style="animation-delay:.06s"/>
-              <rect class="block" x="296" y="450" width="82" height="60" rx="16" fill="#313e35" transform="rotate(1.5 337 480)" style="animation-delay:.10s"/>
-              <rect class="block" x="304" y="400" width="66" height="56" rx="16" fill="#313e35" transform="rotate(-2 337 428)" style="animation-delay:.14s"/>
+              <rect class="block" x="295" y="560" width="90" height="58" rx="16" fill="var(--canopy)" style="animation-delay:.02s"/>
+              <rect class="block" x="302" y="505" width="74" height="60" rx="16" fill="var(--canopy)" transform="rotate(-1.5 339 535)" style="animation-delay:.06s"/>
+              <rect class="block" x="296" y="450" width="82" height="60" rx="16" fill="var(--canopy)" transform="rotate(1.5 337 480)" style="animation-delay:.10s"/>
+              <rect class="block" x="304" y="400" width="66" height="56" rx="16" fill="var(--canopy)" transform="rotate(-2 337 428)" style="animation-delay:.14s"/>
             </g>
 
             <!-- canopy: rounder, denser, softer edges -->
             <g>
-              <rect class="block" x="150" y="230" width="94" height="84" rx="20" fill="#313e35" opacity=".95" transform="rotate(-4 197 272)" style="animation-delay:.18s"/>
-              <rect class="block" x="190" y="168" width="98" height="88" rx="20" fill="#313e35" transform="rotate(3 239 212)" style="animation-delay:.20s"/>
-              <rect class="block" x="252" y="118" width="102" height="92" rx="22" fill="#313e35" transform="rotate(-2 303 164)" style="animation-delay:.22s"/>
-              <rect class="block" x="322" y="90"  width="108" height="96" rx="22" fill="#313e35" transform="rotate(2 376 138)" style="animation-delay:.24s"/>
-              <rect class="block" x="392" y="106" width="98" height="90" rx="20" fill="#313e35" transform="rotate(-3 441 151)" style="animation-delay:.26s"/>
-              <rect class="block" x="447" y="150" width="92" height="86" rx="20" fill="#313e35" opacity=".95" transform="rotate(4 493 193)" style="animation-delay:.28s"/>
-              <rect class="block" x="482" y="212" width="88" height="82" rx="20" fill="#313e35" transform="rotate(-2 526 253)" style="animation-delay:.30s"/>
-              <rect class="block" x="472" y="272" width="92" height="86" rx="20" fill="#313e35" transform="rotate(3 518 315)" style="animation-delay:.32s"/>
-              <rect class="block" x="432" y="322" width="92" height="86" rx="20" fill="#313e35" opacity=".95" transform="rotate(-3 478 365)" style="animation-delay:.34s"/>
-              <rect class="block" x="372" y="342" width="98" height="82" rx="22" fill="#313e35" transform="rotate(2 421 383)" style="animation-delay:.36s"/>
-              <rect class="block" x="302" y="347" width="94" height="82" rx="22" fill="#313e35" transform="rotate(-2 349 388)" style="animation-delay:.38s"/>
-              <rect class="block" x="237" y="332" width="90" height="82" rx="20" fill="#313e35" transform="rotate(3 282 373)" style="animation-delay:.40s"/>
-              <rect class="block" x="187" y="292" width="86" height="82" rx="20" fill="#313e35" opacity=".95" transform="rotate(-3 230 333)" style="animation-delay:.42s"/>
-              <rect class="block" x="274" y="202" width="104" height="98" rx="24" fill="#313e35" transform="rotate(1 326 251)" style="animation-delay:.44s"/>
-              <rect class="block" x="344" y="222" width="104" height="98" rx="24" fill="#313e35" transform="rotate(-1.5 396 271)" style="animation-delay:.46s"/>
-              <rect class="block" x="308" y="272" width="98" height="90" rx="22" fill="#313e35" opacity=".97" transform="rotate(1.5 357 317)" style="animation-delay:.48s"/>
+              <rect class="block" x="150" y="230" width="94" height="84" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-4 197 272)" style="animation-delay:.18s"/>
+              <rect class="block" x="190" y="168" width="98" height="88" rx="20" fill="var(--canopy)" transform="rotate(3 239 212)" style="animation-delay:.20s"/>
+              <rect class="block" x="252" y="118" width="102" height="92" rx="22" fill="var(--canopy)" transform="rotate(-2 303 164)" style="animation-delay:.22s"/>
+              <rect class="block" x="322" y="90"  width="108" height="96" rx="22" fill="var(--canopy)" transform="rotate(2 376 138)" style="animation-delay:.24s"/>
+              <rect class="block" x="392" y="106" width="98" height="90" rx="20" fill="var(--canopy)" transform="rotate(-3 441 151)" style="animation-delay:.26s"/>
+              <rect class="block" x="447" y="150" width="92" height="86" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(4 493 193)" style="animation-delay:.28s"/>
+              <rect class="block" x="482" y="212" width="88" height="82" rx="20" fill="var(--canopy)" transform="rotate(-2 526 253)" style="animation-delay:.30s"/>
+              <rect class="block" x="472" y="272" width="92" height="86" rx="20" fill="var(--canopy)" transform="rotate(3 518 315)" style="animation-delay:.32s"/>
+              <rect class="block" x="432" y="322" width="92" height="86" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-3 478 365)" style="animation-delay:.34s"/>
+              <rect class="block" x="372" y="342" width="98" height="82" rx="22" fill="var(--canopy)" transform="rotate(2 421 383)" style="animation-delay:.36s"/>
+              <rect class="block" x="302" y="347" width="94" height="82" rx="22" fill="var(--canopy)" transform="rotate(-2 349 388)" style="animation-delay:.38s"/>
+              <rect class="block" x="237" y="332" width="90" height="82" rx="20" fill="var(--canopy)" transform="rotate(3 282 373)" style="animation-delay:.40s"/>
+              <rect class="block" x="187" y="292" width="86" height="82" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-3 230 333)" style="animation-delay:.42s"/>
+              <rect class="block" x="274" y="202" width="104" height="98" rx="24" fill="var(--canopy)" transform="rotate(1 326 251)" style="animation-delay:.44s"/>
+              <rect class="block" x="344" y="222" width="104" height="98" rx="24" fill="var(--canopy)" transform="rotate(-1.5 396 271)" style="animation-delay:.46s"/>
+              <rect class="block" x="308" y="272" width="98" height="90" rx="22" fill="var(--canopy)" opacity=".97" transform="rotate(1.5 357 317)" style="animation-delay:.48s"/>
             </g>
 
             <!-- decorative small fruit -->
@@ -436,21 +436,21 @@
 
         <!-- a small runner arrives at the trunk and shakes the tree -->
         <g id="runner-group" aria-hidden="true">
-          <circle cx="205" cy="530" r="14" fill="#fe9b33"/>
-          <path d="M193 526c3-13 21-16 27-4-7-3-15-2-23 5z" fill="#b14b34"/>
-          <circle cx="191" cy="532" r="7" fill="#b14b34"/>
-          <path d="M195 550c7-7 22-7 29 0l-3 42h-30z" fill="#e86726"/>
-          <path d="M198 556l47-8" stroke="#fe9b33" stroke-width="8" stroke-linecap="round"/>
-          <path d="M220 556l40 12" stroke="#fe9b33" stroke-width="8" stroke-linecap="round"/>
-          <circle cx="245" cy="548" r="5" fill="#fe9b33"/>
-          <circle cx="260" cy="568" r="5" fill="#fe9b33"/>
+          <circle cx="205" cy="530" r="14" fill="var(--gold)"/>
+          <path d="M193 526c3-13 21-16 27-4-7-3-15-2-23 5z" fill="var(--rust)"/>
+          <circle cx="191" cy="532" r="7" fill="var(--rust)"/>
+          <path d="M195 550c7-7 22-7 29 0l-3 42h-30z" fill="var(--orange)"/>
+          <path d="M198 556l47-8" stroke="var(--gold)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M220 556l40 12" stroke="var(--gold)" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="245" cy="548" r="5" fill="var(--gold)"/>
+          <circle cx="260" cy="568" r="5" fill="var(--gold)"/>
           <g aria-label="basket">
-            <path d="M220 570 Q240 540 260 570" fill="none" stroke="#384b49" stroke-width="5" stroke-linecap="round"/>
-            <path d="M215 568 Q240 575 265 568 L258 600 Q240 607 222 600 Z" fill="#b14b34" stroke="#384b49" stroke-width="3"/>
-            <path d="M220 577h40M222 586h35" stroke="#fe9b33" stroke-width="3" stroke-linecap="round"/>
+            <path d="M220 570 Q240 540 260 570" fill="none" stroke="var(--bg)" stroke-width="5" stroke-linecap="round"/>
+            <path d="M215 568 Q240 575 265 568 L258 600 Q240 607 222 600 Z" fill="var(--rust)" stroke="var(--bg)" stroke-width="3"/>
+            <path d="M220 577h40M222 586h35" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
           </g>
-          <path class="runner-leg" d="M201 590l-18 32" stroke="#b14b34" stroke-width="9" stroke-linecap="round"/>
-          <path class="runner-leg back" d="M218 590l23 27" stroke="#b14b34" stroke-width="9" stroke-linecap="round"/>
+          <path class="runner-leg" d="M201 590l-18 32" stroke="var(--rust)" stroke-width="9" stroke-linecap="round"/>
+          <path class="runner-leg back" d="M218 590l23 27" stroke="var(--rust)" stroke-width="9" stroke-linecap="round"/>
         </g>
       </svg>
     </div>
