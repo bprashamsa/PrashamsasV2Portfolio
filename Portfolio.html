@@ -107,7 +107,7 @@
   .btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--line); box-shadow:none; }
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); transform:none; box-shadow:none; }
 
-  .tree-holder{
+  .board-holder{
     flex:1 1 auto;
     display:flex;
     justify-content:center;
@@ -115,73 +115,104 @@
     min-width:0;
     cursor:default;
   }
-  .tree-holder svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .board-holder svg{ width:100%; height:auto; display:block; overflow:visible; }
 
   .block{
     transform-origin:center;
     opacity:0;
-    animation:rise .6s cubic-bezier(.2,.9,.3,1) forwards;
+    animation:rise .5s cubic-bezier(.2,.9,.3,1) forwards;
   }
   @keyframes rise{
-    from{ opacity:0; transform:translateY(16px) scale(.92); }
-    to{ opacity:1; transform:translateY(0) scale(1); }
+    from{ opacity:0; transform:scale(.9); }
+    to{ opacity:1; transform:scale(1); }
   }
 
   #parallax-group{ transition:transform .25s cubic-bezier(.2,.7,.3,1); }
-  #sway-group{
-    transform-box:fill-box;
-    transform-origin:50% 100%;
-    animation:sway 7s ease-in-out infinite alternate;
+
+  /* board substrate + silkscreen grid */
+  .board-plate{ fill:var(--canopy); opacity:.9; }
+  .board-grid{ stroke:var(--bg); stroke-width:1; opacity:.5; }
+
+  /* traces */
+  .trace{
+    fill:none;
+    stroke:var(--line);
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
   }
-  #tree-body{
-    transform-box:fill-box;
-    transform-origin:50% 100%;
-    animation:tree-shake 9s ease-in-out infinite;
-    display:none;
+  .trace-flow{
+    fill:none;
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-dasharray:6 22;
+    animation:flow 2.6s linear infinite;
   }
-  #tree-body > g:nth-child(2) rect{
-    rx: 40px;
-    ry: 40px;
-    stroke: var(--canopy);
-    stroke-width: 10;
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-  }
-  @keyframes sway{
-    from{ transform:rotate(-1.1deg); }
-    to{ transform:rotate(1.1deg); }
-  }
-  @keyframes tree-shake{
-    0%, 36%, 100%{ transform:rotate(0deg); }
-    40%{ transform:rotate(-1.5deg); }
-    44%{ transform:rotate(1.8deg); }
-    48%{ transform:rotate(-1.2deg); }
-    52%{ transform:rotate(.8deg); }
-    56%{ transform:rotate(0deg); }
+  @keyframes flow{
+    to{ stroke-dashoffset:-280; }
   }
 
-  .orange-stem{ stroke:#a5c90f; stroke-width:4; stroke-linecap:round; }
-  .fruit{ cursor:pointer; }
-  .fruit-motion{ transform-box:view-box; transform-origin:0 0; }
+  /* chip at the center */
+  .chip-body{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
+  .chip-pin{ stroke:var(--line); stroke-width:3; stroke-linecap:round; }
+  .chip-mark{
+    fill:none;
+    stroke:var(--ink-dim);
+    stroke-width:2;
+    stroke-linecap:round;
+    opacity:.75;
+  }
+  .chip-pulse{
+    fill:none;
+    stroke:var(--gold);
+    stroke-width:2;
+    opacity:0;
+    animation:chip-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes chip-pulse{
+    0%{ opacity:.55; stroke-width:2; }
+    70%{ opacity:0; stroke-width:14; }
+    100%{ opacity:0; }
+  }
 
-  .fruit circle, .fruit ellipse{ transition:transform .2s cubic-bezier(.34,1.56,.64,1); transform-origin:center; transform-box:fill-box; }
-  .fruit:hover circle, .fruit:hover ellipse{ transform:scale(1.18); }
-  .fruit.pulse circle{ animation:pulse .5s ease; }
+  /* small passive components strung along the traces */
+  .component{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
+  .via{ fill:var(--bg); stroke:var(--line); stroke-width:2.5; }
+
+  .node{ cursor:pointer; }
+  .node-motion{ transform-box:view-box; transform-origin:0 0; }
+
+  .node-ring{
+    fill:none;
+    stroke-width:2;
+    opacity:.55;
+    transition:opacity .2s ease, transform .2s ease;
+    transform-origin:center;
+    transform-box:fill-box;
+  }
+  .node-pad{
+    transition:transform .2s cubic-bezier(.34,1.56,.64,1);
+    transform-origin:center;
+    transform-box:fill-box;
+  }
+  .node:hover .node-pad{ transform:scale(1.16); }
+  .node:hover .node-ring{ opacity:1; transform:scale(1.35); }
+  .node.pulse .node-pad{ animation:pulse .5s ease; }
   @keyframes pulse{
     0%{ transform:scale(1); }
     40%{ transform:scale(1.5); }
     100%{ transform:scale(1); }
   }
-  .fruit-label{
+  .node-label{
     font-family:'JetBrains Mono', monospace;
     font-size:12px;
     fill:var(--ink);
     opacity:.82;
-    transform:translateY(4px);
     transition:opacity .15s ease, transform .15s ease;
     pointer-events:none;
   }
-  .fruit:hover .fruit-label{ opacity:1; transform:translateY(0); }
+  .node:hover .node-label{ opacity:1; }
 
   .scroll-cue{
     position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
@@ -280,7 +311,7 @@
     .hero-inner{ flex-direction:column-reverse; text-align:center; }
     .hero-copy{ max-width:520px; text-align:center; }
     .hero-copy .cta-row{ justify-content:center; }
-    .tree-holder{ max-width:560px; }
+    .board-holder{ max-width:560px; }
     .section-head{ grid-template-columns:1fr; gap:14px; }
     .about-grid{ grid-template-columns:1fr; gap:40px; }
     .work-grid{ grid-template-columns:1fr; }
@@ -291,8 +322,9 @@
 
   @media (prefers-reduced-motion: reduce){
     .block{ animation:none; opacity:1; }
-    #sway-group{ animation:none; }
-    #tree-body, .fruit{ animation:none; }
+    .trace-flow{ animation:none; stroke-dasharray:none; }
+    .chip-pulse{ animation:none; opacity:0; }
+    .node{ animation:none; }
     #parallax-group{ transition:none; }
     html{ scroll-behavior:auto; }
   }
@@ -319,147 +351,100 @@
     <div class="hero-copy">
       <h1>Prashamsa Bandarapu</h1>
       <div class="role mono">cybersecurity · data science · engineering</div>
-      <p class="tag">I defend systems, model the data that runs through them, and engineer the infrastructure that holds it all up. Move the cursor around the tree — the fruit link out to what I do.</p>
+      <p class="tag">I defend systems, model the data that runs through them, and engineer the infrastructure that holds it all up. Tilt the board, then follow a trace to what I do.</p>
       <div class="cta-row">
         <a class="btn" href="#work">See the work</a>
         <a class="btn ghost" href="#contact">Get in touch</a>
       </div>
     </div>
 
-    <div class="tree-holder" id="tree-holder">
-      <svg viewBox="0 0 640 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An illustrated tree with four oranges linking to the About, Work, Skills, and Contact sections">
+    <div class="board-holder" id="board-holder">
+      <svg viewBox="0 0 640 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An illustrated circuit board with a central chip tracing out to four pads linking to the About, Work, Skills, and Contact sections">
+        <defs>
+          <pattern id="board-dots" width="40" height="40" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.6" fill="var(--line)" opacity=".45"/>
+          </pattern>
+        </defs>
         <g id="parallax-group">
-          <g id="sway-group">
-            <g id="tree-body">
 
-            <!-- trunk -->
-            <g>
-              <rect class="block" x="295" y="560" width="90" height="58" rx="16" fill="var(--canopy)" style="animation-delay:.02s"/>
-              <rect class="block" x="302" y="505" width="74" height="60" rx="16" fill="var(--canopy)" transform="rotate(-1.5 339 535)" style="animation-delay:.06s"/>
-              <rect class="block" x="296" y="450" width="82" height="60" rx="16" fill="var(--canopy)" transform="rotate(1.5 337 480)" style="animation-delay:.10s"/>
-              <rect class="block" x="304" y="400" width="66" height="56" rx="16" fill="var(--canopy)" transform="rotate(-2 337 428)" style="animation-delay:.14s"/>
-            </g>
+          <!-- substrate -->
+          <rect class="block" x="60" y="50" width="520" height="560" rx="24" fill="url(#board-dots)" style="animation-delay:.02s"/>
+          <rect class="block" x="60" y="50" width="520" height="560" rx="24" fill="none" stroke="var(--line)" stroke-width="2" style="animation-delay:.04s"/>
+          <circle class="block via" cx="85" cy="75" r="7" style="animation-delay:.06s"/>
+          <circle class="block via" cx="555" cy="75" r="7" style="animation-delay:.06s"/>
+          <circle class="block via" cx="85" cy="585" r="7" style="animation-delay:.06s"/>
+          <circle class="block via" cx="555" cy="585" r="7" style="animation-delay:.06s"/>
 
-            <!-- canopy: rounder, denser, softer edges -->
-            <g>
-              <rect class="block" x="150" y="230" width="94" height="84" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-4 197 272)" style="animation-delay:.18s"/>
-              <rect class="block" x="190" y="168" width="98" height="88" rx="20" fill="var(--canopy)" transform="rotate(3 239 212)" style="animation-delay:.20s"/>
-              <rect class="block" x="252" y="118" width="102" height="92" rx="22" fill="var(--canopy)" transform="rotate(-2 303 164)" style="animation-delay:.22s"/>
-              <rect class="block" x="322" y="90"  width="108" height="96" rx="22" fill="var(--canopy)" transform="rotate(2 376 138)" style="animation-delay:.24s"/>
-              <rect class="block" x="392" y="106" width="98" height="90" rx="20" fill="var(--canopy)" transform="rotate(-3 441 151)" style="animation-delay:.26s"/>
-              <rect class="block" x="447" y="150" width="92" height="86" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(4 493 193)" style="animation-delay:.28s"/>
-              <rect class="block" x="482" y="212" width="88" height="82" rx="20" fill="var(--canopy)" transform="rotate(-2 526 253)" style="animation-delay:.30s"/>
-              <rect class="block" x="472" y="272" width="92" height="86" rx="20" fill="var(--canopy)" transform="rotate(3 518 315)" style="animation-delay:.32s"/>
-              <rect class="block" x="432" y="322" width="92" height="86" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-3 478 365)" style="animation-delay:.34s"/>
-              <rect class="block" x="372" y="342" width="98" height="82" rx="22" fill="var(--canopy)" transform="rotate(2 421 383)" style="animation-delay:.36s"/>
-              <rect class="block" x="302" y="347" width="94" height="82" rx="22" fill="var(--canopy)" transform="rotate(-2 349 388)" style="animation-delay:.38s"/>
-              <rect class="block" x="237" y="332" width="90" height="82" rx="20" fill="var(--canopy)" transform="rotate(3 282 373)" style="animation-delay:.40s"/>
-              <rect class="block" x="187" y="292" width="86" height="82" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-3 230 333)" style="animation-delay:.42s"/>
-              <rect class="block" x="274" y="202" width="104" height="98" rx="24" fill="var(--canopy)" transform="rotate(1 326 251)" style="animation-delay:.44s"/>
-              <rect class="block" x="344" y="222" width="104" height="98" rx="24" fill="var(--canopy)" transform="rotate(-1.5 396 271)" style="animation-delay:.46s"/>
-              <rect class="block" x="308" y="272" width="98" height="90" rx="22" fill="var(--canopy)" opacity=".97" transform="rotate(1.5 357 317)" style="animation-delay:.48s"/>
-            </g>
+          <!-- decorative stub traces + passive components -->
+          <path class="block trace" d="M270,340 L210,340 L185,365 L185,410" style="animation-delay:.10s"/>
+          <rect class="block component" x="170" y="408" width="30" height="16" rx="3" style="animation-delay:.30s"/>
+          <path class="block trace" d="M370,360 L440,360 L465,385 L465,430" style="animation-delay:.12s"/>
+          <circle class="block component" cx="465" cy="440" r="9" style="animation-delay:.32s"/>
 
-            <!-- decorative small fruit -->
-            <g class="block" style="animation-delay:.66s">
-              <path class="orange-stem" d="M405 289v-8"/>
-              <circle cx="405" cy="300" r="11" fill="var(--orange)"/>
-            </g>
-            <g class="block" style="animation-delay:.68s">
-              <path class="orange-stem" d="M295 145v-8"/>
-              <circle cx="295" cy="155" r="10" fill="var(--orange)"/>
-            </g>
-            <g class="block" style="animation-delay:.70s">
-              <path class="orange-stem" d="M485 243v-8"/>
-              <circle cx="485" cy="255" r="12" fill="var(--orange)"/>
-            </g>
-            <g class="block" style="animation-delay:.72s">
-              <path class="orange-stem" d="M230 245v-8"/>
-              <circle cx="230" cy="255" r="10" fill="var(--orange)"/>
-            </g>
+          <!-- traces to nav pads -->
+          <path class="block trace" d="M285,282 L285,235 L225,175 L150,175" style="animation-delay:.14s"/>
+          <path class="block trace-flow" d="M285,282 L285,235 L225,175 L150,175" stroke="var(--orange)" style="animation-delay:0s"/>
 
-            <!-- interactive fruit / nav -->
-            <a href="#about" class="fruit fruit-about" aria-label="Go to About section">
-              <g class="fruit-motion" data-fruit="about">
-                <g class="fruit-scale">
-                  <path class="orange-stem" d="M218 191v-13"/>
-                  <circle class="block" cx="218" cy="210" r="19" fill="var(--orange)" style="animation-delay:.52s"/>
-                  <text class="fruit-label" x="218" y="160" text-anchor="middle">about</text>
-                </g>
-              </g>
-            </a>
-            <a href="#work" class="fruit fruit-work" aria-label="Go to Work section">
-              <g class="fruit-motion" data-fruit="work">
-                <g class="fruit-scale">
-                  <path class="orange-stem" d="M360 108V94"/>
-                  <circle class="block" cx="360" cy="128" r="20" fill="var(--orange)" style="animation-delay:.56s"/>
-                  <text class="fruit-label" x="360" y="76" text-anchor="middle">work</text>
-                </g>
-              </g>
-            </a>
-            <a href="#skills" class="fruit fruit-skills" aria-label="Go to Skills section">
-              <g class="fruit-motion" data-fruit="skills">
-                <g class="fruit-scale">
-                  <path class="orange-stem" d="M480 181v-13"/>
-                  <circle class="block" cx="480" cy="200" r="19" fill="var(--orange)" style="animation-delay:.60s"/>
-                  <text class="fruit-label" x="480" y="150" text-anchor="middle">skills</text>
-                </g>
-              </g>
-            </a>
-            <a href="#contact" class="fruit fruit-contact" aria-label="Go to Contact section">
-              <g class="fruit-motion" data-fruit="contact">
-                <g class="fruit-scale">
-                  <path class="orange-stem" d="M270 351v-13"/>
-                  <circle class="block" cx="270" cy="370" r="19" fill="var(--orange)" style="animation-delay:.64s"/>
-                  <text class="fruit-label" x="270" y="414" text-anchor="middle">contact</text>
-                </g>
-              </g>
-            </a>
+          <path class="block trace" d="M340,280 L340,150 L360,130 L360,108" style="animation-delay:.16s"/>
+          <path class="block trace-flow" d="M340,280 L340,150 L360,130 L360,108" stroke="var(--gold)" style="animation-delay:.6s"/>
 
+          <path class="block trace" d="M370,305 L430,305 L470,265 L500,265 L500,220" style="animation-delay:.18s"/>
+          <path class="block trace-flow" d="M370,305 L430,305 L470,265 L500,265 L500,220" stroke="var(--orange)" style="animation-delay:1.2s"/>
+
+          <path class="block trace" d="M310,380 L310,500 L320,510 L320,555" style="animation-delay:.20s"/>
+          <path class="block trace-flow" d="M310,380 L310,500 L320,510 L320,555" stroke="var(--gold)" style="animation-delay:1.8s"/>
+
+          <!-- chip -->
+          <line class="block chip-pin" x1="290" y1="280" x2="290" y2="266" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="320" y1="280" x2="320" y2="266" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="350" y1="280" x2="350" y2="266" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="290" y1="380" x2="290" y2="394" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="320" y1="380" x2="320" y2="394" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="350" y1="380" x2="350" y2="394" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="270" y1="300" x2="256" y2="300" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="270" y1="360" x2="256" y2="360" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="370" y1="300" x2="384" y2="300" style="animation-delay:.22s"/>
+          <line class="block chip-pin" x1="370" y1="360" x2="384" y2="360" style="animation-delay:.22s"/>
+          <circle class="chip-pulse" cx="320" cy="330" r="55"/>
+          <circle class="chip-pulse" cx="320" cy="330" r="55" style="animation-delay:1.3s"/>
+          <rect class="block chip-body" x="270" y="280" width="100" height="100" rx="10" style="animation-delay:.24s"/>
+          <text class="block chip-mark" x="320" y="337" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="15" fill="var(--ink-dim)" stroke="none" style="animation-delay:.26s">PB</text>
+
+          <!-- interactive pads / nav -->
+          <a href="#about" class="node node-about" aria-label="Go to About section">
+            <g class="node-motion" data-node="about">
+              <circle class="node-ring" cx="150" cy="175" r="26" stroke="var(--orange)"/>
+              <circle class="block node-pad" cx="150" cy="175" r="17" fill="var(--orange)" style="animation-delay:.50s"/>
+              <circle class="via" cx="150" cy="175" r="6"/>
+              <text class="node-label" x="150" y="138" text-anchor="middle">about</text>
             </g>
-            <g id="branch-body" aria-label="Orange branches with leaves">
-              <path class="branch-main" d="M665 620 C585 575 610 485 535 430 C475 386 510 315 444 270" stroke-width="32"/>
-              <path class="branch-main" d="M620 505 C555 462 570 375 575 286 C580 205 540 145 472 112" stroke-width="20"/>
-              <path class="branch-main" d="M610 555 C535 555 480 520 405 470 C370 445 340 425 305 418" stroke-width="14"/>
-              <path class="branch-main" d="M555 390 C520 350 535 315 548 280" stroke-width="10"/>
-
-              <circle class="branch-joint" cx="535" cy="430" r="18"/>
-              <circle class="branch-joint" cx="575" cy="286" r="13"/>
-              <circle class="branch-joint" cx="405" cy="470" r="10"/>
-
-              <ellipse class="branch-leaf" cx="515" cy="375" rx="34" ry="15" transform="rotate(-32 515 375)"/>
-              <ellipse class="branch-leaf alt" cx="570" cy="350" rx="29" ry="13" transform="rotate(34 570 350)"/>
-              <ellipse class="branch-leaf" cx="528" cy="205" rx="37" ry="16" transform="rotate(-28 528 205)"/>
-              <ellipse class="branch-leaf alt" cx="600" cy="220" rx="30" ry="13" transform="rotate(30 600 220)"/>
-              <ellipse class="branch-leaf" cx="448" cy="505" rx="35" ry="15" transform="rotate(24 448 505)"/>
-              <ellipse class="branch-leaf alt" cx="360" cy="435" rx="27" ry="12" transform="rotate(-28 360 435)"/>
-              <ellipse class="branch-leaf" cx="440" cy="170" rx="30" ry="13" transform="rotate(28 440 170)"/>
-              <ellipse class="branch-leaf alt" cx="492" cy="80" rx="32" ry="14" transform="rotate(-18 492 80)"/>
-
-              <a href="#about" class="fruit" aria-label="Go to About section">
-                <path class="orange-stem" d="M444 252v-27"/>
-                <ellipse class="block" cx="444" cy="270" rx="25" ry="20" fill="var(--orange)"/>
-                <text class="fruit-label" x="444" y="304" text-anchor="middle">about</text>
-              </a>
-              <a href="#work" class="fruit" aria-label="Go to Work section">
-                <path class="orange-stem" d="M472 113V80"/>
-                <circle class="block" cx="472" cy="112" r="27" fill="var(--orange)"/>
-                <text class="fruit-label" x="472" y="66" text-anchor="middle">work</text>
-              </a>
-              <a href="#skills" class="fruit" aria-label="Go to Skills section">
-                <path class="orange-stem" d="M548 281v-30"/>
-                <ellipse class="block" cx="548" cy="286" rx="18" ry="29" fill="var(--orange)"/>
-                <text class="fruit-label" x="548" y="326" text-anchor="middle">skills</text>
-              </a>
-              <a href="#contact" class="fruit" aria-label="Go to Contact section">
-                <path class="orange-stem" d="M405 470v-25"/>
-                <circle class="block" cx="405" cy="470" r="18" fill="var(--orange)"/>
-                <text class="fruit-label" x="405" y="508" text-anchor="middle">contact</text>
-              </a>
+          </a>
+          <a href="#work" class="node node-work" aria-label="Go to Work section">
+            <g class="node-motion" data-node="work">
+              <circle class="node-ring" cx="360" cy="108" r="27" stroke="var(--gold)"/>
+              <circle class="block node-pad" cx="360" cy="108" r="18" fill="var(--gold)" style="animation-delay:.54s"/>
+              <circle class="via" cx="360" cy="108" r="6"/>
+              <text class="node-label" x="360" y="70" text-anchor="middle">work</text>
             </g>
-          </g>
+          </a>
+          <a href="#skills" class="node node-skills" aria-label="Go to Skills section">
+            <g class="node-motion" data-node="skills">
+              <circle class="node-ring" cx="500" cy="220" r="26" stroke="var(--orange)"/>
+              <circle class="block node-pad" cx="500" cy="220" r="17" fill="var(--orange)" style="animation-delay:.58s"/>
+              <circle class="via" cx="500" cy="220" r="6"/>
+              <text class="node-label" x="500" y="183" text-anchor="middle">skills</text>
+            </g>
+          </a>
+          <a href="#contact" class="node node-contact" aria-label="Go to Contact section">
+            <g class="node-motion" data-node="contact">
+              <circle class="node-ring" cx="320" cy="558" r="26" stroke="var(--gold)"/>
+              <circle class="block node-pad" cx="320" cy="558" r="17" fill="var(--gold)" style="animation-delay:.62s"/>
+              <circle class="via" cx="320" cy="558" r="6"/>
+              <text class="node-label" x="320" y="602" text-anchor="middle">contact</text>
+            </g>
+          </a>
+
         </g>
-
       </svg>
     </div>
   </div>
@@ -586,11 +571,11 @@
   </div>
 </section>
 
-<footer>Prashamsa Bandarapu — grown, not templated.</footer>
+<footer>Prashamsa Bandarapu — etched, not templated.</footer>
 
 <script>
-  // gentle cursor parallax on the tree
-  const holder = document.getElementById('tree-holder');
+  // gentle cursor parallax on the board, like tilting it in your hands
+  const holder = document.getElementById('board-holder');
   const parallax = document.getElementById('parallax-group');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -599,9 +584,9 @@
       const rect = holder.getBoundingClientRect();
       const px = (e.clientX - rect.left) / rect.width - 0.5;
       const py = (e.clientY - rect.top) / rect.height - 0.5;
-      const tx = px * 16;
-      const ty = py * 10;
-      const rot = px * 2.2;
+      const tx = px * 14;
+      const ty = py * 8;
+      const rot = px * 1.8;
       parallax.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
     });
     holder.addEventListener('mouseleave', () => {
@@ -609,11 +594,11 @@
     });
   }
 
-  // little harvest pulse when a fruit is clicked
-  document.querySelectorAll('.fruit').forEach((fruit) => {
-    fruit.addEventListener('click', () => {
-      fruit.classList.add('pulse');
-      setTimeout(() => fruit.classList.remove('pulse'), 500);
+  // little discharge pulse when a pad is clicked
+  document.querySelectorAll('.node').forEach((node) => {
+    node.addEventListener('click', () => {
+      node.classList.add('pulse');
+      setTimeout(() => node.classList.remove('pulse'), 500);
     });
   });
 
