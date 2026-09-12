@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prashamsa Bandarapu — Security, Data & Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #11222c;
+    --canopy:    #1c5858;
+    --rust:      #f69000;
+    --orange:    #f69000;
+    --gold:      #f6c624;
+    --ink:       #53b1b1;
+    --ink-dim:   #53b1b1;
+    --line:      #1c5858;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--orange); color:var(--bg); }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(17,34,44,0.86);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px; max-width:1080px; margin:0 auto;
+  }
+  .mark{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; }
+  .header-orange{
+    width:20px; height:20px; border-radius:50%; background:var(--orange);
+    position:relative; flex:none;
+  }
+  .header-orange::before{ content:""; position:absolute; width:2px; height:7px; background:#a5c90f; top:-5px; left:10px; transform:rotate(18deg); }
+  .header-orange::after{ content:""; position:absolute; width:8px; height:4px; border-radius:100% 0; background:#a5c90f; top:-3px; left:12px; transform:rotate(-24deg); }
+  nav ul{ list-style:none; display:flex; gap:30px; font-size:14px; }
+  nav a{ position:relative; color:var(--ink-dim); transition:color .15s ease; }
+  nav a:hover{ color:var(--gold); }
+  nav a:focus-visible, a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:150px 32px 80px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .hero-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:32px;
+    width:100%;
+  }
+  .hero-copy{
+    flex:0 0 auto;
+    max-width:440px;
+    text-align:left;
+  }
+  .hero-copy h1{ font-size:clamp(2.1rem, 4vw, 3.1rem); }
+  .hero-copy .role{
+    margin-top:10px;
+    color:var(--gold);
+    font-family:'JetBrains Mono', monospace;
+    font-size:13.5px;
+    letter-spacing:.02em;
+  }
+  .hero-copy p.tag{ margin-top:18px; color:var(--ink-dim); font-size:16px; max-width:44ch; }
+  .hero-copy .cta-row{ margin-top:32px; display:flex; gap:16px; flex-wrap:wrap; }
+
+  .btn{
+    display:inline-block; padding:13px 24px;
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14px;
+    background:var(--orange); color:var(--bg);
+    box-shadow:6px 6px 0 var(--rust);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{ transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--rust); }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--line); box-shadow:none; }
+  .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); transform:none; box-shadow:none; }
+
+  .tree-holder{
+    flex:1 1 auto;
+    display:flex;
+    justify-content:center;
+    max-width:760px;
+    min-width:0;
+    cursor:default;
+  }
+  .tree-holder svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+  .block{
+    transform-origin:center;
+    opacity:0;
+    animation:rise .6s cubic-bezier(.2,.9,.3,1) forwards;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(16px) scale(.92); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  #parallax-group{ transition:transform .25s cubic-bezier(.2,.7,.3,1); }
+  #sway-group{
+    transform-box:fill-box;
+    transform-origin:50% 100%;
+    animation:sway 7s ease-in-out infinite alternate;
+  }
+  #tree-body{
+    transform-box:fill-box;
+    transform-origin:50% 100%;
+    animation:tree-shake 9s ease-in-out infinite;
+    display:none;
+  }
+  #tree-body > g:nth-child(2) rect{
+    rx: 40px;
+    ry: 40px;
+    stroke: var(--canopy);
+    stroke-width: 10;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+  }
+  @keyframes sway{
+    from{ transform:rotate(-1.1deg); }
+    to{ transform:rotate(1.1deg); }
+  }
+  @keyframes tree-shake{
+    0%, 36%, 100%{ transform:rotate(0deg); }
+    40%{ transform:rotate(-1.5deg); }
+    44%{ transform:rotate(1.8deg); }
+    48%{ transform:rotate(-1.2deg); }
+    52%{ transform:rotate(.8deg); }
+    56%{ transform:rotate(0deg); }
+  }
+
+  .orange-stem{ stroke:#a5c90f; stroke-width:4; stroke-linecap:round; }
+  .fruit{ cursor:pointer; }
+  .fruit-motion{ transform-box:view-box; transform-origin:0 0; }
+
+  .fruit circle, .fruit ellipse{ transition:transform .2s cubic-bezier(.34,1.56,.64,1); transform-origin:center; transform-box:fill-box; }
+  .fruit:hover circle, .fruit:hover ellipse{ transform:scale(1.18); }
+  .fruit.pulse circle{ animation:pulse .5s ease; }
+  @keyframes pulse{
+    0%{ transform:scale(1); }
+    40%{ transform:scale(1.5); }
+    100%{ transform:scale(1); }
+  }
+  .fruit-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    fill:var(--ink);
+    opacity:.82;
+    transform:translateY(4px);
+    transition:opacity .15s ease, transform .15s ease;
+    pointer-events:none;
+  }
+  .fruit:hover .fruit-label{ opacity:1; transform:translateY(0); }
+
+  .scroll-cue{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim);
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .scroll-cue .stick{ width:1px; height:26px; background:var(--line); }
+  .hero{ position:relative; }
+
+  /* ---------- sections ---------- */
+  section{ padding:100px 0; position:relative; }
+  section:not(.hero)::before{
+    content:""; position:absolute; top:0; left:32px; right:32px;
+    max-width:1016px; margin:0 auto; height:1px; background:var(--line);
+  }
+  .eyebrow{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--gold); margin-bottom:14px; display:block; }
+  .section-head{ display:grid; grid-template-columns:1fr 1.5fr; gap:40px; margin-bottom:56px; align-items:start; }
+  .section-head h2{ font-size:clamp(1.6rem,3vw,2.2rem); }
+  .section-head .lede{ color:var(--ink-dim); font-size:15.5px; max-width:46ch; }
+
+  /* about */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .about-copy p{ color:var(--ink-dim); margin-bottom:16px; font-size:15.5px; max-width:52ch; }
+  .about-copy p strong{ color:var(--ink); font-weight:600; }
+
+  .domain-graphic{ display:flex; flex-direction:column; gap:14px; }
+  .domain-row{
+    display:flex; align-items:center; gap:16px;
+    padding:18px 20px;
+    background:var(--canopy);
+    position:relative;
+  }
+  .domain-row:nth-child(1){ box-shadow:6px 6px 0 var(--rust); }
+  .domain-row:nth-child(2){ box-shadow:6px 6px 0 var(--orange); }
+  .domain-row:nth-child(3){ box-shadow:6px 6px 0 var(--gold); }
+  .domain-row .dot{ width:12px; height:12px; border-radius:50%; flex:none; }
+  .domain-row:nth-child(1) .dot{ background:var(--rust); }
+  .domain-row:nth-child(2) .dot{ background:var(--orange); }
+  .domain-row:nth-child(3) .dot{ background:var(--gold); }
+  .domain-row .label{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; }
+  .domain-row .sub{ margin-left:auto; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-dim); }
+
+  /* work */
+  .work-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; }
+  .card{ background:var(--canopy); padding:28px 24px 26px; position:relative; }
+  .card:nth-child(1){ box-shadow:7px 7px 0 var(--rust); }
+  .card:nth-child(2){ box-shadow:7px 7px 0 var(--orange); }
+  .card:nth-child(3){ box-shadow:7px 7px 0 var(--gold); }
+  .card .fruit-dot{ width:14px; height:14px; margin-bottom:18px; border-radius:50%; }
+  .card:nth-child(1) .fruit-dot{ background:var(--rust); }
+  .card:nth-child(2) .fruit-dot{ background:var(--orange); }
+  .card:nth-child(3) .fruit-dot{ background:var(--gold); }
+  .card .domain-tag{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--gold); margin-bottom:8px; display:block; }
+  .card h3{ font-size:18px; margin-bottom:10px; }
+  .card p{ color:var(--ink-dim); font-size:14.5px; margin-bottom:18px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .tags span{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--ink-dim); border:1px solid var(--line); padding:4px 9px; }
+  .card .link{ font-family:'Space Grotesk', sans-serif; font-size:13.5px; font-weight:600; color:var(--gold); display:inline-flex; align-items:center; gap:6px; }
+
+  /* skills */
+  .skills-columns{ display:grid; grid-template-columns:repeat(3, 1fr); gap:36px; }
+  .skills-col h3{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; font-weight:500;
+    color:var(--ink-dim); margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .skills-col:nth-child(1) h3{ color:var(--rust); }
+  .skills-col:nth-child(2) h3{ color:var(--orange); }
+  .skills-col:nth-child(3) h3{ color:var(--gold); }
+  .skills-cluster{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; padding:8px 14px;
+    background:transparent; border:1.5px solid var(--line); color:var(--ink-dim);
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .skills-col:nth-child(1) .chip:hover{ border-color:var(--rust); color:var(--ink); background:rgba(246,144,0,0.12); }
+  .skills-col:nth-child(2) .chip:hover{ border-color:var(--orange); color:var(--ink); background:rgba(246,144,0,0.12); }
+  .skills-col:nth-child(3) .chip:hover{ border-color:var(--gold); color:var(--ink); background:rgba(246,198,36,0.12); }
+
+  /* contact */
+  .contact-box{ display:grid; grid-template-columns:1.3fr 1fr; gap:50px; align-items:center; }
+  .contact-box h2{ font-size:clamp(1.8rem,4vw,2.6rem); margin-bottom:18px; }
+  .contact-box p{ color:var(--ink-dim); max-width:44ch; margin-bottom:28px; }
+  .contact-links{ display:flex; flex-direction:column; gap:2px; }
+  .contact-links a{
+    display:flex; justify-content:space-between; align-items:center; padding:16px 4px;
+    border-bottom:1px solid var(--line); font-family:'Space Grotesk', sans-serif; font-weight:500; font-size:15px;
+    transition:padding-left .15s ease, color .15s ease;
+  }
+  .contact-links a:hover{ padding-left:10px; color:var(--gold); }
+  .contact-links a span.tag{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim); }
+
+  footer{ padding:32px 0 40px; text-align:center; color:var(--ink-dim); font-family:'JetBrains Mono', monospace; font-size:12px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    .hero-inner{ flex-direction:column-reverse; text-align:center; }
+    .hero-copy{ max-width:520px; text-align:center; }
+    .hero-copy .cta-row{ justify-content:center; }
+    .tree-holder{ max-width:560px; }
+    .section-head{ grid-template-columns:1fr; gap:14px; }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+    .work-grid{ grid-template-columns:1fr; }
+    .skills-columns{ grid-template-columns:1fr; gap:30px; }
+    .contact-box{ grid-template-columns:1fr; }
+    nav ul{ display:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .block{ animation:none; opacity:1; }
+    #sway-group{ animation:none; }
+    #tree-body, .fruit{ animation:none; }
+    #parallax-group{ transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div class="mark"><span class="header-orange" aria-hidden="true"></span>Prashamsa Bandarapu</div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <h1>Prashamsa Bandarapu</h1>
+      <div class="role mono">cybersecurity · data science · engineering</div>
+      <p class="tag">I defend systems, model the data that runs through them, and engineer the infrastructure that holds it all up. Move the cursor around the tree — the fruit link out to what I do.</p>
+      <div class="cta-row">
+        <a class="btn" href="#work">See the work</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="tree-holder" id="tree-holder">
+      <svg viewBox="0 0 640 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An illustrated tree with four oranges linking to the About, Work, Skills, and Contact sections">
+        <g id="parallax-group">
+          <g id="sway-group">
+            <g id="tree-body">
+
+            <!-- trunk -->
+            <g>
+              <rect class="block" x="295" y="560" width="90" height="58" rx="16" fill="var(--canopy)" style="animation-delay:.02s"/>
+              <rect class="block" x="302" y="505" width="74" height="60" rx="16" fill="var(--canopy)" transform="rotate(-1.5 339 535)" style="animation-delay:.06s"/>
+              <rect class="block" x="296" y="450" width="82" height="60" rx="16" fill="var(--canopy)" transform="rotate(1.5 337 480)" style="animation-delay:.10s"/>
+              <rect class="block" x="304" y="400" width="66" height="56" rx="16" fill="var(--canopy)" transform="rotate(-2 337 428)" style="animation-delay:.14s"/>
+            </g>
+
+            <!-- canopy: rounder, denser, softer edges -->
+            <g>
+              <rect class="block" x="150" y="230" width="94" height="84" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-4 197 272)" style="animation-delay:.18s"/>
+              <rect class="block" x="190" y="168" width="98" height="88" rx="20" fill="var(--canopy)" transform="rotate(3 239 212)" style="animation-delay:.20s"/>
+              <rect class="block" x="252" y="118" width="102" height="92" rx="22" fill="var(--canopy)" transform="rotate(-2 303 164)" style="animation-delay:.22s"/>
+              <rect class="block" x="322" y="90"  width="108" height="96" rx="22" fill="var(--canopy)" transform="rotate(2 376 138)" style="animation-delay:.24s"/>
+              <rect class="block" x="392" y="106" width="98" height="90" rx="20" fill="var(--canopy)" transform="rotate(-3 441 151)" style="animation-delay:.26s"/>
+              <rect class="block" x="447" y="150" width="92" height="86" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(4 493 193)" style="animation-delay:.28s"/>
+              <rect class="block" x="482" y="212" width="88" height="82" rx="20" fill="var(--canopy)" transform="rotate(-2 526 253)" style="animation-delay:.30s"/>
+              <rect class="block" x="472" y="272" width="92" height="86" rx="20" fill="var(--canopy)" transform="rotate(3 518 315)" style="animation-delay:.32s"/>
+              <rect class="block" x="432" y="322" width="92" height="86" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-3 478 365)" style="animation-delay:.34s"/>
+              <rect class="block" x="372" y="342" width="98" height="82" rx="22" fill="var(--canopy)" transform="rotate(2 421 383)" style="animation-delay:.36s"/>
+              <rect class="block" x="302" y="347" width="94" height="82" rx="22" fill="var(--canopy)" transform="rotate(-2 349 388)" style="animation-delay:.38s"/>
+              <rect class="block" x="237" y="332" width="90" height="82" rx="20" fill="var(--canopy)" transform="rotate(3 282 373)" style="animation-delay:.40s"/>
+              <rect class="block" x="187" y="292" width="86" height="82" rx="20" fill="var(--canopy)" opacity=".95" transform="rotate(-3 230 333)" style="animation-delay:.42s"/>
+              <rect class="block" x="274" y="202" width="104" height="98" rx="24" fill="var(--canopy)" transform="rotate(1 326 251)" style="animation-delay:.44s"/>
+              <rect class="block" x="344" y="222" width="104" height="98" rx="24" fill="var(--canopy)" transform="rotate(-1.5 396 271)" style="animation-delay:.46s"/>
+              <rect class="block" x="308" y="272" width="98" height="90" rx="22" fill="var(--canopy)" opacity=".97" transform="rotate(1.5 357 317)" style="animation-delay:.48s"/>
+            </g>
+
+            <!-- decorative small fruit -->
+            <g class="block" style="animation-delay:.66s">
+              <path class="orange-stem" d="M405 289v-8"/>
+              <circle cx="405" cy="300" r="11" fill="var(--orange)"/>
+            </g>
+            <g class="block" style="animation-delay:.68s">
+              <path class="orange-stem" d="M295 145v-8"/>
+              <circle cx="295" cy="155" r="10" fill="var(--orange)"/>
+            </g>
+            <g class="block" style="animation-delay:.70s">
+              <path class="orange-stem" d="M485 243v-8"/>
+              <circle cx="485" cy="255" r="12" fill="var(--orange)"/>
+            </g>
+            <g class="block" style="animation-delay:.72s">
+              <path class="orange-stem" d="M230 245v-8"/>
+              <circle cx="230" cy="255" r="10" fill="var(--orange)"/>
+            </g>
+
+            <!-- interactive fruit / nav -->
+            <a href="#about" class="fruit fruit-about" aria-label="Go to About section">
+              <g class="fruit-motion" data-fruit="about">
+                <g class="fruit-scale">
+                  <path class="orange-stem" d="M218 191v-13"/>
+                  <circle class="block" cx="218" cy="210" r="19" fill="var(--orange)" style="animation-delay:.52s"/>
+                  <text class="fruit-label" x="218" y="160" text-anchor="middle">about</text>
+                </g>
+              </g>
+            </a>
+            <a href="#work" class="fruit fruit-work" aria-label="Go to Work section">
+              <g class="fruit-motion" data-fruit="work">
+                <g class="fruit-scale">
+                  <path class="orange-stem" d="M360 108V94"/>
+                  <circle class="block" cx="360" cy="128" r="20" fill="var(--orange)" style="animation-delay:.56s"/>
+                  <text class="fruit-label" x="360" y="76" text-anchor="middle">work</text>
+                </g>
+              </g>
+            </a>
+            <a href="#skills" class="fruit fruit-skills" aria-label="Go to Skills section">
+              <g class="fruit-motion" data-fruit="skills">
+                <g class="fruit-scale">
+                  <path class="orange-stem" d="M480 181v-13"/>
+                  <circle class="block" cx="480" cy="200" r="19" fill="var(--orange)" style="animation-delay:.60s"/>
+                  <text class="fruit-label" x="480" y="150" text-anchor="middle">skills</text>
+                </g>
+              </g>
+            </a>
+            <a href="#contact" class="fruit fruit-contact" aria-label="Go to Contact section">
+              <g class="fruit-motion" data-fruit="contact">
+                <g class="fruit-scale">
+                  <path class="orange-stem" d="M270 351v-13"/>
+                  <circle class="block" cx="270" cy="370" r="19" fill="var(--orange)" style="animation-delay:.64s"/>
+                  <text class="fruit-label" x="270" y="414" text-anchor="middle">contact</text>
+                </g>
+              </g>
+            </a>
+
+            </g>
+          </g>
+        </g>
+
+      </svg>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><span class="stick"></span>scroll</div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-copy">
+        <span class="eyebrow">about</span>
+        <h2 style="margin-bottom:20px;">Three disciplines, one way of thinking.</h2>
+        <p><strong>Prashamsa Bandarapu</strong> works at the intersection of cybersecurity, data science, and engineering — thinking like an attacker, reasoning like an analyst, and building like someone who has to maintain the thing at 2am.</p>
+        <p>On the security side: hardening systems, reading logs for the story they're telling, and modeling how things actually break. On the data side: turning raw, messy signals into models and dashboards people can act on. On the engineering side: the pipelines, infrastructure, and automation that keep it all running.</p>
+        <p>Currently sharpening skills across threat detection, applied machine learning, and cloud infrastructure.</p>
+      </div>
+      <div class="domain-graphic" aria-hidden="true">
+        <div class="domain-row"><span class="dot"></span><span class="label">Security</span><span class="sub">defend &amp; detect</span></div>
+        <div class="domain-row"><span class="dot"></span><span class="label">Data Science</span><span class="sub">model &amp; predict</span></div>
+        <div class="domain-row"><span class="dot"></span><span class="label">Engineering</span><span class="sub">build &amp; automate</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">work</span>
+      <div>
+        <h2>A few things I've built.</h2>
+        <p class="lede">Replace these with your own projects — case studies, research, or systems you're proud to show.</p>
+      </div>
+    </div>
+    <div class="work-grid">
+      <div class="card">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">security</span>
+        <h3>Intrusion detection pipeline</h3>
+        <p>A short description of the threat this addressed, how detection works, and the outcome — false-positive rate, coverage, time-to-detect.</p>
+        <div class="tags"><span>Python</span><span>Suricata</span><span>ELK Stack</span></div>
+        <a class="link" href="#">View project ↗</a>
+      </div>
+      <div class="card">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">data science</span>
+        <h3>Anomaly detection model</h3>
+        <p>A short description of the dataset, the modeling approach, and the measurable impact — accuracy, precision/recall, or business result.</p>
+        <div class="tags"><span>Python</span><span>scikit-learn</span><span>Pandas</span></div>
+        <a class="link" href="#">View project ↗</a>
+      </div>
+      <div class="card">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">engineering</span>
+        <h3>Infrastructure automation</h3>
+        <p>A short description of what was automated, the systems involved, and the time or risk it removed from the team's plate.</p>
+        <div class="tags"><span>Terraform</span><span>AWS</span><span>Kubernetes</span></div>
+        <a class="link" href="#">View project ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">skills</span>
+      <div>
+        <h2>Tools I reach for.</h2>
+        <p class="lede">Grouped by discipline — swap in whatever's true for your own stack.</p>
+      </div>
+    </div>
+    <div class="skills-columns">
+      <div class="skills-col">
+        <h3>security</h3>
+        <div class="skills-cluster">
+          <span class="chip">Network Security</span>
+          <span class="chip">SIEM</span>
+          <span class="chip">Penetration Testing</span>
+          <span class="chip">Threat Modeling</span>
+          <span class="chip">Incident Response</span>
+        </div>
+      </div>
+      <div class="skills-col">
+        <h3>data science</h3>
+        <div class="skills-cluster">
+          <span class="chip">Python</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Pandas</span>
+          <span class="chip">scikit-learn</span>
+          <span class="chip">Machine Learning</span>
+        </div>
+      </div>
+      <div class="skills-col">
+        <h3>engineering</h3>
+        <div class="skills-cluster">
+          <span class="chip">AWS</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Kubernetes</span>
+          <span class="chip">Terraform</span>
+          <span class="chip">CI/CD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <div>
+        <span class="eyebrow">contact</span>
+        <h2>Let's build something secure.</h2>
+        <p>Open to new roles, research collaborations, or just talking shop about security, data, or infrastructure. Reach out through whichever channel is easiest.</p>
+        <a class="btn" href="mailto:bandarapuprashamsa@gmail.com">Email me</a>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:bandarapuprashamsa@gmail.com">Email <span class="tag">mail</span></a>
+        <a href="https://github.com/bprashamsa">GitHub <span class="tag">code</span></a>
+        <a href="https://www.linkedin.com/in/prashamsa-b-b893b1243/">LinkedIn <span class="tag">profile</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Prashamsa Bandarapu — grown, not templated.</footer>
+
+<script>
+  // gentle cursor parallax on the tree
+  const holder = document.getElementById('tree-holder');
+  const parallax = document.getElementById('parallax-group');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (holder && parallax && !reduceMotion) {
+    holder.addEventListener('mousemove', (e) => {
+      const rect = holder.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      const tx = px * 16;
+      const ty = py * 10;
+      const rot = px * 2.2;
+      parallax.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+    });
+    holder.addEventListener('mouseleave', () => {
+      parallax.style.transform = 'translate(0px, 0px) rotate(0deg)';
+    });
+  }
+
+  // little harvest pulse when a fruit is clicked
+  document.querySelectorAll('.fruit').forEach((fruit) => {
+    fruit.addEventListener('click', () => {
+      fruit.classList.add('pulse');
+      setTimeout(() => fruit.classList.remove('pulse'), 500);
+    });
+  });
+
+</script>
+
+</body>
+</html>
