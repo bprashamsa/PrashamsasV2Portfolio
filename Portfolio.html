@@ -57,8 +57,8 @@
     width:20px; height:20px; border-radius:50%; background:var(--orange);
     position:relative; flex:none;
   }
-  .header-orange::before{ content:""; position:absolute; width:2px; height:7px; background:var(--canopy); top:-5px; left:10px; transform:rotate(18deg); }
-  .header-orange::after{ content:""; position:absolute; width:8px; height:4px; border-radius:100% 0; background:var(--canopy); top:-3px; left:12px; transform:rotate(-24deg); }
+  .header-orange::before{ content:""; position:absolute; width:2px; height:7px; background:#a5c90f; top:-5px; left:10px; transform:rotate(18deg); }
+  .header-orange::after{ content:""; position:absolute; width:8px; height:4px; border-radius:100% 0; background:#a5c90f; top:-3px; left:12px; transform:rotate(-24deg); }
   nav ul{ list-style:none; display:flex; gap:30px; font-size:14px; }
   nav a{ position:relative; color:var(--ink-dim); transition:color .15s ease; }
   nav a:hover{ color:var(--gold); }
@@ -156,7 +156,7 @@
     transform-origin:50% 100%;
     animation:run-to-tree 9s ease-in-out infinite;
   }
-  .runner-leg{ transform-box:fill-box; transform-origin:50% 0; animation:run-cycle 9s ease-in-out infinite; }
+  .runner-leg{ transform-box:fill-box; transform-origin:0 0; animation:run-cycle 9s linear infinite; }
   .runner-leg.back{ animation-name:run-cycle-back; }
   @keyframes run-to-tree{
     0%, 5%{ transform:translateX(-150px); }
@@ -164,17 +164,21 @@
     92%, 100%{ transform:translateX(-150px); }
   }
   @keyframes run-cycle{
-    0%, 5%, 15%, 25%{ transform:rotate(-22deg); }
-    10%, 20%{ transform:rotate(22deg); }
-    30%, 100%{ transform:rotate(0deg); }
+    0%, 8%, 16%, 24%{ transform:rotate(-28deg); }
+    4%, 12%, 20%{ transform:rotate(24deg); }
+    28%, 82%, 100%{ transform:rotate(0deg); }
+    86%, 94%{ transform:rotate(-28deg); }
+    90%, 98%{ transform:rotate(24deg); }
   }
   @keyframes run-cycle-back{
-    0%, 5%, 15%, 25%{ transform:rotate(22deg); }
-    10%, 20%{ transform:rotate(-22deg); }
-    30%, 100%{ transform:rotate(0deg); }
+    0%, 8%, 16%, 24%{ transform:rotate(24deg); }
+    4%, 12%, 20%{ transform:rotate(-28deg); }
+    28%, 82%, 100%{ transform:rotate(0deg); }
+    86%, 94%{ transform:rotate(24deg); }
+    90%, 98%{ transform:rotate(-28deg); }
   }
 
-  .orange-stem{ stroke:var(--canopy); stroke-width:4; stroke-linecap:round; }
+  .orange-stem{ stroke:#a5c90f; stroke-width:4; stroke-linecap:round; }
   .fruit{ cursor:pointer; }
   .fruit-motion{ transform-box:view-box; transform-origin:0 0; }
 
