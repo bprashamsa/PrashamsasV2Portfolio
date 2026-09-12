@@ -127,8 +127,6 @@
     to{ opacity:1; transform:scale(1); }
   }
 
-  #parallax-group{ transition:transform .25s cubic-bezier(.2,.7,.3,1); }
-
   /* board substrate + silkscreen grid */
   .board-plate{ fill:var(--canopy); opacity:.9; }
   .board-grid{ stroke:var(--bg); stroke-width:1; opacity:.5; }
@@ -152,6 +150,9 @@
   @keyframes flow{
     to{ stroke-dashoffset:-280; }
   }
+
+  .board-bulb{ filter:drop-shadow(0 0 6px var(--gold)); pointer-events:none; }
+  .board-bulb-dot{ fill:var(--gold); stroke:var(--orange); stroke-width:3; }
 
   /* chip at the center */
   .chip-body{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
@@ -324,8 +325,8 @@
     .block{ animation:none; opacity:1; }
     .trace-flow{ animation:none; stroke-dasharray:none; }
     .chip-pulse{ animation:none; opacity:0; }
+    .board-bulb{ display:none; }
     .node{ animation:none; }
-    #parallax-group{ transition:none; }
     html{ scroll-behavior:auto; }
   }
 </style>
@@ -364,6 +365,7 @@
           <pattern id="board-dots" width="40" height="40" patternUnits="userSpaceOnUse">
             <circle cx="2" cy="2" r="1.6" fill="var(--line)" opacity=".45"/>
           </pattern>
+          <path id="bulb-route" d="M285 282 L285 235 L225 175 L150 175 M285 282 L340 280 L340 150 L360 130 L360 108 M370 305 L430 305 L470 265 L500 265 L500 220 M310 380 L310 500 L320 510 L320 555"/>
         </defs>
         <g id="parallax-group">
 
@@ -393,6 +395,13 @@
 
           <path class="block trace" d="M310,380 L310,500 L320,510 L320,555" style="animation-delay:.20s"/>
           <path class="block trace-flow" d="M310,380 L310,500 L320,510 L320,555" stroke="var(--gold)" style="animation-delay:1.8s"/>
+
+          <g class="board-bulb" aria-label="Animated lightbulb following the circuit traces">
+            <circle class="board-bulb-dot" cx="0" cy="0" r="10"/>
+            <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#bulb-route"/>
+            </animateMotion>
+          </g>
 
           <!-- chip -->
           <line class="block chip-pin" x1="290" y1="280" x2="290" y2="266" style="animation-delay:.22s"/>
@@ -574,26 +583,6 @@
 <footer>Prashamsa Bandarapu — etched, not templated.</footer>
 
 <script>
-  // gentle cursor parallax on the board, like tilting it in your hands
-  const holder = document.getElementById('board-holder');
-  const parallax = document.getElementById('parallax-group');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (holder && parallax && !reduceMotion) {
-    holder.addEventListener('mousemove', (e) => {
-      const rect = holder.getBoundingClientRect();
-      const px = (e.clientX - rect.left) / rect.width - 0.5;
-      const py = (e.clientY - rect.top) / rect.height - 0.5;
-      const tx = px * 14;
-      const ty = py * 8;
-      const rot = px * 1.8;
-      parallax.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
-    });
-    holder.addEventListener('mouseleave', () => {
-      parallax.style.transform = 'translate(0px, 0px) rotate(0deg)';
-    });
-  }
-
   // little discharge pulse when a pad is clicked
   document.querySelectorAll('.node').forEach((node) => {
     node.addEventListener('click', () => {
