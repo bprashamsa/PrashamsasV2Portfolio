@@ -151,8 +151,8 @@
     to{ stroke-dashoffset:-280; }
   }
 
-  .board-bulb{ filter:drop-shadow(0 0 4px var(--gold)); pointer-events:none; }
-  .board-bulb-mark{ fill:var(--gold); stroke:var(--orange); stroke-width:2; stroke-linejoin:round; }
+  .board-bulb{ filter:drop-shadow(0 0 6px var(--gold)); pointer-events:none; }
+  .board-bulb-dot{ fill:var(--gold); stroke:var(--orange); stroke-width:3; }
 
   /* chip at the center */
   .chip-body{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
@@ -397,7 +397,7 @@
           <path class="block trace-flow" d="M310,380 L310,500 L320,510 L320,555" stroke="var(--gold)" style="animation-delay:1.8s"/>
 
           <g class="board-bulb" aria-label="Animated lightbulb following the circuit traces">
-            <path class="board-bulb-mark" d="M0-14 L-9 2 H-2 L-6 15 L10 -4 H3 Z"/>
+            <circle class="board-bulb-dot" cx="0" cy="0" r="10"/>
             <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
               <mpath href="#bulb-route"/>
             </animateMotion>
