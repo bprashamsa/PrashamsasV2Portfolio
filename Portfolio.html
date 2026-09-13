@@ -851,6 +851,30 @@
     });
   });
 
+  // ── Randomize orb path ──
+  (() => {
+    const paths = [
+      'M285 282 L285 235 L225 175 L150 175',           // to about
+      'M285 282 L340 280 L340 150 L360 130 L360 108',   // to work
+      'M370 305 L430 305 L470 265 L500 265 L500 220',   // to skills
+      'M310 380 L310 500 L320 510 L320 555'             // to contact
+    ];
+    
+    function randomizePath(){
+      const bulbRoute = document.getElementById('bulb-route');
+      if (bulbRoute) {
+        const randomPath = paths[Math.floor(Math.random() * paths.length)];
+        bulbRoute.setAttribute('d', randomPath);
+      }
+    }
+    
+    // Initialize on page load
+    randomizePath();
+    
+    // Store function globally so board bulb click can use it
+    window.randomizePath = randomizePath;
+  })();
+
   // ── Board bulb click to restart ──
   (() => {
     const boardBulb = document.querySelector('.board-bulb');
@@ -862,7 +886,12 @@
       const animateMotion = boardBulb.querySelector('animateMotion');
       if (!animateMotion) return;
       
-      // Restart the animation by resetting it
+      // Randomize the path before restarting
+      if (window.randomizePath) {
+        window.randomizePath();
+      }
+      
+      // Restart the animation
       animateMotion.beginElement();
     });
   })();
