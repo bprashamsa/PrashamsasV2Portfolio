@@ -354,37 +354,58 @@
   .stack-lane:nth-of-type(3){ --lane-color:var(--gold); }
   .stack-lane:nth-of-type(3) .lane-node:hover::before{ box-shadow:0 0 0 5px rgba(246,198,36,.22); }
 
-  /* contact — Find me elsewhere */
+  /* contact — hardware links */
   .elsewhere-card{
-    background:var(--noir); border:1px solid var(--noir-line);
-    padding:44px 40px; display:flex; align-items:flex-end; justify-content:space-between;
-    gap:24px; flex-wrap:wrap; box-shadow:8px 8px 0 var(--gold);
+    background:linear-gradient(180deg, rgba(8,18,24,0.96), rgba(12,23,29,0.96));
+    border:1px solid var(--noir-line); padding:26px 22px; display:grid; gap:18px;
+    box-shadow:8px 8px 0 var(--gold);
+  }
+  .elsewhere-header{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    padding-bottom:10px; border-bottom:1px solid var(--noir-line);
   }
   .elsewhere-intro{ max-width:20ch; font-size:clamp(24px,3vw,32px); color:var(--noir-ink); }
-  .elsewhere-tiles{ display:flex; gap:10px; position:relative; }
-  .elsewhere-tile{
-    width:56px; height:56px; border-radius:16px; display:grid; place-items:center;
-    background:var(--canopy); color:var(--noir-ink); cursor:pointer;
-    transform-origin:50% 100%;
-    transition:transform 480ms cubic-bezier(.19,1,.22,1), background .18s ease, color .18s ease;
+  .elsewhere-status{
+    display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace;
+    font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim);
   }
-  .elsewhere-tile svg{ width:24px; height:24px; }
-  .elsewhere-tile .glyph{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:20px; }
-  .elsewhere-tiles:hover .elsewhere-tile:nth-child(1),
-  .elsewhere-tiles:focus-within .elsewhere-tile:nth-child(1){ transform:translate(-52px,10px) rotate(-22deg); background:var(--rust); color:var(--bg); }
-  .elsewhere-tiles:hover .elsewhere-tile:nth-child(2),
-  .elsewhere-tiles:focus-within .elsewhere-tile:nth-child(2){ transform:translate(-26px,4px) rotate(-11deg); background:var(--orange); color:var(--bg); }
-  .elsewhere-tiles:hover .elsewhere-tile:nth-child(3),
-  .elsewhere-tiles:focus-within .elsewhere-tile:nth-child(3){ background:var(--gold); color:var(--bg); }
-  .elsewhere-tile:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
-  .elsewhere-tile .em-idle, .elsewhere-tile .em-check{
-    grid-area:1/1; transition:opacity 160ms ease, transform 200ms ease;
+  .status-led{
+    width:9px; height:9px; border-radius:50%; background:var(--gold);
+    box-shadow:0 0 12px rgba(246,198,36,0.9), 0 0 20px rgba(246,198,36,0.5);
   }
-  .elsewhere-tile .em-check{ opacity:0; transform:scale(.7); }
-  .elsewhere-tile.is-copied .em-idle{ opacity:0; transform:scale(.7); }
-  .elsewhere-tile.is-copied .em-check{ opacity:1; transform:scale(1); }
-  .elsewhere-tile .em-idle, .elsewhere-tile .em-check{ display:flex; }
-  .elsewhere-tile > span{ display:grid; }
+  .elsewhere-board{
+    display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px;
+  }
+  .elsewhere-link{
+    position:relative; display:grid; gap:16px; min-height:128px; padding:16px 18px 14px;
+    background:linear-gradient(180deg, rgba(28,88,88,0.9), rgba(17,34,44,0.85));
+    border:1px solid var(--line); color:var(--noir-ink); cursor:pointer;
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02);
+  }
+  .elsewhere-link:hover,
+  .elsewhere-link:focus-visible{
+    transform:translateY(-3px); border-color:var(--gold);
+    box-shadow:0 0 0 1px rgba(246,198,36,0.2), 8px 8px 0 rgba(246,198,36,0.18);
+  }
+  .elsewhere-link:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+  .module-top{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim);
+  }
+  .module-led{
+    width:8px; height:8px; border-radius:50%; background:var(--gold);
+    box-shadow:0 0 10px rgba(246,198,36,0.9);
+  }
+  .module-label{
+    font-family:'Space Grotesk', sans-serif; font-size:1.02rem; font-weight:600; line-height:1.2; letter-spacing:-.03em;
+    color:var(--noir-ink);
+  }
+  .module-meta{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; }
+  .module-meta span{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ink-dim); }
+  .module-icon{ width:28px; height:28px; display:grid; place-items:center; border:1px solid var(--line); background:rgba(255,255,255,0.02); }
+  .module-icon svg{ width:18px; height:18px; }
+  .module-icon .glyph{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:17px; }
 
   footer{ padding:32px 0 40px; text-align:center; color:var(--ink-dim); font-family:'JetBrains Mono', monospace; font-size:12px; }
 
@@ -698,19 +719,20 @@
     <span class="eyebrow">contact</span>
     <h2 style="margin-bottom:24px;">Let's build something secure.</h2>
     <div class="elsewhere-card">
-      <h3 class="elsewhere-intro">See you around.</h3>
-      <div class="elsewhere-tiles" aria-label="Contact links">
-        <button class="elsewhere-tile" type="button" id="copyEmailTile" data-cursor-link="⧉ copy email" aria-label="Copy email address bandarapuprashamsa@gmail.com" data-copy-email="bandarapuprashamsa@gmail.com">
-          <span>
-            <svg class="em-idle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="m3.6 6.4 8.4 6.6 8.4-6.6"/></svg>
-            <svg class="em-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg>
-          </span>
-        </button>
-        <a class="elsewhere-tile" href="https://github.com/bprashamsa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-cursor-link="● github">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8 5 12l4 4M15 8l4 4-4 4"/></svg>
+      <div class="elsewhere-header">
+        <h3 class="elsewhere-intro">See you around.</h3>
+        <span class="elsewhere-status"><span class="status-led" aria-hidden="true"></span>online</span>
+      </div>
+      <div class="elsewhere-board" aria-label="Contact links">
+        <a class="elsewhere-link" href="https://github.com/bprashamsa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-cursor-link="● github">
+          <span class="module-top"><span>github</span><span class="module-led" aria-hidden="true"></span></span>
+          <span class="module-label">@bprashamsa</span>
+          <span class="module-meta"><span>repo</span><span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8 5 12l4 4M15 8l4 4-4 4"/></svg></span></span>
         </a>
-        <a class="elsewhere-tile" href="https://www.linkedin.com/in/prashamsa-b-b893b1243/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-cursor-link="● linkedin">
-          <span class="glyph" aria-hidden="true">in</span>
+        <a class="elsewhere-link" href="https://www.linkedin.com/in/prashamsa-b-b893b1243/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-cursor-link="● linkedin">
+          <span class="module-top"><span>linkedin</span><span class="module-led" aria-hidden="true"></span></span>
+          <span class="module-label">/in/prashamsa</span>
+          <span class="module-meta"><span>profile</span><span class="module-icon" aria-hidden="true"><span class="glyph">in</span></span></span>
         </a>
       </div>
     </div>
@@ -883,38 +905,6 @@
   scrim.addEventListener('click', closeSheet);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 
-  // ── Copy email (Find me elsewhere) ──
-  (() => {
-    const tile = document.getElementById('copyEmailTile');
-    if (!tile) return;
-    const status = document.getElementById('copyStatus');
-    let revertTimer;
-
-    async function writeClipboard(text){
-      if (navigator.clipboard && window.isSecureContext) {
-        try { await navigator.clipboard.writeText(text); return true; } catch(e) {}
-      }
-      try {
-        const field = document.createElement('textarea');
-        field.value = text;
-        field.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0;';
-        document.body.appendChild(field);
-        field.select();
-        const ok = document.execCommand('copy');
-        field.remove();
-        return ok;
-      } catch(e) { return false; }
-    }
-
-    tile.addEventListener('click', async () => {
-      const address = tile.dataset.copyEmail;
-      clearTimeout(revertTimer);
-      const ok = await writeClipboard(address);
-      tile.classList.toggle('is-copied', ok);
-      status.textContent = ok ? ('Email address copied: ' + address) : ('Could not copy. The address is ' + address);
-      revertTimer = setTimeout(() => tile.classList.remove('is-copied'), 1800);
-    });
-  })();
 </script>
 
 </body>
