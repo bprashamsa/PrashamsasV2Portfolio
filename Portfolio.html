@@ -225,6 +225,39 @@
   }
   .board-bulb-dot{ fill:var(--gold); stroke:var(--orange); stroke-width:3; }
 
+  .power-switch{
+    cursor:pointer; transition:filter .2s ease;
+  }
+  .power-switch:hover{
+    filter:drop-shadow(0 0 8px rgba(246,198,36,0.6));
+  }
+  .switch-toggle{
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+    transform-origin:center;
+  }
+  .power-switch.off .switch-toggle{
+    transform:translateX(-8px);
+  }
+  .power-switch.on .switch-toggle{
+    transform:translateX(8px);
+  }
+  .switch-label{
+    font-family:'JetBrains Mono', monospace; font-size:10px; fill:var(--ink-dim);
+    transition:fill .2s ease;
+  }
+  .power-switch.on .switch-label{
+    fill:var(--gold);
+  }
+
+  /* Circuit off state */
+  #parallax-group.circuit-off .trace-flow,
+  #parallax-group.circuit-off .board-bulb{
+    animation:none !important; opacity:0;
+  }
+  #parallax-group.circuit-off .chip-pulse{
+    animation:none !important; opacity:0;
+  }
+
   .chip-body{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
   .chip-pin{ stroke:var(--line); stroke-width:3; stroke-linecap:round; }
   .chip-mark{ fill:none; stroke:var(--ink-dim); stroke-width:2; stroke-linecap:round; opacity:.75; }
@@ -631,6 +664,13 @@
               <text class="node-label" x="320" y="602" text-anchor="middle">contact</text>
             </g>
           </a>
+
+          <!-- Power switch -->
+          <g class="power-switch on" id="power-switch" role="button" aria-label="Toggle circuit power" aria-pressed="true" tabindex="0">
+            <rect x="285" y="610" width="70" height="30" rx="15" fill="var(--canopy)" stroke="var(--line)" stroke-width="1.5"/>
+            <circle class="switch-toggle" cx="310" cy="625" r="9" fill="var(--gold)"/>
+            <text class="switch-label" x="320" y="628" text-anchor="middle" font-size="9">ON</text>
+          </g>
         </g>
       </svg>
     </div>
@@ -850,6 +890,41 @@
       setTimeout(() => node.classList.remove('pulse'), 500);
     });
   });
+
+  // ── Circuit power switch ──
+  (() => {
+    const powerSwitch = document.getElementById('power-switch');
+    const parallelGroup = document.getElementById('parallax-group');
+    
+    let circuitOn = true;
+    
+    if (!powerSwitch || !parallelGroup) return;
+    
+    powerSwitch.addEventListener('click', (e) => {
+      e.stopPropagation();
+      togglePower();
+    });
+    
+    powerSwitch.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        togglePower();
+      }
+    });
+    
+    function togglePower() {
+      circuitOn = !circuitOn;
+      powerSwitch.classList.toggle('on', circuitOn);
+      powerSwitch.classList.toggle('off', !circuitOn);
+      parallelGroup.classList.toggle('circuit-off', !circuitOn);
+      powerSwitch.setAttribute('aria-pressed', circuitOn);
+      
+      // Only randomize path if turning on
+      if (circuitOn && window.randomizePath) {
+        window.randomizePath();
+      }
+    }
+  })();
 
   // ── Randomize orb path ──
   (() => {
