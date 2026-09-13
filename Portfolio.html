@@ -265,12 +265,22 @@
   }
 
   /* Circuit off state */
+  #parallax-group{
+    transition:filter .4s ease, opacity .4s ease;
+  }
+  #parallax-group.circuit-off{
+    filter:grayscale(.85) brightness(.55);
+  }
   #parallax-group.circuit-off .trace-flow,
   #parallax-group.circuit-off .board-bulb{
     animation:none !important; opacity:0;
   }
   #parallax-group.circuit-off .chip-pulse{
     animation:none !important; opacity:0;
+  }
+  #parallax-group.circuit-off .node-ring,
+  #parallax-group.circuit-off .node-label{
+    opacity:0 !important;
   }
 
   .chip-body{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
