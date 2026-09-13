@@ -226,23 +226,38 @@
   .board-bulb-dot{ fill:var(--gold); stroke:var(--orange); stroke-width:3; }
 
   .power-switch{
-    cursor:pointer; transition:filter .2s ease;
+    cursor:pointer;
   }
-  .power-switch:hover{
-    filter:drop-shadow(0 0 8px rgba(246,198,36,0.6));
+  .switch-track{
+    fill:var(--canopy); stroke:var(--line); stroke-width:1.5;
+  }
+  .switch-stub{
+    stroke:var(--line); stroke-width:3; stroke-linecap:round;
+  }
+  .switch-led{
+    fill:var(--gold);
+    filter:drop-shadow(0 0 6px rgba(246,198,36,0.9)) drop-shadow(0 0 12px rgba(246,198,36,0.5));
+    transition:fill .2s ease, filter .2s ease, opacity .2s ease;
+  }
+  .power-switch.off .switch-led{
+    fill:var(--line); filter:none; opacity:.5;
   }
   .switch-toggle{
-    transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+    fill:var(--gold); stroke:var(--orange); stroke-width:2;
+    filter:drop-shadow(0 0 6px rgba(246,198,36,0.85)) drop-shadow(0 0 10px rgba(246,198,36,0.4));
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1), fill .2s ease, filter .2s ease;
     transform-origin:center;
   }
   .power-switch.off .switch-toggle{
-    transform:translateX(-8px);
+    transform:translateY(38px);
+    fill:var(--bg); stroke:var(--line);
+    filter:none;
   }
   .power-switch.on .switch-toggle{
-    transform:translateX(8px);
+    transform:translateY(0);
   }
   .switch-label{
-    font-family:'JetBrains Mono', monospace; font-size:10px; fill:var(--ink-dim);
+    font-family:'JetBrains Mono', monospace; font-size:9px; fill:var(--ink-dim);
     transition:fill .2s ease;
   }
   .power-switch.on .switch-label{
@@ -593,7 +608,7 @@
           <circle class="block via" cx="85" cy="585" r="7" style="animation-delay:.06s"/>
           <circle class="block via" cx="555" cy="585" r="7" style="animation-delay:.06s"/>
 
-          <path class="block trace" d="M270,340 L210,340 L185,365 L185,410" style="animation-delay:.8s"/>
+          <path class="block trace" d="M270,340 L210,340 L185,365 L185,410" style="animation-delay:.5s"/>
           <rect class="block component" x="170" y="408" width="30" height="16" rx="3" style="animation-delay:.30s"/>
           <path class="block trace" d="M370,360 L440,360 L465,385 L465,430" style="animation-delay:.12s"/>
           <circle class="block component" cx="465" cy="440" r="9" style="animation-delay:.32s"/>
@@ -666,10 +681,12 @@
           </a>
 
           <!-- Power switch -->
-          <g class="power-switch on" id="power-switch" role="button" aria-label="Toggle circuit power" aria-pressed="true" tabindex="0">
-            <rect x="285" y="610" width="70" height="30" rx="15" fill="var(--canopy)" stroke="var(--line)" stroke-width="1.5"/>
-            <circle class="switch-toggle" cx="310" cy="625" r="9" fill="var(--gold)"/>
-            <text class="switch-label" x="320" y="628" text-anchor="middle" font-size="9">ON</text>
+          <line class="switch-stub" x1="580" y1="330" x2="600" y2="330"/>
+          <g class="power-switch on" id="power-switch" role="button" aria-label="Toggle circuit power" aria-pressed="true" tabindex="0" transform="translate(600,330)">
+            <circle class="switch-led" cx="0" cy="-46" r="4"/>
+            <rect class="switch-track" x="-15" y="-34" width="30" height="68" rx="15"/>
+            <circle class="switch-toggle" cx="0" cy="-19" r="11"/>
+            <text class="switch-label" x="0" y="58" text-anchor="middle">POWER</text>
           </g>
         </g>
       </svg>
