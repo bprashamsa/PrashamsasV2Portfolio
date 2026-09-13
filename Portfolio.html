@@ -91,22 +91,14 @@
     padding:18px 32px; max-width:1080px; margin:0 auto;
   }
   .mark{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; }
-  .header-bulb{
-    position:relative; flex:none; width:18px; height:18px;
-    border:2px solid var(--gold); border-radius:50% 50% 42% 42%;
-    background:rgba(246,198,36,0.08);
-    box-shadow: inset 0 0 0 2px rgba(246,198,36,0.18);
+  .header-orb{
+    position:relative; flex:none; width:16px; height:16px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff7d6 0%, var(--gold) 28%, rgba(246,198,36,0.78) 60%, rgba(246,198,36,0.22) 100%);
+    box-shadow:0 0 0 1px rgba(246,198,36,0.45), 0 0 14px rgba(246,198,36,0.9), 0 0 24px rgba(246,198,36,0.38);
   }
-  .header-bulb::before{
-    content:""; position:absolute; left:50%; top:50%; width:9px; height:9px;
-    transform:translate(-50%, -50%); border-radius:50%;
-    background:radial-gradient(circle at 35% 35%, #fff7c2 0%, var(--gold) 32%, rgba(246,198,36,0.35) 100%);
-    box-shadow:0 0 12px rgba(246,198,36,0.7);
-  }
-  .header-bulb::after{
-    content:""; position:absolute; left:50%; bottom:-6px; width:2px; height:7px;
-    transform:translateX(-50%); border-radius:999px; background:var(--gold);
-    box-shadow:-5px 0 0 0 var(--gold), 5px 0 0 0 var(--gold);
+  .header-orb::after{
+    content:""; position:absolute; inset:-4px; border-radius:50%;
+    border:1px solid rgba(246,198,36,0.3); opacity:.7;
   }
   nav ul{ list-style:none; display:flex; gap:30px; font-size:14px; }
   nav a{ position:relative; color:var(--ink-dim); transition:color .15s ease; }
@@ -469,7 +461,7 @@
 
 <header>
   <div class="header-row">
-    <div class="mark"><span class="header-bulb" aria-hidden="true"></span>Prashamsa Bandarapu</div>
+    <div class="mark"><span class="header-orb" aria-hidden="true"></span>Prashamsa Bandarapu</div>
     <nav>
       <ul>
         <li><a href="#about">About</a></li>
@@ -592,8 +584,8 @@
     <div class="about-grid">
       <div class="about-copy">
         <span class="eyebrow">about</span>
-        <h2 style="margin-bottom:20px;">Three disciplines, one way of thinking.</h2>
-        <p><strong>Prashamsa Bandarapu</strong> works at the intersection of cybersecurity, data science, and engineering — thinking like an attacker, reasoning like an analyst, and building like someone who has to maintain the thing at 2am.</p>
+        <h2 style="margin-bottom:20px;">Three interests, one way of thinking.</h2>
+        <p><strong>I</strong> work at the intersection of cybersecurity, data science, and engineering, thinking like an attacker, reasoning like an analyst, and building like someone who has to maintain the thing at 2am.</p>
         <p>On the security side: hardening systems, reading logs for the story they're telling, and modeling how things actually break. On the data side: turning raw, messy signals into models and dashboards people can act on. On the engineering side: the pipelines, infrastructure, and automation that keep it all running.</p>
         <p>Currently sharpening skills across threat detection, applied machine learning, and cloud infrastructure.</p>
       </div>
