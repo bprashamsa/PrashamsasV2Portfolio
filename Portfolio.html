@@ -188,6 +188,11 @@
     transform-origin:center;
     opacity:0;
     animation:rise .5s cubic-bezier(.2,.9,.3,1) forwards;
+    transition:opacity .3s ease;
+  }
+  #parallax-group.resetting .block{
+    animation:none !important;
+    opacity:0 !important;
   }
   @keyframes rise{
     from{ opacity:0; transform:scale(.9); }
