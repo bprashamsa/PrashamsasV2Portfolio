@@ -51,9 +51,10 @@
   #site-cursor{
     position:fixed; left:0; top:0; z-index:9999;
     pointer-events:none;
-    border-radius:999px;
-    min-width:10px; max-width:10px; height:10px;
-    background:var(--gold);
+    border-radius:50%;
+    width:12px; height:12px;
+    background:radial-gradient(circle at 35% 35%, #fff7d6 0%, var(--gold) 26%, rgba(246,198,36,0.85) 55%, rgba(246,198,36,0.2) 100%);
+    box-shadow:0 0 0 1px rgba(246,198,36,0.45), 0 0 10px rgba(246,198,36,0.8), 0 0 18px rgba(246,198,36,0.48);
     transform:translate(-50%,-50%);
     opacity:0;
     display:flex; align-items:center; justify-content:center;
@@ -64,19 +65,27 @@
     color:var(--bg);
     transition:
       opacity 120ms ease,
-      min-width 320ms cubic-bezier(.2,.9,.3,1),
-      max-width 320ms cubic-bezier(.2,.9,.3,1),
-      height 220ms ease,
-      padding 320ms cubic-bezier(.2,.9,.3,1),
-      background 160ms ease;
+      width 260ms cubic-bezier(.2,.9,.3,1),
+      height 260ms cubic-bezier(.2,.9,.3,1),
+      min-width 260ms cubic-bezier(.2,.9,.3,1),
+      max-width 260ms cubic-bezier(.2,.9,.3,1),
+      padding 260ms cubic-bezier(.2,.9,.3,1),
+      background 160ms ease,
+      box-shadow 160ms ease;
+  }
+  #site-cursor::after{
+    content:""; position:absolute; inset:-5px; border-radius:50%;
+    border:1px solid rgba(246,198,36,0.35); opacity:.7;
   }
   #site-cursor.is-visible{ opacity:1; }
-  #site-cursor.is-hover{ min-width:20px; max-width:20px; height:20px; }
+  #site-cursor.is-hover{ width:18px; height:18px; }
   #site-cursor.is-pill{
-    min-width:0; max-width:220px; height:28px; padding:0 13px;
-    background:var(--gold);
+    width:auto; min-width:0; max-width:220px; height:28px; padding:0 13px;
+    border-radius:999px; background:var(--gold);
+    box-shadow:0 0 0 1px rgba(246,198,36,0.45), 0 0 14px rgba(246,198,36,0.9), 0 0 24px rgba(246,198,36,0.45);
   }
-  #site-cursor.is-on-dark{ background:var(--orange); color:var(--bg); }
+  #site-cursor.is-pill::after{ opacity:0; }
+  #site-cursor.is-on-dark{ background:radial-gradient(circle at 35% 35%, #fff4d3 0%, var(--orange) 28%, rgba(246,144,0,0.8) 58%, rgba(246,144,0,0.18) 100%); box-shadow:0 0 0 1px rgba(246,144,0,0.45), 0 0 12px rgba(246,144,0,0.8), 0 0 22px rgba(246,144,0,0.4); color:var(--bg); }
   @media (pointer:coarse){ #site-cursor{ display:none; } }
 
   /* ---------- header ---------- */
