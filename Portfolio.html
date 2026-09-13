@@ -821,11 +821,17 @@
     
     headerOrb.addEventListener('click', () => {
       const parallaxGroup = document.getElementById('parallax-group');
-      if (!parallaxGroup) return;
+      if (!parallaxGroup || parallaxGroup.classList.contains('resetting')) return;
       
-      // Clone the group to restart all animations
-      const clone = parallaxGroup.cloneNode(true);
-      parallaxGroup.parentNode.replaceChild(clone, parallaxGroup);
+      // Trigger fade out
+      parallaxGroup.classList.add('resetting');
+      
+      // After fade completes, clone and reset
+      setTimeout(() => {
+        const clone = parallaxGroup.cloneNode(true);
+        clone.classList.remove('resetting');
+        parallaxGroup.parentNode.replaceChild(clone, parallaxGroup);
+      }, 300);
     });
   })();
 
