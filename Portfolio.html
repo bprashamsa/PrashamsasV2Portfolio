@@ -214,7 +214,15 @@
   }
   @keyframes flow{ to{ stroke-dashoffset:-280; } }
 
-  .board-bulb{ filter:drop-shadow(0 0 6px var(--gold)); pointer-events:none; }
+  .board-bulb{ 
+    filter:drop-shadow(0 0 6px var(--gold)); 
+    pointer-events:auto; 
+    cursor:pointer;
+    transition:filter .2s ease;
+  }
+  .board-bulb:hover{
+    filter:drop-shadow(0 0 12px rgba(246,198,36,0.9));
+  }
   .board-bulb-dot{ fill:var(--gold); stroke:var(--orange); stroke-width:3; }
 
   .chip-body{ fill:var(--bg); stroke:var(--line); stroke-width:2; }
@@ -842,6 +850,22 @@
       setTimeout(() => node.classList.remove('pulse'), 500);
     });
   });
+
+  // ── Board bulb click to restart ──
+  (() => {
+    const boardBulb = document.querySelector('.board-bulb');
+    if (!boardBulb) return;
+    
+    boardBulb.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      const animateMotion = boardBulb.querySelector('animateMotion');
+      if (!animateMotion) return;
+      
+      // Restart the animation by resetting it
+      animateMotion.beginElement();
+    });
+  })();
 
   // ── Case study sheet ──
   const CASES = {
