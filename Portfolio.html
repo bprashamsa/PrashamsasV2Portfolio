@@ -809,6 +809,21 @@
     });
   })();
 
+  // ── Header orb circuit minigame ──
+  (() => {
+    const headerOrb = document.querySelector('.header-orb');
+    if (!headerOrb) return;
+    
+    headerOrb.addEventListener('click', () => {
+      const parallaxGroup = document.getElementById('parallax-group');
+      if (!parallaxGroup) return;
+      
+      // Clone the group to restart all animations
+      const clone = parallaxGroup.cloneNode(true);
+      parallaxGroup.parentNode.replaceChild(clone, parallaxGroup);
+    });
+  })();
+
   // ── Node pulse on click ──
   document.querySelectorAll('.node').forEach((node) => {
     node.addEventListener('click', () => {
