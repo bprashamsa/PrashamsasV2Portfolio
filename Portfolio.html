@@ -380,7 +380,25 @@
   .stack-schematic{
     background:var(--canopy); border:1px solid var(--line);
     padding:36px 34px 8px; box-shadow:8px 8px 0 var(--gold);
-    overflow:hidden;
+    overflow:hidden; position:relative;
+  }
+  .stack-scroll-hint{
+    position:absolute; right:14px; bottom:7px; z-index:2;
+    display:flex; align-items:center; gap:6px; padding:2px 6px;
+    background:var(--canopy); color:var(--gold);
+    font-family:'JetBrains Mono', monospace; font-size:9px; letter-spacing:.08em;
+    pointer-events:none;
+  }
+  .stack-scroll-hint::after{
+    content:"→"; font-size:14px; line-height:1;
+    animation:scroll-nudge 1.4s ease-in-out infinite;
+  }
+  @keyframes scroll-nudge{
+    0%, 100%{ transform:translateX(0); }
+    50%{ transform:translateX(4px); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .stack-scroll-hint::after{ animation:none; }
   }
   .stack-head{
     display:flex; align-items:baseline; justify-content:space-between;
@@ -787,6 +805,7 @@
       </div>
     </div>
     <div class="stack-schematic">
+      <span class="stack-scroll-hint" aria-hidden="true">SCROLL</span>
       <div class="stack-head">
         <h3>Signal chain</h3>
         <span class="mono">STACK.SCH · rev 03</span>
