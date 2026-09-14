@@ -552,15 +552,18 @@
   .circuit-node{ position:absolute; left:50%; width:13px; height:13px; border:3px solid currentColor; border-radius:50%; background:var(--bg); transform:translate(-50%, -50%); }
   .circuit-node-start{ top:0; }
   .circuit-node-end{ top:100%; }
-  .circuit-led{ position:absolute; top:0; left:50%; width:20px; height:20px; border:3px solid var(--bg); border-radius:50%; background:var(--line); transform:translate(-50%, -50%); transition:top .12s ease, background .12s ease, box-shadow .12s ease, scale .12s ease; }
+  .circuit-led{ position:absolute; top:0; left:50%; width:12px; height:12px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #fff7d6 0%, var(--gold) 26%, rgba(246,198,36,.85) 55%, rgba(246,198,36,.2) 100%); box-shadow:0 0 0 1px rgba(246,198,36,.45), 0 0 10px rgba(246,198,36,.8), 0 0 18px rgba(246,198,36,.48); transform:translate(-50%, -50%); transition:top .12s ease, background .12s ease, box-shadow .12s ease, scale .12s ease; }
   .project-circuit.is-scroll-down{ color:var(--gold); }
   .project-circuit.is-scroll-up{ color:var(--orange); }
   .project-circuit.is-scroll-down .circuit-led,
-  .project-circuit.is-scroll-up .circuit-led{ background:currentColor; box-shadow:0 0 7px currentColor, 0 0 14px currentColor; scale:1.3; }
+  .project-circuit.is-scroll-up .circuit-led{ background:radial-gradient(circle at 35% 35%, #fff7d6 0%, currentColor 32%, color-mix(in srgb, currentColor 70%, transparent) 100%); box-shadow:0 0 0 1px currentColor, 0 0 10px currentColor, 0 0 18px currentColor; scale:1.3; }
   .sheet-body h2{ font-size:clamp(26px,4vw,34px); margin-bottom:14px; }
   .sheet-body .lead{ color:var(--ink-dim); font-size:15px; line-height:1.65; margin-bottom:26px; }
-  .sheet-repo{ display:inline-flex; margin:-10px 0 26px; color:var(--gold); font-family:'JetBrains Mono', monospace; font-size:12px; }
-  .sheet-repo:hover{ text-decoration:underline; }
+  .sheet-repo{ display:inline-flex; align-items:center; gap:10px; margin:-10px 0 26px; padding:12px 17px 12px 14px; background:var(--orange); border:1.5px solid var(--orange); box-shadow:5px 5px 0 var(--rust); color:var(--bg); font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; letter-spacing:.02em; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+  .sheet-repo::before{ content:""; width:9px; height:9px; border:2px solid currentColor; border-radius:50%; }
+  .sheet-repo::after{ content:"↗"; font-size:16px; line-height:1; transition:transform .18s ease; }
+  .sheet-repo:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.18); }
+  .sheet-repo:hover::after{ transform:translate(3px, -3px); }
   .sheet-facts{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line); margin-bottom:28px; }
   .sheet-facts > div{ padding:14px 0; border-bottom:1px solid var(--line); }
   .sheet-facts dt{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
@@ -1106,7 +1109,7 @@
     if (!c) return '';
     let html = `<h2>${c.title}</h2><p class="lead">${c.lead}</p>`;
     if (c.interactiveCircuit) html += '<aside class="project-circuit" aria-label="Circuit LED follows project-page scrolling"><span class="circuit-track"></span><span class="circuit-node circuit-node-start"></span><span class="circuit-node circuit-node-end"></span><span class="circuit-led"></span></aside>';
-    if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>View on GitHub</a>`;
+    if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer">View on GitHub</a>`;
     html += '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
     c.sections.forEach(([heading, paras]) => {
       html += `<h3>${heading}</h3>`;
