@@ -545,9 +545,7 @@
   .sheet-body h2{ font-size:clamp(26px,4vw,34px); margin-bottom:14px; }
   .sheet-body .lead{ color:var(--ink-dim); font-size:15px; line-height:1.65; margin-bottom:26px; }
   .sheet-repo{ display:inline-flex; margin:-10px 0 26px; color:var(--gold); font-family:'JetBrains Mono', monospace; font-size:12px; }
-  .sheet-repo::after{ content:"\2192"; margin-left:8px; transition:transform .15s ease; }
   .sheet-repo:hover{ text-decoration:underline; }
-  .sheet-repo:hover::after{ transform:translateX(3px); }
   .sheet-facts{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line); margin-bottom:28px; }
   .sheet-facts > div{ padding:14px 0; border-bottom:1px solid var(--line); }
   .sheet-facts dt{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
@@ -1084,7 +1082,7 @@
     const c = CASES[key];
     if (!c) return '';
     let html = `<h2>${c.title}</h2><p class="lead">${c.lead}</p>`;
-    if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer">View on GitHub</a>`;
+    if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>View on GitHub</a>`;
     html += '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
     c.sections.forEach(([heading, paras]) => {
       html += `<h3>${heading}</h3>`;
