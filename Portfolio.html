@@ -545,7 +545,9 @@
   .sheet-body h2{ font-size:clamp(26px,4vw,34px); margin-bottom:14px; }
   .sheet-body .lead{ color:var(--ink-dim); font-size:15px; line-height:1.65; margin-bottom:26px; }
   .sheet-repo{ display:inline-flex; margin:-10px 0 26px; color:var(--gold); font-family:'JetBrains Mono', monospace; font-size:12px; }
+  .sheet-repo::after{ content:"\2192"; margin-left:8px; transition:transform .15s ease; }
   .sheet-repo:hover{ text-decoration:underline; }
+  .sheet-repo:hover::after{ transform:translateX(3px); }
   .sheet-facts{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line); margin-bottom:28px; }
   .sheet-facts > div{ padding:14px 0; border-bottom:1px solid var(--line); }
   .sheet-facts dt{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
