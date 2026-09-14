@@ -541,7 +541,19 @@
     transition:background .15s ease, border-color .15s ease;
   }
   .sheet-close:hover{ background:var(--canopy); border-color:var(--gold); }
-  .sheet-body{ padding:32px 28px 64px; }
+  .sheet-body{ max-width:860px; margin:0 auto; padding:32px 28px 64px; }
+  .project-circuit{
+    position:fixed; left:48px; top:50%; z-index:3; width:108px;
+    transform:translateY(-50%); color:var(--line); pointer-events:none;
+  }
+  .project-circuit svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .circuit-trace{ fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+  .circuit-node{ fill:var(--bg); stroke:currentColor; stroke-width:3; }
+  .circuit-led{ fill:var(--line); stroke:var(--bg); stroke-width:3; transition:fill .12s ease, filter .12s ease, transform .12s ease; transform-origin:center; }
+  .project-circuit.is-scroll-down{ color:var(--gold); }
+  .project-circuit.is-scroll-up{ color:var(--orange); }
+  .project-circuit.is-scroll-down .circuit-led,
+  .project-circuit.is-scroll-up .circuit-led{ fill:currentColor; filter:drop-shadow(0 0 7px currentColor) drop-shadow(0 0 14px currentColor); transform:scale(1.3); }
   .sheet-body h2{ font-size:clamp(26px,4vw,34px); margin-bottom:14px; }
   .sheet-body .lead{ color:var(--ink-dim); font-size:15px; line-height:1.65; margin-bottom:26px; }
   .sheet-repo{ display:inline-flex; margin:-10px 0 26px; color:var(--gold); font-family:'JetBrains Mono', monospace; font-size:12px; }
@@ -582,6 +594,7 @@
     nav ul{ display:none; }
     .sheet{ width:100vw; }
   }
+  @media (max-width: 1080px){ .project-circuit{ display:none; } }
 
   @media (prefers-reduced-motion: reduce){
     .block{ animation:none; opacity:1; }
@@ -1025,6 +1038,7 @@
       title: 'NVD + CWE risk chatbot',
       lead: 'A Claude-powered security chatbot that combines live NVD CVE data, MITRE CWE guidance, CVSS severity, and EPSS exploitation likelihood into practical patch-priority recommendations.',
       repo: 'https://github.com/bprashamsa/NVD-CWE-ClaudeChatbot',
+      interactiveCircuit: true,
       facts: [['Role','Developer'],['Stack','Python, Claude, LangChain'],['Data','NVD, MITRE CWE, EPSS'],['Status','Open source']],
       sections: [
         ["So here's the issue:", ['Raw vulnerability scores alone do not clearly show which issues deserve attention first. Security teams need current context about both severity and likely real-world exploitation.']],
@@ -1081,11 +1095,14 @@
   const sheetTag = document.getElementById('sheetTag');
   const sheetBody = document.getElementById('sheetBody');
   let lastTrigger = null;
+  let previousSheetScrollTop = 0;
+  let circuitTimer = null;
 
   function renderCase(key){
     const c = CASES[key];
     if (!c) return '';
     let html = `<h2>${c.title}</h2><p class="lead">${c.lead}</p>`;
+    if (c.interactiveCircuit) html += '<aside class="project-circuit" aria-label="Circuit LED responds to project-page scrolling"><svg viewBox="0 0 108 180" aria-hidden="true"><path class="circuit-trace" d="M54 12v38H24v40h30v78"/><path class="circuit-trace" d="M54 90h30v-28"/><circle class="circuit-node" cx="54" cy="12" r="7"/><circle class="circuit-node" cx="24" cy="90" r="7"/><circle class="circuit-node" cx="54" cy="168" r="7"/><circle class="circuit-led" cx="84" cy="62" r="10"/></svg></aside>';
     if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>View on GitHub</a>`;
     html += '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
     c.sections.forEach(([heading, paras]) => {
@@ -1109,6 +1126,7 @@
     sheetTag.textContent = c.tag;
     sheetBody.innerHTML = renderCase(key);
     sheet.scrollTop = 0;
+    previousSheetScrollTop = 0;
     scrim.classList.add('open');
     sheet.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1120,6 +1138,18 @@
     document.body.style.overflow = '';
     if (lastTrigger) lastTrigger.focus({ preventScroll:true });
   }
+
+  sheet.addEventListener('scroll', () => {
+    const circuit = sheet.querySelector('.project-circuit');
+    const currentScrollTop = sheet.scrollTop;
+    const scrollDirection = currentScrollTop - previousSheetScrollTop;
+    previousSheetScrollTop = currentScrollTop;
+    if (!circuit || !scrollDirection) return;
+    circuit.classList.toggle('is-scroll-down', scrollDirection > 0);
+    circuit.classList.toggle('is-scroll-up', scrollDirection < 0);
+    clearTimeout(circuitTimer);
+    circuitTimer = setTimeout(() => circuit.classList.remove('is-scroll-down', 'is-scroll-up'), 180);
+  });
 
   document.querySelectorAll('.card[data-case]').forEach(card => {
     card.addEventListener('click', () => openSheet(card.dataset.case, card));
