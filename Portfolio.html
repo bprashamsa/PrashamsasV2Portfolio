@@ -549,7 +549,7 @@
   .project-circuit svg{ width:100%; height:auto; display:block; overflow:visible; }
   .circuit-trace{ fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
   .circuit-node{ fill:var(--bg); stroke:currentColor; stroke-width:3; }
-  .circuit-led{ fill:var(--line); stroke:var(--bg); stroke-width:3; transition:fill .12s ease, filter .12s ease, transform .12s ease; transform-origin:center; }
+  .circuit-led{ fill:var(--line); stroke:var(--bg); stroke-width:3; transition:cy .12s ease, fill .12s ease, filter .12s ease, transform .12s ease; transform-origin:center; }
   .project-circuit.is-scroll-down{ color:var(--gold); }
   .project-circuit.is-scroll-up{ color:var(--orange); }
   .project-circuit.is-scroll-down .circuit-led,
@@ -1102,7 +1102,7 @@
     const c = CASES[key];
     if (!c) return '';
     let html = `<h2>${c.title}</h2><p class="lead">${c.lead}</p>`;
-    if (c.interactiveCircuit) html += '<aside class="project-circuit" aria-label="Circuit LED responds to project-page scrolling"><svg viewBox="0 0 108 180" aria-hidden="true"><path class="circuit-trace" d="M54 12v38H24v40h30v78"/><path class="circuit-trace" d="M54 90h30v-28"/><circle class="circuit-node" cx="54" cy="12" r="7"/><circle class="circuit-node" cx="24" cy="90" r="7"/><circle class="circuit-node" cx="54" cy="168" r="7"/><circle class="circuit-led" cx="84" cy="62" r="10"/></svg></aside>';
+    if (c.interactiveCircuit) html += '<aside class="project-circuit" aria-label="Circuit LED follows project-page scrolling"><svg viewBox="0 0 108 180" aria-hidden="true"><path class="circuit-trace" d="M54 12v156"/><circle class="circuit-node" cx="54" cy="12" r="7"/><circle class="circuit-node" cx="54" cy="168" r="7"/><circle class="circuit-led" cx="54" cy="12" r="10"/></svg></aside>';
     if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>View on GitHub</a>`;
     html += '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
     c.sections.forEach(([heading, paras]) => {
@@ -1145,6 +1145,9 @@
     const scrollDirection = currentScrollTop - previousSheetScrollTop;
     previousSheetScrollTop = currentScrollTop;
     if (!circuit || !scrollDirection) return;
+    const scrollRange = sheet.scrollHeight - sheet.clientHeight;
+    const scrollProgress = scrollRange ? currentScrollTop / scrollRange : 0;
+    circuit.querySelector('.circuit-led').setAttribute('cy', String(12 + scrollProgress * 156));
     circuit.classList.toggle('is-scroll-down', scrollDirection > 0);
     circuit.classList.toggle('is-scroll-up', scrollDirection < 0);
     clearTimeout(circuitTimer);
