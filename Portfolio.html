@@ -349,7 +349,11 @@
   .domain-row:nth-child(1) .dot{ background:var(--rust); }
   .domain-row:nth-child(2) .dot{ background:var(--orange); }
   .domain-row:nth-child(3) .dot{ background:var(--gold); }
-  .domain-row .label{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; }
+  .domain-row .label{
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
+    transition:color .15s ease, text-shadow .15s ease;
+  }
+  .domain-row:hover .label{ color:var(--gold); text-shadow:0 0 8px rgba(246,198,36,.45); }
   .domain-row .sub{ margin-left:auto; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-dim); }
 
   /* work */
