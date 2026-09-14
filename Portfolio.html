@@ -1097,7 +1097,7 @@
       }
     });
     html += `<div class="sheet-impact"><span>Impact</span><p>${c.impact}</p></div>`;
-    if (c.improvements) html += `<section class="sheet-improvements"><h3>Things I could improve</h3><ul>${c.improvements.map(item => `<li>${item}</li>`).join('')}</ul></section>`;
+    if (c.improvements) html += `<section class="sheet-improvements"><h3>Things I could improve on:</h3><ul>${c.improvements.map(item => `<li>${item}</li>`).join('')}</ul></section>`;
     html += '<div class="sheet-tags">' + c.tags.map(t => `<span>${t}</span>`).join('') + '</div>';
     return html;
   }
