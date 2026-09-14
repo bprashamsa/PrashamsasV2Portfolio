@@ -545,6 +545,8 @@
   .sheet-body{ padding:32px 28px 64px; }
   .sheet-body h2{ font-size:clamp(26px,4vw,34px); margin-bottom:14px; }
   .sheet-body .lead{ color:var(--ink-dim); font-size:15px; line-height:1.65; margin-bottom:26px; }
+  .sheet-repo{ display:inline-flex; margin:-10px 0 26px; color:var(--gold); font-family:'JetBrains Mono', monospace; font-size:12px; }
+  .sheet-repo:hover{ text-decoration:underline; }
   .sheet-facts{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line); margin-bottom:28px; }
   .sheet-facts > div{ padding:14px 0; border-bottom:1px solid var(--line); }
   .sheet-facts dt{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
@@ -1020,6 +1022,7 @@
       tag: 'Security · Case Study',
       title: 'NVD + CWE risk chatbot',
       lead: 'A Claude-powered security chatbot that combines live NVD CVE data, MITRE CWE guidance, CVSS severity, and EPSS exploitation likelihood into practical patch-priority recommendations.',
+      repo: 'https://github.com/bprashamsa/NVD-CWE-ClaudeChatbot',
       facts: [['Role','Developer'],['Stack','Python, Claude, LangChain'],['Data','NVD, MITRE CWE, EPSS'],['Status','Open source']],
       sections: [
         ['The problem', ['Raw vulnerability scores alone do not clearly show which issues deserve attention first. Security teams need current context about both severity and likely real-world exploitation.']],
@@ -1028,6 +1031,7 @@
           'Connected live NVD CVE and MITRE CWE feeds with normalized lookups and cached CWE data.',
           'Added composite CVSS and EPSS scoring to rank findings as low, medium, high, or critical based on impact and exploitation likelihood.'
         ]],
+        ['What I learned', ['This was my first time working directly with APIs. I became comfortable making requests, working with live responses, and integrating external data into an application, building a practical new skill through the project.']],
         ['Outcome', ['The chatbot translates vulnerability data into a clearer answer to the operational question: what should be patched first?']]
       ],
       impact: 'Combines theoretical severity with observed exploitation probability for more actionable remediation prioritization.',
@@ -1079,6 +1083,7 @@
     const c = CASES[key];
     if (!c) return '';
     let html = `<h2>${c.title}</h2><p class="lead">${c.lead}</p>`;
+    if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer">View on GitHub</a>`;
     html += '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
     c.sections.forEach(([heading, paras]) => {
       html += `<h3>${heading}</h3>`;
