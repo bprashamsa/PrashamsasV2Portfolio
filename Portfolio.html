@@ -563,6 +563,9 @@
   }
   .sheet-impact span{ display:block; font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
   .sheet-impact p{ margin:0; color:var(--ink); font-size:14.5px; }
+  .sheet-improvements{ margin-top:20px; padding:22px 20px; border:1px solid var(--line); background:var(--canopy); }
+  .sheet-improvements h3{ margin:0 0 12px; }
+  .sheet-improvements ul{ margin:0; }
 
   /* ---------- responsive ---------- */
   @media (max-width: 900px){
@@ -1024,15 +1027,16 @@
       repo: 'https://github.com/bprashamsa/NVD-CWE-ClaudeChatbot',
       facts: [['Role','Developer'],['Stack','Python, Claude, LangChain'],['Data','NVD, MITRE CWE, EPSS'],['Status','Open source']],
       sections: [
-        ['The problem', ['Raw vulnerability scores alone do not clearly show which issues deserve attention first. Security teams need current context about both severity and likely real-world exploitation.']],
-        ['What I built', [
+        ['The issue at hand', ['Raw vulnerability scores alone do not clearly show which issues deserve attention first. Security teams need current context about both severity and likely real-world exploitation.']],
+        ['What did I build to solve the problem?', [
           'Built a Claude-powered natural-language interface for CVE, CWE, CVSS, and vulnerability-search questions.',
           'Connected live NVD CVE and MITRE CWE feeds with normalized lookups and cached CWE data.',
           'Added composite CVSS and EPSS scoring to rank findings as low, medium, high, or critical based on impact and exploitation likelihood.'
         ]],
-        ['What did I learn', ['This was my first time working directly with APIs. I became comfortable making requests, working with live responses, and integrating external data into an application, building a practical new skill through the project.']],
-        ['Outcome', ['The chatbot translates vulnerability data into a clearer answer to the operational question: what should be patched first?']]
+        ['Well, this is what I learned', ['This was my first time working directly with APIs. I became comfortable making requests, working with live responses, and integrating external data into an application, building a practical new skill through the project.']],
+        ['My fix:', ['The chatbot translates vulnerability data into a clearer answer to the operational question: what should be patched first?']]
       ],
+      improvements: ['Add more resilient API error handling and clearer fallback states.', 'Expand the browser interface with richer vulnerability visualizations.', 'Add automated tests for API responses and risk-score calculations.'],
       impact: 'Combines theoretical severity with observed exploitation probability for more actionable remediation prioritization.',
       tags: ['Python','Claude','LangChain','NVD API','MITRE CWE','EPSS']
     },
@@ -1093,6 +1097,7 @@
       }
     });
     html += `<div class="sheet-impact"><span>Impact</span><p>${c.impact}</p></div>`;
+    if (c.improvements) html += `<section class="sheet-improvements"><h3>Things I could improve</h3><ul>${c.improvements.map(item => `<li>${item}</li>`).join('')}</ul></section>`;
     html += '<div class="sheet-tags">' + c.tags.map(t => `<span>${t}</span>`).join('') + '</div>';
     return html;
   }
