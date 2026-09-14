@@ -752,11 +752,11 @@
     <div class="work-grid">
       <button class="card" data-case="ids" aria-haspopup="dialog">
         <div class="fruit-dot"></div>
-        <span class="domain-tag">a b c</span>
-        <h3>abcdefg hijkl</h3>
-        <p>abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz</p>
-        <div class="tags"><span>abc</span><span>def</span><span>ghi</span></div>
-        <span class="link">a b c d e<svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg></span>
+        <span class="domain-tag">security</span>
+        <h3>NVD + CWE risk chatbot</h3>
+        <p>A Claude-powered chatbot that turns live vulnerability data into patch-priority guidance.</p>
+        <div class="tags"><span>Python</span><span>Claude</span><span>NVD API</span></div>
+        <span class="link">Open the project<svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg></span>
       </button>
       <button class="card" data-case="anomaly" aria-haspopup="dialog">
         <div class="fruit-dot"></div>
@@ -1018,20 +1018,20 @@
   const CASES = {
     ids: {
       tag: 'Security · Case Study',
-      title: 'Intrusion detection pipeline',
-      lead: 'A network-traffic monitoring pipeline that flags anomalous behavior in near real time and routes confirmed threats into an analyst-facing dashboard.',
-      facts: [['Role','Security engineer'],['Stack','Python, Suricata, ELK'],['Timeframe','8 weeks'],['Status','In production']],
+      title: 'NVD + CWE risk chatbot',
+      lead: 'A Claude-powered security chatbot that combines live NVD CVE data, MITRE CWE guidance, CVSS severity, and EPSS exploitation likelihood into practical patch-priority recommendations.',
+      facts: [['Role','Developer'],['Stack','Python, Claude, LangChain'],['Data','NVD, MITRE CWE, EPSS'],['Status','Open source']],
       sections: [
-        ['The problem', ['The existing setup relied on static, hand-written rules that missed slow, low-and-slow scanning behavior and generated enough noise that real alerts got lost in it.']],
+        ['The problem', ['Raw vulnerability scores alone do not clearly show which issues deserve attention first. Security teams need current context about both severity and likely real-world exploitation.']],
         ['What I built', [
-          'Deployed Suricata at the network edge to capture and classify traffic against a tuned ruleset.',
-          'Piped events into an ELK stack for storage, search, and a live analyst dashboard.',
-          'Added a lightweight scoring layer in Python to correlate related events and suppress duplicate alerts.'
+          'Built a Claude-powered natural-language interface for CVE, CWE, CVSS, and vulnerability-search questions.',
+          'Connected live NVD CVE and MITRE CWE feeds with normalized lookups and cached CWE data.',
+          'Added composite CVSS and EPSS scoring to rank findings as low, medium, high, or critical based on impact and exploitation likelihood.'
         ]],
-        ['Outcome', ['Cut the false-positive rate enough that the on-call rotation stopped triaging noise, and cut median time-to-detect for the scanning patterns we cared about most.']]
+        ['Outcome', ['The chatbot translates vulnerability data into a clearer answer to the operational question: what should be patched first?']]
       ],
-      impact: 'Replace with your real numbers: false-positive rate, coverage, or time-to-detect.',
-      tags: ['Python','Suricata','ELK Stack','Network Security']
+      impact: 'Combines theoretical severity with observed exploitation probability for more actionable remediation prioritization.',
+      tags: ['Python','Claude','LangChain','NVD API','MITRE CWE','EPSS']
     },
     anomaly: {
       tag: 'Data Science · Case Study',
