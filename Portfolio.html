@@ -103,7 +103,8 @@
     display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
     position:relative;
   }
-  .mark-email{ font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:400; color:var(--ink-dim); }
+  .mark-email{ padding:0; border:0; background:transparent; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:400; color:var(--ink-dim); cursor:pointer; transition:color .15s ease; }
+  .mark-email:hover{ color:var(--gold); }
   .mark::before{
     content:""; position:absolute; right:100%; top:50%;
     width:28px; height:2px; transform:translateY(-50%);
@@ -619,7 +620,7 @@
 
 <header>
   <div class="header-row">
-    <div class="mark"><span class="header-orb" aria-hidden="true"></span>Prashamsa Bandarapu <span class="mark-email">bandarapuprashamsa@gmail.com</span></div>
+    <div class="mark"><span class="header-orb" aria-hidden="true"></span>Prashamsa Bandarapu <button class="mark-email" type="button" data-cursor-link="copy email" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard">bandarapuprashamsa@gmail.com</button></div>
     <nav>
       <ul>
         <li><a href="#about">About</a></li>
@@ -919,6 +920,12 @@
         cursor.textContent = '';
         cursor.classList.remove('is-pill');
       });
+    });
+
+    document.querySelector('.mark-email').addEventListener('click', async () => {
+      const email = 'bandarapuprashamsa@gmail.com';
+      await navigator.clipboard.writeText(email);
+      document.getElementById('copyStatus').textContent = 'Email copied to clipboard.';
     });
 
     document.querySelectorAll('.elsewhere-card, header, .chip-body').forEach(el => {
