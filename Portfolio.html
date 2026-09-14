@@ -163,16 +163,18 @@
   .hero-copy .cta-row{ margin-top:32px; display:flex; gap:16px; flex-wrap:wrap; }
 
   .btn{
-    display:inline-block; padding:13px 24px;
-    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14px;
-    background:var(--orange); color:var(--bg);
-    border:1.5px solid var(--orange);
-    box-shadow:6px 6px 0 var(--rust), inset 0 0 0 1px rgba(255,255,255,0.02);
-    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    display:inline-flex; align-items:center; gap:10px; padding:12px 17px 12px 14px;
+    font-family:'JetBrains Mono', monospace; font-weight:500; font-size:12px; letter-spacing:.02em;
+    background:var(--orange); color:var(--bg); border:1.5px solid var(--orange);
+    box-shadow:5px 5px 0 var(--rust);
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, color .18s ease;
   }
-  .btn:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,0.2), 6px 6px 0 rgba(246,198,36,0.12), inset 0 0 0 1px rgba(255,255,255,0.02); }
-  .btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--line); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02); }
-  .btn.ghost:hover{ transform:translateY(-2px); border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,0.2), 6px 6px 0 rgba(246,198,36,0.12), inset 0 0 0 1px rgba(255,255,255,0.02); }
+  .btn::before{ content:""; width:9px; height:9px; border:2px solid currentColor; border-radius:50%; }
+  .btn::after{ content:"→"; font-size:16px; line-height:1; transition:transform .18s ease; }
+  .btn:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.18); }
+  .btn:hover::after{ transform:translateX(3px); }
+  .btn.ghost{ background:transparent; color:var(--ink); border-color:var(--ink); box-shadow:none; }
+  .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.12); }
 
   .board-holder{
     flex:1 1 auto;
@@ -634,8 +636,8 @@
       <div class="role mono">cybersecurity · data science · engineering</div>
       <p class="tag">Rewire what you wish to see.</p>
       <div class="cta-row">
-        <a class="btn" href="#work">See the work</a>
-        <a class="btn ghost" href="#contact">Get in touch</a>
+        <a class="btn" href="#work">Browse projects</a>
+        <a class="btn ghost" href="#contact">Let's connect</a>
       </div>
     </div>
 
