@@ -585,34 +585,126 @@
   .sheet-improvements h3{ margin:0 0 12px; }
   .sheet-improvements ul{ margin:0; }
 
-  .sheet-demo-intro{ font-size:14.5px; line-height:1.7; color:var(--ink-dim); margin-bottom:18px; }
-  .sheet-gallery{ display:grid; gap:24px; margin:18px 0 26px; }
-  .sheet-preview-card{
-    background:var(--noir); border:1px solid var(--noir-line);
-    box-shadow:0 8px 24px rgba(0,0,0,0.45);
-    border-radius:8px; overflow:hidden;
-    transition:border-color .2s ease, box-shadow .2s ease;
+  /* ---------- interactive card flip deck ---------- */
+  .sheet-demo-intro{ font-size:14.5px; line-height:1.7; color:var(--ink-dim); margin-bottom:16px; }
+  .sheet-deck-container{
+    margin:18px 0 28px;
+    background:rgba(8,18,24,0.7);
+    border:1px solid var(--noir-line);
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 12px 32px rgba(0,0,0,0.45);
   }
-  .sheet-preview-card:hover{
+  .sheet-deck-controls{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap; margin-bottom:16px;
+    padding-bottom:14px; border-bottom:1px solid var(--noir-line);
+  }
+  .sheet-deck-meta{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .sheet-deck-counter{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:12px; font-weight:600; color:var(--gold);
+    background:var(--noir); border:1px solid var(--line);
+    padding:4px 10px; border-radius:4px;
+  }
+  .sheet-deck-hint{
+    font-size:11px; color:var(--ink-dim); letter-spacing:.02em;
+  }
+  .sheet-deck-nav{
+    display:flex; align-items:center; gap:10px;
+  }
+  .sheet-deck-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:6px;
+    background:var(--canopy); color:var(--ink);
+    border:1px solid var(--line); cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .sheet-deck-btn:hover{
+    background:var(--bg); border-color:var(--gold); color:var(--gold);
+    transform:translateY(-1px);
+    box-shadow:0 0 8px rgba(246,198,36,0.3);
+  }
+  .sheet-deck-btn svg{ width:15px; height:15px; }
+  .sheet-deck-dots{
+    display:flex; align-items:center; gap:6px; margin:0 4px;
+  }
+  .sheet-deck-dot{
+    width:22px; height:8px; border-radius:999px;
+    background:var(--line); border:0; cursor:pointer;
+    transition:background .2s ease, width .2s ease, box-shadow .2s ease;
+  }
+  .sheet-deck-dot:hover{ background:var(--ink); }
+  .sheet-deck-dot.is-active{
+    width:32px; background:var(--gold);
+    box-shadow:0 0 8px rgba(246,198,36,0.6);
+  }
+  .sheet-deck-stage{
+    position:relative;
+    width:100%;
+    min-height:500px;
+    perspective:1400px;
+    cursor:pointer;
+  }
+  .sheet-deck-card{
+    position:absolute; inset:0;
+    width:100%;
+    background:var(--noir); border:1.5px solid var(--noir-line);
+    box-shadow:0 10px 30px rgba(0,0,0,0.55);
+    border-radius:8px; overflow:hidden;
+    opacity:0; pointer-events:none;
+    transform:translate3d(0, 0, -80px) rotateY(12deg) scale(0.95);
+    transition:transform .45s cubic-bezier(.2,.85,.3,1), opacity .32s ease, border-color .2s ease, box-shadow .2s ease;
+    will-change:transform, opacity;
+  }
+  .sheet-deck-card:hover{
     border-color:var(--gold);
-    box-shadow:0 0 0 1px rgba(246,198,36,0.3), 0 10px 30px rgba(0,0,0,0.55);
+    box-shadow:0 0 0 1px rgba(246,198,36,0.35), 0 14px 40px rgba(0,0,0,0.7);
+  }
+  .sheet-deck-card.is-active{
+    position:relative;
+    opacity:1; pointer-events:auto;
+    transform:translate3d(0, 0, 0) rotateY(0deg) scale(1);
+    z-index:4;
+  }
+  .sheet-deck-card.is-prev{
+    opacity:0; pointer-events:none;
+    transform:translate3d(-40px, 0, -100px) rotateY(-18deg) scale(0.92);
+    z-index:2;
+  }
+  .sheet-deck-card.is-next{
+    opacity:0; pointer-events:none;
+    transform:translate3d(40px, 0, -100px) rotateY(18deg) scale(0.92);
+    z-index:2;
   }
   .sheet-preview-bar{
-    display:flex; align-items:center; gap:8px; padding:10px 14px;
-    background:rgba(20,48,57,0.6); border-bottom:1px solid var(--noir-line);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 14px;
+    background:rgba(20,48,57,0.75); border-bottom:1px solid var(--noir-line);
+  }
+  .sheet-preview-bar-left{
+    display:flex; align-items:center; gap:8px;
   }
   .sheet-preview-dot{ width:9px; height:9px; border-radius:50%; }
   .sheet-preview-dot.red{ background:#ff5f56; }
   .sheet-preview-dot.yellow{ background:#ffbd2e; }
   .sheet-preview-dot.green{ background:#27c93f; }
   .sheet-preview-title{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim); margin-left:6px; }
+  .sheet-preview-pill{
+    font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--gold);
+    border:1px solid rgba(246,198,36,0.3); padding:2px 8px; border-radius:4px; background:rgba(246,198,36,0.08);
+  }
   .sheet-preview-img{
     width:100%; height:auto; display:block;
+    max-height:560px; object-fit:contain;
+    background:#04090d;
     border-bottom:1px solid var(--noir-line);
   }
   .sheet-preview-caption{
-    padding:12px 16px; font-family:'JetBrains Mono', monospace; font-size:12px;
-    color:var(--noir-ink); background:rgba(8,18,24,0.95); line-height:1.55;
+    padding:14px 18px; font-family:'JetBrains Mono', monospace; font-size:12px;
+    color:var(--noir-ink); background:rgba(8,18,24,0.96); line-height:1.6;
   }
   .sheet-preview-caption strong{ color:var(--gold); }
 
@@ -1094,18 +1186,28 @@
         ['Outcome:', ['The chatbot translates vulnerability data into a clearer answer to the operational question: what should be patched first?']]
       ],
       demo: {
-        title: 'Live Chatbot Queries in Action',
-        description: 'Users can ask questions about CVEs, CWEs, and CVSS scores or run general vulnerability searches in plain English. The chatbot queries official feeds (NVD NIST API, MITRE CWE database, FIRST EPSS) in real time to return verified details and calculated risk scores.',
+        title: 'Interactive Project Previews & Queries',
+        description: 'Flip through the cards below to see the default interface and live query demonstrations against live NVD CVE feeds, MITRE CWE databases, and FIRST EPSS models.',
         items: [
           {
-            title: 'terminal — cve-2021-44228.log',
+            title: 'interface — nvd-cwe-chatbot.gui',
+            badge: 'Interface Preview',
+            label: 'Default Screen (Search & Routing Interface)',
+            src: 'assets/NVD%2BCWERiskChatbotDefault.png',
+            alt: 'NVD & CWE risk chatbot default screen showing clean chat interface and prompt routing',
+            caption: 'Default Interface — ready to accept CVE identifiers (e.g. CVE-2021-44228), CWE lookups, or conversational security questions with real-time tool orchestration and fallback routing.'
+          },
+          {
+            title: 'query — log4shell-cve-2021-44228.log',
+            badge: 'Live Query 01',
             label: 'First Question (Direct CVE & Risk Lookup)',
             src: 'assets/NVD%2BCWERiskChatbotFirstQ.png',
             alt: 'NVD & CWE security chatbot querying CVE-2021-44228 Log4Shell with CVSS, EPSS, and Risk score',
             caption: 'Querying Log4Shell (CVE-2021-44228) — retrieves live NVD description, CVSS 10.0 score, EPSS exploitation probability (0.9754), and assigns a composite 100/100 CRITICAL risk rating.'
           },
           {
-            title: 'terminal — cve-2024-3094.log',
+            title: 'analysis — xz-utils-cve-2024-3094.log',
+            badge: 'Live Query 02',
             label: 'Second Question (Natural Language Analysis & Risk Explanation)',
             src: 'assets/NVD%2BCWERiskChatbotSeondQ.png',
             alt: 'NVD & CWE security chatbot explaining CVSS and risk of CVE-2024-3094 XZ Utils backdoor',
@@ -1180,18 +1282,47 @@
       html += `<h3>${c.demo.title}</h3>`;
       if (c.demo.description) html += `<p class="sheet-demo-intro">${c.demo.description}</p>`;
       if (c.demo.items && c.demo.items.length) {
-        html += '<div class="sheet-gallery">' + c.demo.items.map(item => `
-          <figure class="sheet-preview-card">
-            <div class="sheet-preview-bar">
-              <span class="sheet-preview-dot red"></span>
-              <span class="sheet-preview-dot yellow"></span>
-              <span class="sheet-preview-dot green"></span>
-              <span class="sheet-preview-title">${item.title}</span>
+        const total = c.demo.items.length;
+        const totalStr = total < 10 ? `0${total}` : `${total}`;
+        html += `
+          <div class="sheet-deck-container">
+            <div class="sheet-deck-controls">
+              <div class="sheet-deck-meta">
+                <span class="sheet-deck-counter mono"><span class="deck-current">01</span> / <span class="deck-total">${totalStr}</span></span>
+                <span class="sheet-deck-hint mono">● Click card or arrows to flip</span>
+              </div>
+              <div class="sheet-deck-nav">
+                <button class="sheet-deck-btn deck-prev" type="button" aria-label="Previous card" data-cursor-link="← prev">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 3-5 5 5 5"/></svg>
+                </button>
+                <div class="sheet-deck-dots" role="tablist" aria-label="Card pagination">
+                  ${c.demo.items.map((_, i) => `<button class="sheet-deck-dot${i === 0 ? ' is-active' : ''}" type="button" aria-label="Go to card ${i + 1}" data-deck-index="${i}"></button>`).join('')}
+                </div>
+                <button class="sheet-deck-btn deck-next" type="button" aria-label="Next card" data-cursor-link="next →">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+                </button>
+              </div>
             </div>
-            <img class="sheet-preview-img" src="${item.src}" alt="${item.alt || item.title}" />
-            <figcaption class="sheet-preview-caption"><strong>${item.label}:</strong> ${item.caption}</figcaption>
-          </figure>
-        `).join('') + '</div>';
+
+            <div class="sheet-deck-stage" tabindex="0" role="region" aria-label="Interactive project card deck. Press arrow keys or click to flip cards." data-cursor-link="flip ↻">
+              ${c.demo.items.map((item, idx) => `
+                <figure class="sheet-deck-card${idx === 0 ? ' is-active' : (idx === 1 ? ' is-next' : '')}" data-card-index="${idx}">
+                  <div class="sheet-preview-bar">
+                    <div class="sheet-preview-bar-left">
+                      <span class="sheet-preview-dot red"></span>
+                      <span class="sheet-preview-dot yellow"></span>
+                      <span class="sheet-preview-dot green"></span>
+                      <span class="sheet-preview-title">${item.title}</span>
+                    </div>
+                    ${item.badge ? `<span class="sheet-preview-pill">${item.badge}</span>` : ''}
+                  </div>
+                  <img class="sheet-preview-img" src="${item.src}" alt="${item.alt || item.title}" />
+                  <figcaption class="sheet-preview-caption"><strong>${item.label}:</strong> ${item.caption}</figcaption>
+                </figure>
+              `).join('')}
+            </div>
+          </div>
+        `;
       }
     }
     html += `<div class="sheet-impact"><span>Impact</span><p>${c.impact}</p></div>`;
@@ -1200,12 +1331,105 @@
     return html;
   }
 
+  function initCardDeck() {
+    const deckContainer = sheet.querySelector('.sheet-deck-container');
+    if (!deckContainer) return;
+    const cards = Array.from(deckContainer.querySelectorAll('.sheet-deck-card'));
+    const dots = Array.from(deckContainer.querySelectorAll('.sheet-deck-dot'));
+    const prevBtn = deckContainer.querySelector('.deck-prev');
+    const nextBtn = deckContainer.querySelector('.deck-next');
+    const currentCounter = deckContainer.querySelector('.deck-current');
+    const stage = deckContainer.querySelector('.sheet-deck-stage');
+    if (!cards.length) return;
+
+    let currentIndex = 0;
+    const total = cards.length;
+
+    function updateDeck(newIndex) {
+      currentIndex = (newIndex + total) % total;
+      cards.forEach((card, idx) => {
+        card.classList.remove('is-active', 'is-prev', 'is-next');
+        if (idx === currentIndex) {
+          card.classList.add('is-active');
+        } else if (idx === (currentIndex - 1 + total) % total) {
+          card.classList.add('is-prev');
+        } else {
+          card.classList.add('is-next');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('is-active', idx === currentIndex);
+      });
+
+      if (currentCounter) {
+        currentCounter.textContent = (currentIndex + 1) < 10 ? `0${currentIndex + 1}` : `${currentIndex + 1}`;
+      }
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateDeck(currentIndex - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateDeck(currentIndex + 1);
+      });
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateDeck(idx);
+      });
+    });
+
+    if (stage) {
+      stage.addEventListener('click', () => {
+        updateDeck(currentIndex + 1);
+      });
+
+      stage.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          updateDeck(currentIndex + 1);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          updateDeck(currentIndex - 1);
+        }
+      });
+    }
+
+    deckContainer.querySelectorAll('[data-cursor-link]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        const cursor = document.getElementById('site-cursor');
+        if (cursor) {
+          cursor.textContent = el.dataset.cursorLink;
+          cursor.classList.add('is-pill');
+          cursor.classList.remove('is-hover');
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        const cursor = document.getElementById('site-cursor');
+        if (cursor) {
+          cursor.textContent = '';
+          cursor.classList.remove('is-pill');
+        }
+      });
+    });
+  }
+
   function openSheet(key, triggerEl){
     lastTrigger = triggerEl || null;
     const c = CASES[key];
     if (!c) return;
     sheetTag.textContent = c.tag;
     sheetBody.innerHTML = renderCase(key);
+    initCardDeck();
     sheet.scrollTop = 0;
     previousSheetScrollTop = 0;
     scrim.classList.add('open');
