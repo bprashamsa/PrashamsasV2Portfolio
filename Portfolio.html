@@ -1100,14 +1100,14 @@
           {
             title: 'terminal — cve-2021-44228.log',
             label: 'First Question (Direct CVE & Risk Lookup)',
-            src: 'assets/NVD+CWERiskChatbotFirstQ.png',
+            src: 'assets/NVD%2BCWERiskChatbotFirstQ.png',
             alt: 'NVD & CWE security chatbot querying CVE-2021-44228 Log4Shell with CVSS, EPSS, and Risk score',
             caption: 'Querying Log4Shell (CVE-2021-44228) — retrieves live NVD description, CVSS 10.0 score, EPSS exploitation probability (0.9754), and assigns a composite 100/100 CRITICAL risk rating.'
           },
           {
             title: 'terminal — cve-2024-3094.log',
             label: 'Second Question (Natural Language Analysis & Risk Explanation)',
-            src: 'assets/NVD+CWERiskChatbotSeondQ.png',
+            src: 'assets/NVD%2BCWERiskChatbotSeondQ.png',
             alt: 'NVD & CWE security chatbot explaining CVSS and risk of CVE-2024-3094 XZ Utils backdoor',
             caption: 'Asking "What is the CVSS of CVE-2024-3094 and explain its risk" — returns CVSS 10.0, EPSS 0.8932, and an in-depth contextual explanation of the upstream XZ Utils supply chain backdoor.'
           }
@@ -1188,7 +1188,7 @@
               <span class="sheet-preview-dot green"></span>
               <span class="sheet-preview-title">${item.title}</span>
             </div>
-            <img class="sheet-preview-img" src="${item.src}" alt="${item.alt || item.title}" loading="lazy" />
+            <img class="sheet-preview-img" src="${item.src}" alt="${item.alt || item.title}" />
             <figcaption class="sheet-preview-caption"><strong>${item.label}:</strong> ${item.caption}</figcaption>
           </figure>
         `).join('') + '</div>';
