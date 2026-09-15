@@ -585,6 +585,37 @@
   .sheet-improvements h3{ margin:0 0 12px; }
   .sheet-improvements ul{ margin:0; }
 
+  .sheet-demo-intro{ font-size:14.5px; line-height:1.7; color:var(--ink-dim); margin-bottom:18px; }
+  .sheet-gallery{ display:grid; gap:24px; margin:18px 0 26px; }
+  .sheet-preview-card{
+    background:var(--noir); border:1px solid var(--noir-line);
+    box-shadow:0 8px 24px rgba(0,0,0,0.45);
+    border-radius:8px; overflow:hidden;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .sheet-preview-card:hover{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px rgba(246,198,36,0.3), 0 10px 30px rgba(0,0,0,0.55);
+  }
+  .sheet-preview-bar{
+    display:flex; align-items:center; gap:8px; padding:10px 14px;
+    background:rgba(20,48,57,0.6); border-bottom:1px solid var(--noir-line);
+  }
+  .sheet-preview-dot{ width:9px; height:9px; border-radius:50%; }
+  .sheet-preview-dot.red{ background:#ff5f56; }
+  .sheet-preview-dot.yellow{ background:#ffbd2e; }
+  .sheet-preview-dot.green{ background:#27c93f; }
+  .sheet-preview-title{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim); margin-left:6px; }
+  .sheet-preview-img{
+    width:100%; height:auto; display:block;
+    border-bottom:1px solid var(--noir-line);
+  }
+  .sheet-preview-caption{
+    padding:12px 16px; font-family:'JetBrains Mono', monospace; font-size:12px;
+    color:var(--noir-ink); background:rgba(8,18,24,0.95); line-height:1.55;
+  }
+  .sheet-preview-caption strong{ color:var(--gold); }
+
   /* ---------- responsive ---------- */
   @media (max-width: 900px){
     .hero-inner{ flex-direction:column-reverse; text-align:center; }
@@ -1062,6 +1093,26 @@
         ['Well, this is what I learned...', ['This was my first time working directly with APIs. I became comfortable making requests, working with live responses, and integrating external data into an application, building a practical new skill through the project.']],
         ['Outcome:', ['The chatbot translates vulnerability data into a clearer answer to the operational question: what should be patched first?']]
       ],
+      demo: {
+        title: 'Live Chatbot Queries in Action',
+        description: 'Users can ask questions about CVEs, CWEs, and CVSS scores or run general vulnerability searches in plain English. The chatbot queries official feeds (NVD NIST API, MITRE CWE database, FIRST EPSS) in real time to return verified details and calculated risk scores.',
+        items: [
+          {
+            title: 'terminal — cve-2021-44228.log',
+            label: 'First Question (Direct CVE & Risk Lookup)',
+            src: 'assets/NVD+CWERiskChatbotFirstQ.png',
+            alt: 'NVD & CWE security chatbot querying CVE-2021-44228 Log4Shell with CVSS, EPSS, and Risk score',
+            caption: 'Querying Log4Shell (CVE-2021-44228) — retrieves live NVD description, CVSS 10.0 score, EPSS exploitation probability (0.9754), and assigns a composite 100/100 CRITICAL risk rating.'
+          },
+          {
+            title: 'terminal — cve-2024-3094.log',
+            label: 'Second Question (Natural Language Analysis & Risk Explanation)',
+            src: 'assets/NVD+CWERiskChatbotSeondQ.png',
+            alt: 'NVD & CWE security chatbot explaining CVSS and risk of CVE-2024-3094 XZ Utils backdoor',
+            caption: 'Asking "What is the CVSS of CVE-2024-3094 and explain its risk" — returns CVSS 10.0, EPSS 0.8932, and an in-depth contextual explanation of the upstream XZ Utils supply chain backdoor.'
+          }
+        ]
+      },
       improvements: ['Add more resilient API error handling and clearer fallback states.', 'Expand the browser interface with richer vulnerability visualizations.', 'Add automated tests for API responses and risk-score calculations.'],
       impact: 'Combines theoretical severity with observed exploitation probability for more actionable remediation prioritization.',
       tags: ['Python','Claude','LangChain','NVD API','MITRE CWE','EPSS']
@@ -1125,6 +1176,24 @@
         html += `<p>${paras[0]}</p>`;
       }
     });
+    if (c.demo) {
+      html += `<h3>${c.demo.title}</h3>`;
+      if (c.demo.description) html += `<p class="sheet-demo-intro">${c.demo.description}</p>`;
+      if (c.demo.items && c.demo.items.length) {
+        html += '<div class="sheet-gallery">' + c.demo.items.map(item => `
+          <figure class="sheet-preview-card">
+            <div class="sheet-preview-bar">
+              <span class="sheet-preview-dot red"></span>
+              <span class="sheet-preview-dot yellow"></span>
+              <span class="sheet-preview-dot green"></span>
+              <span class="sheet-preview-title">${item.title}</span>
+            </div>
+            <img class="sheet-preview-img" src="${item.src}" alt="${item.alt || item.title}" loading="lazy" />
+            <figcaption class="sheet-preview-caption"><strong>${item.label}:</strong> ${item.caption}</figcaption>
+          </figure>
+        `).join('') + '</div>';
+      }
+    }
     html += `<div class="sheet-impact"><span>Impact</span><p>${c.impact}</p></div>`;
     if (c.improvements) html += `<section class="sheet-improvements"><h3>Things I could improve on:</h3><ul>${c.improvements.map(item => `<li>${item}</li>`).join('')}</ul></section>`;
     html += '<div class="sheet-tags">' + c.tags.map(t => `<span>${t}</span>`).join('') + '</div>';
