@@ -561,6 +561,9 @@
   .project-circuit.is-scroll-up .circuit-led{ background:radial-gradient(circle at 35% 35%, #e2ffe8 0%, #49e27d 32%, rgba(73,226,125,.2) 100%); box-shadow:0 0 0 1px rgba(73,226,125,.45), 0 0 10px rgba(73,226,125,.8), 0 0 18px rgba(73,226,125,.48); scale:1.3; }
   .sheet-body h2{ font-size:clamp(26px,4vw,34px); margin-bottom:14px; }
   .sheet-body .lead{ color:var(--ink-dim); font-size:15px; line-height:1.65; margin-bottom:26px; }
+  .case-split{ display:grid; grid-template-columns:minmax(0, 1.05fr) minmax(0, .95fr); gap:34px; align-items:start; }
+  .case-split .sheet-demo{ position:sticky; top:86px; }
+  .case-split .sheet-demo h3:first-child{ margin-top:0; }
   .sheet-repo{ display:inline-flex; align-items:center; gap:10px; margin:-10px 0 26px; padding:12px 17px 12px 14px; background:var(--orange); border:1.5px solid var(--orange); box-shadow:5px 5px 0 var(--rust); color:var(--bg); font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; letter-spacing:.02em; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
   .sheet-repo:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.18); }
   .sheet-repo:hover .trace-icon{ transform:translateX(3px); }
@@ -720,6 +723,8 @@
     .section-head{ grid-template-columns:1fr; gap:14px; }
     .about-grid{ grid-template-columns:1fr; gap:40px; }
     .work-grid{ grid-template-columns:1fr; }
+    .case-split{ grid-template-columns:1fr; }
+    .case-split .sheet-demo{ position:static; }
     .elsewhere-card{ flex-direction:column; align-items:flex-start; }
     .elsewhere-tiles:hover .elsewhere-tile,
     .elsewhere-tiles:focus-within .elsewhere-tile{ transform:none !important; }
@@ -1227,6 +1232,7 @@
       title: 'Washington State Crime Trends',
       lead: 'A data-driven study of crime trends across Washington State counties from 2016 to 2024, created in RStudio using publicly available government data.',
       arrowBullets: true,
+      sideBySide: true,
       source: { href: 'https://sac.ofm.wa.gov/data', label: 'View the public data source' },
       facts: [['Role','Data analyst'],['Stack','RStudio, R'],['Data','Publicly available Washington State Statistical Analysis Center data'],['Study period','2016-2024']],
       sections: [
@@ -1295,23 +1301,24 @@
     if (c.interactiveCircuit) html += '<aside class="project-circuit" aria-label="Circuit LED follows project-page scrolling"><span class="circuit-track"></span><span class="circuit-node circuit-node-start"></span><span class="circuit-node circuit-node-end"></span><span class="circuit-led"></span></aside>';
     if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>View it on GitHub</a>`;
     if (c.source) html += `<a class="sheet-repo sheet-source" href="${c.source.href}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>${c.source.label}</a>`;
-    html += '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
+    let infoHtml = '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
     c.sections.forEach(([heading, paras]) => {
-      html += `<h3>${heading}</h3>`;
+      infoHtml += `<h3>${heading}</h3>`;
       if (paras.length > 1) {
-        html += `<ul${c.arrowBullets ? ' class="arrow-list"' : ''}>` + paras.map(p => `<li>${p}</li>`).join('') + '</ul>';
+        infoHtml += `<ul${c.arrowBullets ? ' class="arrow-list"' : ''}>` + paras.map(p => `<li>${p}</li>`).join('') + '</ul>';
       } else {
-        html += `<p>${paras[0]}</p>`;
+        infoHtml += `<p>${paras[0]}</p>`;
       }
     });
+    let demoHtml = '';
     if (c.demo) {
-      html += `<h3>${c.demo.title}</h3>`;
-      if (c.demo.description) html += `<p class="sheet-demo-intro">${c.demo.description}</p>`;
+      demoHtml += `<h3>${c.demo.title}</h3>`;
+      if (c.demo.description) demoHtml += `<p class="sheet-demo-intro">${c.demo.description}</p>`;
       if (c.demo.items && c.demo.items.length) {
         const total = c.demo.items.length;
         const totalStr = total < 10 ? `0${total}` : `${total}`;
         const isInteractive = total > 1;
-        html += `
+        demoHtml += `
           <div class="sheet-deck-container">
             ${isInteractive ? `<div class="sheet-deck-controls">
               <div class="sheet-deck-meta">
@@ -1352,6 +1359,7 @@
         `;
       }
     }
+    html += c.sideBySide ? `<div class="case-split"><div class="sheet-demo">${demoHtml}</div><div class="case-info">${infoHtml}</div></div>` : infoHtml + demoHtml;
     html += `<div class="sheet-impact"><span>Impact</span><p>${c.impact}</p></div>`;
     if (c.improvements) html += `<section class="sheet-improvements"><h3>Things I could improve on:</h3><ul>${c.improvements.map(item => `<li>${item}</li>`).join('')}</ul></section>`;
     html += '<div class="sheet-tags">' + c.tags.map(t => `<span>${t}</span>`).join('') + '</div>';
