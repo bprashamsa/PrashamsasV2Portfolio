@@ -571,6 +571,9 @@
   .project-glance-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 18px; }
   .project-glance-item span{ display:block; font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; }
   .project-glance-item strong{ display:block; margin-top:2px; font-size:13px; color:var(--ink); line-height:1.35; }
+  .project-glance-detail{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+  .project-glance-detail h5{ font-family:'JetBrains Mono', monospace; font-size:10.5px; font-weight:500; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; }
+  .project-glance-detail p{ font-size:13px; line-height:1.55; color:var(--ink-dim); margin:0; }
   .sheet-repo{ display:inline-flex; align-items:center; gap:10px; margin:-10px 0 26px; padding:12px 17px 12px 14px; background:var(--orange); border:1.5px solid var(--orange); box-shadow:5px 5px 0 var(--rust); color:var(--bg); font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; letter-spacing:.02em; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
   .sheet-repo:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.18); }
   .sheet-repo:hover .trace-icon{ transform:translateX(3px); }
@@ -1240,7 +1243,11 @@
       arrowBullets: true,
       sideBySide: true,
       source: { href: 'https://sac.ofm.wa.gov/data', label: 'View the public data source' },
-      glance: [['Scope','Washington State counties'],['Period','2016-2024'],['Method','Rates per 1,000 residents'],['Workflow','RStudio with public data']],
+      glance: [['Scope','Every Washington State county'],['Period','2016-2024'],['Dataset','1,505 county-year observations / 299 variables'],['Method','Rates per 1,000 residents'],['Workflow','RStudio with public data']],
+      glanceDetails: [
+        ['Why this study', 'I wanted to see what a real civic dataset could actually tell a story about: not just run numbers, but turn them into something a person could look at and understand. Crime data is public, messy in the ways real data usually is, and directly shapes decisions that affect everyday safety.'],
+        ['Key findings', 'Spokane County has the highest crime rate relative to its population, while Ferry County has the lowest. Assault and property crimes make up the largest share of offenses statewide, and the 2021 shift from SRS to NIBRS reporting may affect how recent trends read.']
+      ],
       facts: [['Role','Data analyst'],['Stack','RStudio, R'],['Data','Publicly available Washington State Statistical Analysis Center data'],['Study period','2016-2024']],
       sections: [
         ['The question', ['How did crime rates and crime types vary across Washington State counties before and after the COVID-19 period?']],
@@ -1366,7 +1373,7 @@
         `;
       }
       if (c.glance) {
-        demoHtml += `<aside class="project-glance" aria-label="Project at a glance"><h4>At a glance</h4><div class="project-glance-grid">${c.glance.map(item => `<div class="project-glance-item"><span>${item[0]}</span><strong>${item[1]}</strong></div>`).join('')}</div></aside>`;
+        demoHtml += `<aside class="project-glance" aria-label="Project at a glance"><h4>At a glance</h4><div class="project-glance-grid">${c.glance.map(item => `<div class="project-glance-item"><span>${item[0]}</span><strong>${item[1]}</strong></div>`).join('')}</div>${c.glanceDetails ? c.glanceDetails.map(item => `<section class="project-glance-detail"><h5>${item[0]}</h5><p>${item[1]}</p></section>`).join('') : ''}</aside>`;
       }
     }
     html += c.sideBySide ? `<div class="case-split"><div class="sheet-demo">${demoHtml}</div><div class="case-info">${infoHtml}</div></div>` : infoHtml + demoHtml;
