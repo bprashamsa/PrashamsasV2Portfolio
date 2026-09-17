@@ -904,13 +904,13 @@
         <div class="tags"><span>Python</span><span>Claude</span><span>NVD API</span></div>
         <span class="link">Open the project<svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg></span>
       </button>
-      <button class="card" data-case="anomaly" aria-haspopup="dialog">
+      <button class="card" data-case="crime" aria-haspopup="dialog">
         <div class="fruit-dot"></div>
-        <span class="domain-tag">d e f</span>
-        <h3>lmnopq rstuv</h3>
-        <p>zyxwvutsrqponmlkjihgfedcba zyxwvutsrqponmlkjihgfedcba</p>
-        <div class="tags"><span>jkl</span><span>mno</span><span>pqr</span></div>
-        <span class="link">f g h i j<svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg></span>
+        <span class="domain-tag">data 2026 project</span>
+        <h3>Crime Project</h3>
+        <p>A county-level analysis of Washington State crime trends from 2016 through 2024, built with publicly available data in RStudio.</p>
+        <div class="tags"><span>RStudio</span><span>Public Data</span><span>Data Analysis</span></div>
+        <span class="link">Open the project<svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg></span>
       </button>
       <button class="card" data-case="infra" aria-haspopup="dialog">
         <div class="fruit-dot"></div>
@@ -1219,22 +1219,36 @@
       impact: 'Combines theoretical severity with observed exploitation probability for more actionable remediation prioritization.',
       tags: ['Python','Claude','LangChain','NVD API','MITRE CWE','EPSS']
     },
-    anomaly: {
-      tag: 'Data Science · Case Study',
-      title: 'Anomaly detection model',
-      lead: 'An unsupervised model trained on transaction-level data to surface outliers that a static, rules-based system was structurally unable to catch.',
-      facts: [['Role','Data scientist'],['Stack','Python, scikit-learn, Pandas'],['Timeframe','6 weeks'],['Status','Shipped']],
+    crime: {
+      tag: 'Data 2026 Project · Case Study',
+      title: 'Crime Project',
+      lead: 'A data-driven study of crime trends across Washington State counties from 2016 to 2024, created in RStudio using publicly available government data.',
+      facts: [['Role','Data analyst'],['Stack','RStudio, R'],['Data','Publicly available Washington State Statistical Analysis Center data'],['Study period','2016-2024']],
       sections: [
-        ['The problem', ['Rules-based fraud checks catch known patterns well but miss novel ones by definition — anything that doesn\u2019t match an existing rule sails through.']],
-        ['What I built', [
-          'Engineered features from raw transaction logs: velocity, geo-distance between consecutive events, and account-age interactions.',
-          'Trained an isolation-forest model to score transactions by how unusual they are relative to normal behavior.',
-          'Set up an evaluation loop against labeled historical fraud cases to tune the anomaly threshold.'
+        ['The question', ['How did crime rates and crime types vary across Washington State counties before and after the COVID-19 period?']],
+        ['What I analyzed', [
+          'Used publicly available county-level crime and population data from the Washington State Statistical Analysis Center.',
+          'Analyzed 1,505 county-year observations across 299 variables in RStudio to compare crime rates, offense types, and changes over time.',
+          'Examined the 2021 transition from SRS to NIBRS reporting as important context when interpreting recent trends.'
         ]],
-        ['Outcome', ['The model surfaced a set of previously-unflagged transactions that matched confirmed fraud patterns, giving the rules team new patterns to formalize.']]
+        ['Findings', ['Crime rates differed significantly across counties. Assault and property crimes represented the largest share of offenses, while reporting changes may affect trends in recent years.']]
       ],
-      impact: 'Replace with your real numbers: precision/recall, cases surfaced, or dollar impact.',
-      tags: ['Python','scikit-learn','Pandas','Machine Learning']
+      demo: {
+        title: 'Project Preview',
+        description: 'A visual summary of the RStudio analysis, including county-level crime rates, crime-type distributions, and pre- and post-COVID-19 comparisons.',
+        items: [
+          {
+            title: 'analysis — washington-state-crime-study',
+            badge: 'Data 2026 Project',
+            label: 'Washington State Crime Trends (2016-2024)',
+            src: 'assets/Projectcrime.png',
+            alt: 'Washington State county crime analysis with charts comparing rates, trends, and crime types from 2016 through 2024',
+            caption: 'Created in RStudio with publicly available data from the Washington State Statistical Analysis Center.'
+          }
+        ]
+      },
+      impact: 'Turns public county-level crime data into an accessible view of how crime patterns vary across Washington State and change over time.',
+      tags: ['RStudio','R','Public Data','Data Analysis','Washington State']
     },
     infra: {
       tag: 'Engineering · Case Study',
