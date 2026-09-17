@@ -566,12 +566,13 @@
   .case-split .sheet-demo{ display:flex; flex-direction:column; }
   .case-split .sheet-demo h3:first-child{ margin-top:0; }
   .case-split .sheet-preview-img{ max-height:760px; }
-  .project-glance{ flex:1; margin-top:18px; padding:18px; border:1px solid var(--line); background:var(--canopy); }
+  .project-glance-stack{ flex:1; display:flex; flex-direction:column; gap:18px; margin-top:18px; }
+  .project-glance{ flex:1; padding:18px; border:1px solid var(--line); background:var(--canopy); }
   .project-glance h4{ font-family:'JetBrains Mono', monospace; font-size:10.5px; font-weight:500; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; margin-bottom:12px; }
   .project-glance-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 18px; }
   .project-glance-item span{ display:block; font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; }
   .project-glance-item strong{ display:block; margin-top:2px; font-size:13px; color:var(--ink); line-height:1.35; }
-  .project-glance-detail{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+  .project-glance-detail{ padding:18px; border:1px solid var(--line); background:var(--canopy); }
   .project-glance-detail h5{ font-family:'JetBrains Mono', monospace; font-size:10.5px; font-weight:500; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; }
   .project-glance-detail p{ font-size:13px; line-height:1.55; color:var(--ink-dim); margin:0; }
   .sheet-repo{ display:inline-flex; align-items:center; gap:10px; margin:-10px 0 26px; padding:12px 17px 12px 14px; background:var(--orange); border:1.5px solid var(--orange); box-shadow:5px 5px 0 var(--rust); color:var(--bg); font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; letter-spacing:.02em; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
@@ -1373,7 +1374,7 @@
         `;
       }
       if (c.glance) {
-        demoHtml += `<aside class="project-glance" aria-label="Project at a glance"><h4>At a glance</h4><div class="project-glance-grid">${c.glance.map(item => `<div class="project-glance-item"><span>${item[0]}</span><strong>${item[1]}</strong></div>`).join('')}</div>${c.glanceDetails ? c.glanceDetails.map(item => `<section class="project-glance-detail"><h5>${item[0]}</h5><p>${item[1]}</p></section>`).join('') : ''}</aside>`;
+        demoHtml += `<div class="project-glance-stack"><aside class="project-glance" aria-label="Project at a glance"><h4>At a glance</h4><div class="project-glance-grid">${c.glance.map(item => `<div class="project-glance-item"><span>${item[0]}</span><strong>${item[1]}</strong></div>`).join('')}</div></aside>${c.glanceDetails ? c.glanceDetails.map(item => `<section class="project-glance-detail"><h5>${item[0]}</h5><p>${item[1]}</p></section>`).join('') : ''}</div>`;
       }
     }
     html += c.sideBySide ? `<div class="case-split"><div class="sheet-demo">${demoHtml}</div><div class="case-info">${infoHtml}</div></div>` : infoHtml + demoHtml;
