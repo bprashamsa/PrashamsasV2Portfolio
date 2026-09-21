@@ -1520,10 +1520,7 @@
     const scrollRange = sheet.scrollHeight - sheet.clientHeight;
     const scrollProgress = scrollRange ? currentScrollTop / scrollRange : 0;
     circuit.querySelector('.circuit-led').style.top = `${scrollProgress * 100}%`;
-    circuit.classList.toggle('is-scroll-down', scrollDirection > 0);
-    circuit.classList.toggle('is-scroll-up', scrollDirection < 0);
-    clearTimeout(circuitTimer);
-    circuitTimer = setTimeout(() => circuit.classList.remove('is-scroll-down', 'is-scroll-up'), 180);
+    circuit.classList.toggle('is-complete', scrollProgress >= 0.99);
   });
 
   document.querySelectorAll('.card[data-case]').forEach(card => {
