@@ -1028,7 +1028,14 @@
 <div class="scrim" id="scrim"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Case study">
   <div class="sheet-head">
-    <span class="sheet-tag" id="sheetTag"></span>
+    <div class="sheet-head-left">
+      <span class="sheet-tag" id="sheetTag"></span>
+      <nav class="sheet-project-nav" aria-label="Projects">
+        <button type="button" data-case="ids">NVD + CWE</button>
+        <button type="button" data-case="crime">Crime Trends</button>
+        <button type="button" data-case="infra">Infrastructure</button>
+      </nav>
+    </div>
     <button class="sheet-close" id="sheetClose" aria-label="Close case study" data-cursor-link="close">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
     </button>
@@ -1310,6 +1317,7 @@
   const sheet = document.getElementById('sheet');
   const sheetTag = document.getElementById('sheetTag');
   const sheetBody = document.getElementById('sheetBody');
+  const projectNav = document.querySelector('.sheet-project-nav');
   let lastTrigger = null;
   let previousSheetScrollTop = 0;
   let circuitTimer = null;
@@ -1482,10 +1490,13 @@
   }
 
   function openSheet(key, triggerEl){
-    lastTrigger = triggerEl || null;
+    if (triggerEl) lastTrigger = triggerEl;
     const c = CASES[key];
     if (!c) return;
     sheetTag.textContent = c.tag;
+    projectNav?.querySelectorAll('button').forEach(button => {
+      button.classList.toggle('is-active', button.dataset.case === key);
+    });
     sheetBody.innerHTML = renderCase(key);
     initCardDeck();
     sheet.scrollTop = 0;
@@ -1519,6 +1530,9 @@
 
   document.querySelectorAll('.card[data-case]').forEach(card => {
     card.addEventListener('click', () => openSheet(card.dataset.case, card));
+  });
+  projectNav?.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => openSheet(button.dataset.case));
   });
   document.getElementById('sheetClose').addEventListener('click', closeSheet);
   scrim.addEventListener('click', closeSheet);
