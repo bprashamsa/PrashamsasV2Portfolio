@@ -550,7 +550,7 @@
   .sheet-close:hover{ background:var(--canopy); border-color:var(--gold); }
   .sheet-body{ max-width:860px; margin:0 auto; padding:32px 28px 64px; }
   .project-circuit{
-    position:fixed; left:24px; top:96px; bottom:28px; z-index:1; width:24px;
+    position:fixed; left:24px; top:96px; bottom:28px; z-index:96; width:24px;
     color:var(--line); pointer-events:none;
   }
   .circuit-track{ position:absolute; top:0; bottom:0; left:50%; width:3px; transform:translateX(-50%); background:currentColor; }
@@ -1039,14 +1039,15 @@
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
     </button>
   </div>
-  <aside class="project-circuit" id="projectCircuit" aria-label="Circuit arrow follows project-page scrolling" hidden>
-    <span class="circuit-track"></span>
-    <span class="circuit-node circuit-node-start"></span>
-    <span class="circuit-node circuit-node-end"></span>
-    <span class="circuit-led"></span>
-  </aside>
   <div class="sheet-body" id="sheetBody"></div>
 </div>
+
+<aside class="project-circuit" id="projectCircuit" aria-label="Circuit arrow follows project-page scrolling" hidden>
+  <span class="circuit-track"></span>
+  <span class="circuit-node circuit-node-start"></span>
+  <span class="circuit-node circuit-node-end"></span>
+  <span class="circuit-led"></span>
+</aside>
 
 <div class="sr-only" role="status" aria-live="polite" id="copyStatus" style="position:absolute;width:1px;height:1px;overflow:hidden;"></div>
 
@@ -1529,7 +1530,7 @@
     previousSheetScrollTop = currentScrollTop;
     if (!projectCircuit || projectCircuit.hidden || !scrollDirection) return;
     const scrollRange = sheet.scrollHeight - sheet.clientHeight;
-    const scrollProgress = scrollRange ? currentScrollTop / scrollRange : 0;
+    const scrollProgress = scrollRange ? Math.min(1, Math.max(0, currentScrollTop / scrollRange)) : 0;
     projectCircuit.querySelector('.circuit-led').style.top = `${scrollProgress * 100}%`;
     projectCircuit.classList.toggle('is-complete', scrollProgress >= 0.99);
   });
