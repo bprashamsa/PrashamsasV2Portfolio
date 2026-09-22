@@ -772,6 +772,63 @@
     * { cursor:auto !important; }
   }
 </style>
+  <script>
+    (function () {
+      const isMobileDevice = () => {
+        return /Android|iPhone|iPad|iPod|Mobile|tablet|Windows Phone/i.test(navigator.userAgent)
+          || window.innerWidth <= 768;
+      };
+
+      if (isMobileDevice()) {
+        document.documentElement.innerHTML = `
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Mobile Access Restricted</title>
+            <style>
+              html, body {
+                margin: 0;
+                min-height: 100%;
+                height: 100%;
+                background: #11222c;
+                color: #53b1b1;
+                font-family: Arial, sans-serif;
+              }
+              body {
+                display: grid;
+                place-items: center;
+                text-align: center;
+                padding: 24px;
+              }
+              .mobile-block {
+                max-width: 520px;
+                padding: 32px 24px;
+                border: 1px solid #1c5858;
+                background: rgba(255,255,255,0.02);
+                box-shadow: 0 0 20px rgba(246,198,36,0.12);
+              }
+              h1 {
+                margin: 0 0 12px;
+                font-size: clamp(1.8rem, 5vw, 2.6rem);
+                color: #f6c624;
+              }
+              p {
+                margin: 0;
+                line-height: 1.6;
+                color: #53b1b1;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="mobile-block">
+              <h1>Mobile access is not available.</h1>
+              <p>This portfolio is intended for desktop viewing only.</p>
+            </div>
+          </body>
+        `;
+      }
+    })();
+  </script>
 </head>
 <body>
 
