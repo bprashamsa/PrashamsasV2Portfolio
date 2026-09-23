@@ -344,7 +344,7 @@
   }
   .about-panel .detail-grid{ display:grid; gap:16px; margin-top:20px; }
   .about-panel .detail-block{
-    padding:18px 18px 16px; background:var(--canopy); border:1px solid var(--line);
+    padding:18px 18px 16px; background:rgba(8,18,24,.78); border:1px solid var(--line);
   }
   .about-panel .detail-block h4{
     font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--gold);
@@ -404,7 +404,7 @@
   @keyframes workflow-flow{ to{ border-color:var(--gold); opacity:1; } }
   .workflow-node{
     position:relative; z-index:1; min-width:0; padding:16px 14px 14px;
-    background:var(--canopy); border:1px solid var(--line); text-align:center;
+    background:rgba(8,18,24,.78); border:1px solid var(--line); text-align:center;
     transition:transform .22s cubic-bezier(.2,.9,.3,1), opacity .2s ease, border-color .18s ease, box-shadow .18s ease;
   }
   .workflow-node:hover, .workflow-node:focus, .workflow-node.is-expanded{ transform:scale(1.08); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.16); outline:none; }
