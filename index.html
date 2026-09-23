@@ -1683,42 +1683,72 @@
   const aiLabContent = {
     security: {
       status: 'security mode',
-      title: 'Threat modeling partner',
-      text: 'AI helps me think through potential vulnerabilities, threat scenarios, and edge cases before independently validating the security decision.',
-      check: 'I verify the suggestion against security principles, evidence, and the actual system.'
+      steps: [
+        ['Frame the threat', 'I ask what could go wrong, who could be affected, and which assumptions need to be challenged.', 'Start with a clear security question, not an AI-generated answer.'],
+        ['Expand the scenarios', 'I use AI to explore vulnerabilities, threat paths, edge cases, and what I might be overlooking.', 'Treat the output as possibilities to investigate.'],
+        ['Validate the evidence', 'I compare suggestions against the actual system, security principles, and available evidence.', 'Independent validation is required before trusting a security decision.'],
+        ['Make the call', 'I decide what matters based on context, impact, and risk rather than accepting the most confident suggestion.', 'My judgment remains responsible for the final decision.']
+      ]
     },
     engineering: {
       status: 'build mode',
-      title: 'Prototype and debug loop',
-      text: 'The most useful approach with AI is to prototype ideas, compare approaches, and break large-scale problems into smaller pieces I can test.',
-      check: 'I run the code, inspect the behavior, and choose the approach that makes sense for the constraints.'
+      steps: [
+        ['Define the build', 'I turn a vague idea into a concrete problem with constraints, inputs, and a testable outcome.', 'A smaller question produces a more useful first experiment.'],
+        ['Compare approaches', 'I ask AI to prototype options, explain tradeoffs, and break a large problem into smaller pieces.', 'Multiple approaches are more useful than one polished-looking answer.'],
+        ['Run the experiment', 'I use the output to write, debug, and test code while watching for behavior the explanation missed.', 'The running system is the source of truth.'],
+        ['Choose deliberately', 'I keep the approach that fits the real constraints, not necessarily the one that was fastest to generate.', 'Speed helps me explore; judgment decides what ships.']
+      ]
     },
     data: {
       status: 'analysis mode',
-      title: 'Question-to-evidence loop',
-      text: 'AI structures questions into analytical problems, explore patterns, and communicate technical findings more clearly.',
-      check: 'I inspect data quality and ask whether the result actually supports the conclusion.'
+      steps: [
+        ['Clarify the question', 'I use AI to turn a broad idea into an analytical question with a defined measure and comparison.', 'A precise question makes weak assumptions easier to see.'],
+        ['Explore the data', 'I ask for possible patterns, useful cuts, and alternative explanations worth investigating.', 'Exploration generates hypotheses; it does not prove them.'],
+        ['Check the result', 'I inspect data quality and test whether the result is robust enough to support a conclusion.', 'A clean chart cannot repair incomplete or misleading data.'],
+        ['Communicate clearly', 'I use AI to improve how I explain the finding while keeping the evidence and limitations visible.', 'The conclusion must stay proportional to what the data can support.']
+      ]
     }
   };
   const aiLabButtons = document.querySelectorAll('.ai-domain-button');
+  const aiStepButtons = document.querySelectorAll('.ai-step-button');
   const aiLabStatus = document.getElementById('aiLabStatus');
   const aiLabTitle = document.getElementById('aiLabTitle');
   const aiLabText = document.getElementById('aiLabText');
   const aiLabCheck = document.getElementById('aiLabCheck');
+  let selectedAiDomain = 'security';
+  let selectedAiStep = 0;
+
+  function updateAiLab(){
+    const content = aiLabContent[selectedAiDomain];
+    const step = content.steps[selectedAiStep];
+    aiLabStatus.textContent = content.status;
+    aiLabTitle.textContent = step[0];
+    aiLabText.textContent = step[1];
+    aiLabCheck.textContent = step[2];
+    aiStepButtons.forEach(button => {
+      const active = Number(button.dataset.aiStep) === selectedAiStep;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
 
   aiLabButtons.forEach(button => {
     button.addEventListener('click', () => {
-      const content = aiLabContent[button.dataset.aiDomain];
-      if (!content) return;
+      if (!aiLabContent[button.dataset.aiDomain]) return;
+      selectedAiDomain = button.dataset.aiDomain;
       aiLabButtons.forEach(item => {
         const active = item === button;
         item.classList.toggle('is-active', active);
         item.setAttribute('aria-selected', active ? 'true' : 'false');
       });
-      aiLabStatus.textContent = content.status;
-      aiLabTitle.textContent = content.title;
-      aiLabText.textContent = content.text;
-      aiLabCheck.textContent = content.check;
+      updateAiLab();
+    });
+  });
+
+  aiStepButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      selectedAiStep = Number(button.dataset.aiStep);
+      updateAiLab();
     });
   });
 
