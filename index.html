@@ -780,47 +780,76 @@
       };
 
       if (isMobileDevice()) {
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.style.height = '100%';
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100vh';
+
         document.documentElement.innerHTML = `
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Mobile Access Restricted</title>
             <style>
+              :root {
+                --bg: #11222c;
+                --canopy: #1c5858;
+                --gold: #f6c624;
+                --ink: #53b1b1;
+                --line: #1c5858;
+              }
               html, body {
                 margin: 0;
-                min-height: 100%;
+                width: 100%;
                 height: 100%;
-                background: #11222c;
-                color: #53b1b1;
-                font-family: Arial, sans-serif;
+                background: var(--bg);
+                color: var(--ink);
+                overflow: hidden !important;
+                font-family: 'Inter', sans-serif;
               }
               body {
                 display: grid;
                 place-items: center;
-                text-align: center;
                 padding: 24px;
               }
-              .mobile-block {
-                max-width: 520px;
-                padding: 32px 24px;
-                border: 1px solid #1c5858;
-                background: rgba(255,255,255,0.02);
-                box-shadow: 0 0 20px rgba(246,198,36,0.12);
+              .mobile-lock {
+                position: relative;
+                width: min(92vw, 560px);
+                padding: 28px 22px;
+                background: rgba(17, 34, 44, 0.9);
+                border: 1px solid var(--line);
+                box-shadow: 0 0 0 1px rgba(246,198,36,0.12), 0 0 24px rgba(246,198,36,0.08);
+                text-align: center;
+              }
+              .mobile-lock::before {
+                content: "";
+                position: absolute;
+                inset: 10px;
+                border: 1px solid rgba(246,198,36,0.2);
+                pointer-events: none;
+              }
+              .eyebrow {
+                display: inline-block;
+                margin-bottom: 14px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                letter-spacing: 0.18em;
+                text-transform: lowercase;
+                color: var(--gold);
               }
               h1 {
-                margin: 0 0 12px;
-                font-size: clamp(1.8rem, 5vw, 2.6rem);
-                color: #f6c624;
-              }
-              p {
                 margin: 0;
-                line-height: 1.6;
-                color: #53b1b1;
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: clamp(1.7rem, 5vw, 2.5rem);
+                line-height: 1.15;
+                letter-spacing: -0.04em;
+                color: var(--gold);
               }
             </style>
           </head>
           <body>
-            <div class="mobile-block">
+            <div class="mobile-lock">
+              <span class="eyebrow">desktop only</span>
               <h1>Oops! This is not available on mobile devices yet!</h1>
             </div>
           </body>
