@@ -357,6 +357,33 @@
   .about-panel .detail-block li::before{
     content:""; position:absolute; left:0; top:.7em; width:6px; height:6px; border-radius:50%; background:var(--orange);
   }
+  .ai-lab{
+    margin:28px 0 24px; padding:20px; border:1px solid var(--line);
+    background:rgba(8,18,24,.52); box-shadow:6px 6px 0 rgba(246,198,36,.16);
+  }
+  .ai-lab-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    margin-bottom:16px; padding-bottom:12px; border-bottom:1px dashed var(--line);
+  }
+  .ai-lab-head h4{ color:var(--ink); font-size:16px; }
+  .ai-lab-status{ color:var(--gold); font:10px 'JetBrains Mono', monospace; letter-spacing:.08em; text-transform:uppercase; }
+  .ai-domain-controls{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .ai-domain-button{
+    padding:10px 8px; border:1px solid var(--line); background:transparent; color:var(--ink-dim);
+    font:11px 'JetBrains Mono', monospace; cursor:pointer; transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .ai-domain-button:hover, .ai-domain-button.is-active{
+    color:var(--gold); border-color:var(--gold); background:rgba(246,198,36,.08);
+  }
+  .ai-lab-output{ padding:18px 0 4px; }
+  .ai-lab-output h5{ color:var(--gold); font:11px 'JetBrains Mono', monospace; letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
+  .ai-lab-output p{ color:var(--ink); font-size:14px; line-height:1.7; margin-bottom:14px; }
+  .ai-lab-check{ display:flex; align-items:flex-start; gap:9px; color:var(--ink-dim); font-size:12.5px; line-height:1.6; }
+  .ai-lab-check::before{ content:""; flex:none; width:7px; height:7px; margin-top:.55em; border-radius:50%; background:#49e27d; box-shadow:0 0 8px rgba(73,226,125,.7); }
+  @media (max-width: 560px){
+    .ai-lab-head{ align-items:flex-start; flex-direction:column; gap:5px; }
+    .ai-domain-controls{ grid-template-columns:1fr; }
+  }
 
   .domain-graphic{ display:flex; flex-direction:column; gap:14px; }
   .domain-row{
@@ -1103,6 +1130,22 @@
   <div class="about-panel" data-panel="ai" role="tabpanel">
     <h3>How I use AI</h3>
     <p class="lead">I treat AI as a research partner and thinking accelerator. I use it to explore complex technical problems, challenge my assumptions, and move quickly from an idea to something I can test and validate.</p>
+    <div class="ai-lab" aria-label="How I use AI by discipline">
+      <div class="ai-lab-head">
+        <h4>Choose a signal path</h4>
+        <span class="ai-lab-status" id="aiLabStatus">security mode</span>
+      </div>
+      <div class="ai-domain-controls" role="tablist" aria-label="AI use cases">
+        <button class="ai-domain-button is-active" type="button" role="tab" aria-selected="true" data-ai-domain="security">Cybersecurity</button>
+        <button class="ai-domain-button" type="button" role="tab" aria-selected="false" data-ai-domain="engineering">Engineering</button>
+        <button class="ai-domain-button" type="button" role="tab" aria-selected="false" data-ai-domain="data">Data science</button>
+      </div>
+      <div class="ai-lab-output" role="tabpanel" aria-live="polite" aria-labelledby="aiLabStatus">
+        <h5 id="aiLabTitle">Threat modeling partner</h5>
+        <p id="aiLabText">I use AI to think through potential vulnerabilities, threat scenarios, and edge cases before independently validating the security decision.</p>
+        <div class="ai-lab-check" id="aiLabCheck">I verify the suggestion against security principles, evidence, and the actual system.</div>
+      </div>
+    </div>
     <div class="detail-grid">
       <div class="detail-block">
         <h4>Cybersecurity</h4>
@@ -1647,6 +1690,48 @@
       aboutPanels.forEach(panel => {
         panel.classList.toggle('is-active', panel.dataset.panel === selected);
       });
+    });
+  });
+
+  const aiLabContent = {
+    security: {
+      status: 'security mode',
+      title: 'Threat modeling partner',
+      text: 'I use AI to think through potential vulnerabilities, threat scenarios, and edge cases before independently validating the security decision.',
+      check: 'I verify the suggestion against security principles, evidence, and the actual system.'
+    },
+    engineering: {
+      status: 'build mode',
+      title: 'Prototype and debug loop',
+      text: 'I use AI to prototype ideas, debug code, compare approaches, and break large-scale problems into smaller pieces I can test.',
+      check: 'I run the code, inspect the behavior, and choose the approach that makes sense for the constraints.'
+    },
+    data: {
+      status: 'analysis mode',
+      title: 'Question-to-evidence loop',
+      text: 'I use AI to structure questions into analytical problems, explore patterns, and communicate technical findings more clearly.',
+      check: 'I inspect data quality and ask whether the result actually supports the conclusion.'
+    }
+  };
+  const aiLabButtons = document.querySelectorAll('.ai-domain-button');
+  const aiLabStatus = document.getElementById('aiLabStatus');
+  const aiLabTitle = document.getElementById('aiLabTitle');
+  const aiLabText = document.getElementById('aiLabText');
+  const aiLabCheck = document.getElementById('aiLabCheck');
+
+  aiLabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const content = aiLabContent[button.dataset.aiDomain];
+      if (!content) return;
+      aiLabButtons.forEach(item => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      aiLabStatus.textContent = content.status;
+      aiLabTitle.textContent = content.title;
+      aiLabText.textContent = content.text;
+      aiLabCheck.textContent = content.check;
     });
   });
 
