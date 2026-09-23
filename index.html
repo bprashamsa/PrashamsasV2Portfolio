@@ -1136,7 +1136,7 @@
 
   <div class="about-panel" data-panel="ai" role="tabpanel">
     <h3>How I use AI</h3>
-    <p class="lead">I treat AI as a research partner and thinking accelerator. I use it to explore complex technical problems, challenge my assumptions, and move quickly from an idea to something I can test and validate.</p>
+    <p class="lead">I treat AI as a research partner and thinking accelerator. It helps me move from a vague idea to a structured question, explore multiple directions, and get to a testable starting point faster. The value is not in accepting the first answer; it is in having a collaborator that helps me see the problem from more than one angle.</p>
     <div class="ai-lab" aria-label="How I use AI by discipline">
       <div class="ai-lab-head">
         <h4>Choose a signal path</h4>
@@ -1161,7 +1161,7 @@
     </div>
     <div class="detail-block ai-principle">
       <h4>The rule I keep</h4>
-      <p>Across security, engineering, and data science, AI helps me turn vague ideas into structured plans, explore alternatives, and identify edge cases. It is a starting point, never the answer. I apply my own judgment, especially when the work involves security, sensitive data, or real-world consequences.</p>
+      <p>Across security, engineering, and data science, AI helps me turn vague ideas into structured plans, explore alternatives, and identify edge cases I may not have considered. I still own the reasoning: I check the evidence, test the behavior, and decide whether the result actually makes sense. AI is a starting point for me, never the answer, especially when the work involves security, sensitive data, or real-world consequences.</p>
     </div>
   </div>
 
@@ -1684,28 +1684,28 @@
     security: {
       status: 'security mode',
       steps: [
-        ['Frame the threat', 'I ask what could go wrong, who could be affected, and which assumptions need to be challenged.', 'Start with a clear security question, not an AI-generated answer.'],
-        ['Expand the scenarios', 'I use AI to explore vulnerabilities, threat paths, edge cases, and what I might be overlooking.', 'Treat the output as possibilities to investigate.'],
-        ['Validate the evidence', 'I compare suggestions against the actual system, security principles, and available evidence.', 'Independent validation is required before trusting a security decision.'],
-        ['Make the call', 'I decide what matters based on context, impact, and risk rather than accepting the most confident suggestion.', 'My judgment remains responsible for the final decision.']
+        ['Frame the threat', 'I ask what could go wrong, who could be affected, what the attacker or failure mode might look like, and which assumptions need to be challenged. This gives the investigation a clear scope.', 'Start with a specific security question and the system context, not an AI-generated answer.'],
+        ['Expand the scenarios', 'I use AI to explore potential vulnerabilities, threat paths, privilege boundaries, edge cases, and the kinds of weaknesses I might overlook when I am too close to the problem.', 'Treat the output as a list of possibilities to investigate, not as proof that a vulnerability exists.'],
+        ['Validate the evidence', 'I compare suggestions against the actual system, documentation, security principles, and available evidence. I look for false positives, missing context, and recommendations that sound reasonable but do not apply here.', 'Independent validation is required before I trust a security decision or communicate it to someone else.'],
+        ['Make the call', 'I decide what matters based on context, likelihood, impact, and the people or systems affected. AI can help organize the reasoning, but it cannot take responsibility for the risk decision.', 'My judgment remains responsible for the final decision, including when the safest choice is to investigate further.']
       ]
     },
     engineering: {
       status: 'build mode',
       steps: [
-        ['Define the build', 'I turn a vague idea into a concrete problem with constraints, inputs, and a testable outcome.', 'A smaller question produces a more useful first experiment.'],
-        ['Compare approaches', 'I ask AI to prototype options, explain tradeoffs, and break a large problem into smaller pieces.', 'Multiple approaches are more useful than one polished-looking answer.'],
-        ['Run the experiment', 'I use the output to write, debug, and test code while watching for behavior the explanation missed.', 'The running system is the source of truth.'],
-        ['Choose deliberately', 'I keep the approach that fits the real constraints, not necessarily the one that was fastest to generate.', 'Speed helps me explore; judgment decides what ships.']
+        ['Define the build', 'I turn a vague idea into a concrete problem with constraints, inputs, expected behavior, and a testable outcome. AI is useful here because it helps expose requirements I have not written down yet.', 'A smaller, well-defined question produces a more useful first experiment than trying to solve the whole system at once.'],
+        ['Compare approaches', 'I ask AI to prototype options, explain tradeoffs, suggest different abstractions, and break a large problem into smaller pieces. Seeing alternatives helps me avoid committing too early to the first design that comes to mind.', 'Multiple approaches are more useful than one polished-looking answer when I am still learning what the problem requires.'],
+        ['Run the experiment', 'I use the output to write, debug, and test code while watching for behavior the explanation missed. I check edge cases, inspect errors, and adjust the implementation based on what actually happens at runtime.', 'The running system, tests, and observed behavior are the source of truth, not the confidence of the explanation.'],
+        ['Choose deliberately', 'I keep the approach that fits the real constraints, remains understandable, and can be maintained by the people who will use it. The fastest generated solution is not always the best engineering decision.', 'Speed helps me explore; judgment decides what is reliable enough to keep.']
       ]
     },
     data: {
       status: 'analysis mode',
       steps: [
-        ['Clarify the question', 'I use AI to turn a broad idea into an analytical question with a defined measure and comparison.', 'A precise question makes weak assumptions easier to see.'],
-        ['Explore the data', 'I ask for possible patterns, useful cuts, and alternative explanations worth investigating.', 'Exploration generates hypotheses; it does not prove them.'],
-        ['Check the result', 'I inspect data quality and test whether the result is robust enough to support a conclusion.', 'A clean chart cannot repair incomplete or misleading data.'],
-        ['Communicate clearly', 'I use AI to improve how I explain the finding while keeping the evidence and limitations visible.', 'The conclusion must stay proportional to what the data can support.']
+        ['Clarify the question', 'I use AI to turn a broad idea into an analytical question with a defined measure, comparison, population, and timeframe. It helps me separate what I want to know from what the available data can actually answer.', 'A precise question makes weak assumptions, missing variables, and overconfident conclusions easier to see.'],
+        ['Explore the data', 'I ask for possible patterns, useful cuts, and alternative explanations worth investigating. I use those suggestions to decide what to examine next, rather than letting the first interesting pattern become the story.', 'Exploration generates hypotheses; it does not prove them or replace careful analysis.'],
+        ['Check the result', 'I inspect data quality, definitions, missing values, reporting changes, and whether the result is robust enough to support a conclusion. I also ask whether the analysis measures what I think it measures.', 'A clean chart cannot repair incomplete, biased, or misleading data.'],
+        ['Communicate clearly', 'I use AI to improve how I explain a finding to different audiences while keeping the evidence, uncertainty, and limitations visible. Good communication should make the reasoning easier to follow, not make the conclusion sound more certain than it is.', 'The conclusion must stay proportional to what the data can support.']
       ]
     }
   };
