@@ -375,6 +375,12 @@
   .ai-domain-button:hover, .ai-domain-button.is-active{
     color:var(--gold); border-color:var(--gold); background:rgba(246,198,36,.08);
   }
+  .ai-step-controls{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:12px; }
+  .ai-step-button{
+    padding:8px 5px; border:0; border-top:1px solid var(--line); background:transparent; color:var(--ink-dim);
+    font:10px 'JetBrains Mono', monospace; cursor:pointer; transition:color .15s ease, border-color .15s ease;
+  }
+  .ai-step-button:hover, .ai-step-button.is-active{ color:var(--gold); border-top-color:var(--gold); }
   .ai-lab-output{ padding:18px 0 4px; }
   .ai-lab-output h5{ color:var(--gold); font:11px 'JetBrains Mono', monospace; letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
   .ai-lab-output p{ color:var(--ink); font-size:14px; line-height:1.7; margin-bottom:14px; }
@@ -383,6 +389,7 @@
   @media (max-width: 560px){
     .ai-lab-head{ align-items:flex-start; flex-direction:column; gap:5px; }
     .ai-domain-controls{ grid-template-columns:1fr; }
+    .ai-step-controls{ grid-template-columns:repeat(2,1fr); }
   }
 
   .domain-graphic{ display:flex; flex-direction:column; gap:14px; }
@@ -1139,6 +1146,12 @@
         <button class="ai-domain-button is-active" type="button" role="tab" aria-selected="true" data-ai-domain="security">Cybersecurity</button>
         <button class="ai-domain-button" type="button" role="tab" aria-selected="false" data-ai-domain="engineering">Engineering</button>
         <button class="ai-domain-button" type="button" role="tab" aria-selected="false" data-ai-domain="data">Data science</button>
+      </div>
+      <div class="ai-step-controls" role="tablist" aria-label="AI reasoning workflow">
+        <button class="ai-step-button is-active" type="button" role="tab" aria-selected="true" data-ai-step="0">01 Ask</button>
+        <button class="ai-step-button" type="button" role="tab" aria-selected="false" data-ai-step="1">02 Explore</button>
+        <button class="ai-step-button" type="button" role="tab" aria-selected="false" data-ai-step="2">03 Test</button>
+        <button class="ai-step-button" type="button" role="tab" aria-selected="false" data-ai-step="3">04 Decide</button>
       </div>
       <div class="ai-lab-output" role="tabpanel" aria-live="polite" aria-labelledby="aiLabStatus">
         <h5 id="aiLabTitle">Threat modeling partner</h5>
