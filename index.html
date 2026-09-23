@@ -407,9 +407,9 @@
     background:var(--canopy); border:1px solid var(--line); text-align:center;
     transition:transform .22s cubic-bezier(.2,.9,.3,1), opacity .2s ease, border-color .18s ease, box-shadow .18s ease;
   }
-  .workflow-node:hover, .workflow-node:focus-visible{ transform:scale(1.08); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.16); outline:none; }
+  .workflow-node:hover, .workflow-node:focus{ transform:scale(1.08); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.16); outline:none; }
   .workflow-board:has(.workflow-node:hover) .workflow-node:not(:hover),
-  .workflow-board:has(.workflow-node:focus-visible) .workflow-node:not(:focus-visible){ opacity:.42; }
+  .workflow-board:has(.workflow-node:focus) .workflow-node:not(:focus){ opacity:.42; }
   .workflow-node::before{
     content:""; display:block; width:12px; height:12px; margin:-20px auto 9px;
     border-radius:50%; background:var(--bg); border:2px solid var(--gold);
