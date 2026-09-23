@@ -1748,42 +1748,6 @@
     });
   });
 
-  const aboutScrim = document.getElementById('aboutScrim');
-  const aboutSheet = document.getElementById('aboutDetailSheet');
-  const aboutTrigger = document.querySelector('.about-detail-trigger');
-  const aboutTabs = document.querySelectorAll('.about-tab');
-  const aboutPanels = document.querySelectorAll('.about-panel');
-
-  function openAboutDetail(){
-    aboutScrim?.classList.add('open');
-    aboutSheet?.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeAboutDetail(){
-    aboutScrim?.classList.remove('open');
-    aboutSheet?.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  aboutTrigger?.addEventListener('click', openAboutDetail);
-  document.getElementById('aboutDetailClose')?.addEventListener('click', closeAboutDetail);
-  aboutScrim?.addEventListener('click', closeAboutDetail);
-
-  aboutTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const selected = tab.dataset.tab;
-      aboutTabs.forEach(btn => {
-        const active = btn === tab;
-        btn.classList.toggle('is-active', active);
-        btn.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      aboutPanels.forEach(panel => {
-        panel.classList.toggle('is-active', panel.dataset.panel === selected);
-      });
-    });
-  });
-
   document.querySelectorAll('.card[data-case]').forEach(card => {
     card.addEventListener('click', () => openSheet(card.dataset.case, card));
   });
