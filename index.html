@@ -44,47 +44,6 @@
 
   .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
 
-  /* ---------- custom cursor ---------- */
-  #site-cursor{
-    position:fixed; left:50vw; top:50vh; z-index:9999;
-    pointer-events:none;
-    border-radius:50%;
-    width:12px; height:12px;
-    background:radial-gradient(circle at 35% 35%, #fff7d6 0%, var(--gold) 26%, rgba(246,198,36,0.85) 55%, rgba(246,198,36,0.2) 100%);
-    box-shadow:0 0 0 1px rgba(246,198,36,0.45), 0 0 10px rgba(246,198,36,0.8), 0 0 18px rgba(246,198,36,0.48);
-    transform:translate(-50%,-50%);
-    opacity:1;
-    display:flex; align-items:center; justify-content:center;
-    overflow:hidden; white-space:nowrap;
-    padding:0;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px; font-weight:600; letter-spacing:.02em;
-    color:var(--bg);
-    transition:
-      opacity 120ms ease,
-      width 260ms cubic-bezier(.2,.9,.3,1),
-      height 260ms cubic-bezier(.2,.9,.3,1),
-      min-width 260ms cubic-bezier(.2,.9,.3,1),
-      max-width 260ms cubic-bezier(.2,.9,.3,1),
-      padding 260ms cubic-bezier(.2,.9,.3,1),
-      background 160ms ease,
-      box-shadow 160ms ease;
-  }
-  #site-cursor::after{
-    content:""; position:absolute; inset:-5px; border-radius:50%;
-    border:1px solid rgba(246,198,36,0.35); opacity:.7;
-  }
-  #site-cursor.is-visible{ opacity:1; }
-  #site-cursor.is-hover{ width:18px; height:18px; }
-  #site-cursor.is-pill{
-    width:auto; min-width:0; max-width:220px; height:28px; padding:0 13px;
-    border-radius:999px; background:var(--gold);
-    box-shadow:0 0 0 1px rgba(246,198,36,0.45), 0 0 14px rgba(246,198,36,0.9), 0 0 24px rgba(246,198,36,0.45);
-  }
-  #site-cursor.is-pill::after{ opacity:0; }
-  #site-cursor.is-on-dark{ background:radial-gradient(circle at 35% 35%, #fff4d3 0%, var(--orange) 28%, rgba(246,144,0,0.8) 58%, rgba(246,144,0,0.18) 100%); box-shadow:0 0 0 1px rgba(246,144,0,0.45), 0 0 12px rgba(246,144,0,0.8), 0 0 22px rgba(246,144,0,0.4); color:var(--bg); }
-  @media (pointer:coarse){ #site-cursor{ display:none; } }
-
   /* ---------- header ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
@@ -822,18 +781,15 @@
     .node{ animation:none; }
     .hero-name{ animation:none; }
     html{ scroll-behavior:auto; }
-    #site-cursor{ display:none; }
     * { cursor:auto !important; }
   }
 </style>
 </head>
 <body>
 
-<div id="site-cursor" aria-hidden="true"></div>
-
 <header>
   <div class="header-row">
-    <div class="mark">Prashamsa Bandarapu <span class="header-orb" aria-hidden="true"></span><button class="mark-email" type="button" data-cursor-link="copy email" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard">bandarapuprashamsa@gmail.com</button></div>
+    <div class="mark">Prashamsa Bandarapu <span class="header-orb" aria-hidden="true"></span><button class="mark-email" type="button" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard">bandarapuprashamsa@gmail.com</button></div>
     <nav>
       <ul>
         <li><a href="#about">About</a></li>
@@ -1076,12 +1032,12 @@
         <span class="elsewhere-status"><span class="status-led" aria-hidden="true"></span>online</span>
       </div>
       <div class="elsewhere-board" aria-label="Contact links">
-        <a class="elsewhere-link" href="https://github.com/bprashamsa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-cursor-link="● github">
+        <a class="elsewhere-link" href="https://github.com/bprashamsa" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <span class="module-top"><span>github</span><span class="module-led" aria-hidden="true"></span></span>
           <span class="module-label">@bprashamsa</span>
           <span class="module-meta"><span>repo</span><span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8 5 12l4 4M15 8l4 4-4 4"/></svg></span></span>
         </a>
-        <a class="elsewhere-link" href="https://www.linkedin.com/in/prashamsab" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-cursor-link="● linkedin">
+        <a class="elsewhere-link" href="https://www.linkedin.com/in/prashamsab" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
           <span class="module-top"><span>linkedin</span><span class="module-led" aria-hidden="true"></span></span>
           <span class="module-label">/in/prashamsa</span>
           <span class="module-meta"><span>profile</span><span class="module-icon" aria-hidden="true"><span class="glyph">in</span></span></span>
@@ -1105,7 +1061,7 @@
         <button type="button" data-case="infra">Infrastructure</button>
       </nav>
     </div>
-    <button class="sheet-close" id="sheetClose" aria-label="Close case study" data-cursor-link="close">
+    <button class="sheet-close" id="sheetClose" aria-label="Close case study">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
     </button>
   </div>
@@ -1200,76 +1156,19 @@
 <div class="sr-only" role="status" aria-live="polite" id="copyStatus" style="position:absolute;width:1px;height:1px;overflow:hidden;"></div>
 
 <script>
-  // ── Custom cursor ──
-  (() => {
-    const startCursor = () => {
-      if (window.matchMedia('(pointer:coarse)').matches) return;
-
-      const cursor = document.getElementById('site-cursor');
-      if (!cursor) return;
-
-      const updateCursor = (x, y) => {
-        cursor.style.left = x + 'px';
-        cursor.style.top = y + 'px';
-        cursor.style.opacity = '1';
-        cursor.classList.add('is-visible');
-      };
-
-      document.addEventListener('pointermove', e => updateCursor(e.clientX, e.clientY));
-      document.addEventListener('pointerleave', () => {
-        cursor.style.opacity = '0';
-        cursor.classList.remove('is-visible');
-      });
-      document.addEventListener('pointerenter', () => {
-        cursor.style.opacity = '1';
-        cursor.classList.add('is-visible');
-      });
-
-      updateCursor(window.innerWidth / 2, window.innerHeight / 2);
-
-      document.querySelectorAll('a, button, .node, .card, .lane-node').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
+  const emailButton = document.querySelector('.mark-email');
+  if (emailButton) {
+    emailButton.addEventListener('click', async () => {
+      const email = 'bandarapuprashamsa@gmail.com';
+      try {
+        await navigator.clipboard.writeText(email);
+        const copyStatus = document.getElementById('copyStatus');
+        if (copyStatus) copyStatus.textContent = 'Email copied to clipboard.';
+      } catch (err) {
+        console.warn('Clipboard copy failed:', err);
+      }
     });
-
-    document.querySelectorAll('[data-cursor-link]').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.textContent = el.dataset.cursorLink;
-        cursor.classList.add('is-pill');
-        cursor.classList.remove('is-hover');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.textContent = '';
-        cursor.classList.remove('is-pill');
-      });
-    });
-
-    const emailButton = document.querySelector('.mark-email');
-    if (emailButton) {
-      emailButton.addEventListener('click', async () => {
-        const email = 'bandarapuprashamsa@gmail.com';
-        try {
-          await navigator.clipboard.writeText(email);
-          const copyStatus = document.getElementById('copyStatus');
-          if (copyStatus) copyStatus.textContent = 'Email copied to clipboard.';
-        } catch (err) {
-          console.warn('Clipboard copy failed:', err);
-        }
-      });
-    }
-
-      document.querySelectorAll('.elsewhere-card, header, .chip-body').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('is-on-dark'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('is-on-dark'));
-      });
-    };
-
-    if (document.readyState === 'complete') {
-      startCursor();
-    } else {
-      window.addEventListener('load', startCursor, { once: true });
-    }
-  })();
+  }
 
   // ── Header orb circuit minigame ──
   (() => {
@@ -1537,19 +1436,19 @@
                 <span class="sheet-deck-hint mono">● Click card or arrows to flip</span>
               </div>
               <div class="sheet-deck-nav">
-                <button class="sheet-deck-btn deck-prev" type="button" aria-label="Previous card" data-cursor-link="← prev">
+                <button class="sheet-deck-btn deck-prev" type="button" aria-label="Previous card">
                   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 3-5 5 5 5"/></svg>
                 </button>
                 <div class="sheet-deck-dots" role="tablist" aria-label="Card pagination">
                   ${c.demo.items.map((_, i) => `<button class="sheet-deck-dot${i === 0 ? ' is-active' : ''}" type="button" aria-label="Go to card ${i + 1}" data-deck-index="${i}"></button>`).join('')}
                 </div>
-                <button class="sheet-deck-btn deck-next" type="button" aria-label="Next card" data-cursor-link="next →">
+                <button class="sheet-deck-btn deck-next" type="button" aria-label="Next card">
                   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
                 </button>
               </div>
             </div>` : ''}
 
-            <div class="sheet-deck-stage${isInteractive ? '' : ' is-static'}"${isInteractive ? ' tabindex="0" role="region" aria-label="Interactive project card deck. Press arrow keys or click to flip cards." data-cursor-link="flip ↻"' : ''}>
+            <div class="sheet-deck-stage${isInteractive ? '' : ' is-static'}"${isInteractive ? ' tabindex="0" role="region" aria-label="Interactive project card deck. Press arrow keys or click to flip cards."' : ''}>
               ${c.demo.items.map((item, idx) => `
                 <figure class="sheet-deck-card${idx === 0 ? ' is-active' : (idx === 1 ? ' is-next' : '')}" data-card-index="${idx}">
                   <div class="sheet-preview-bar">
@@ -1653,23 +1552,6 @@
       });
     }
 
-    deckContainer.querySelectorAll('[data-cursor-link]').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        const cursor = document.getElementById('site-cursor');
-        if (cursor) {
-          cursor.textContent = el.dataset.cursorLink;
-          cursor.classList.add('is-pill');
-          cursor.classList.remove('is-hover');
-        }
-      });
-      el.addEventListener('mouseleave', () => {
-        const cursor = document.getElementById('site-cursor');
-        if (cursor) {
-          cursor.textContent = '';
-          cursor.classList.remove('is-pill');
-        }
-      });
-    });
   }
 
   function openSheet(key, triggerEl){
