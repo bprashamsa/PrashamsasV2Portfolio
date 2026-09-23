@@ -45,18 +45,15 @@
   .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
 
   /* ---------- custom cursor ---------- */
-  @media (pointer:fine){
-    * { cursor:none !important; }
-  }
   #site-cursor{
-    position:fixed; left:0; top:0; z-index:9999;
+    position:fixed; left:50vw; top:50vh; z-index:9999;
     pointer-events:none;
     border-radius:50%;
     width:12px; height:12px;
     background:radial-gradient(circle at 35% 35%, #fff7d6 0%, var(--gold) 26%, rgba(246,198,36,0.85) 55%, rgba(246,198,36,0.2) 100%);
     box-shadow:0 0 0 1px rgba(246,198,36,0.45), 0 0 10px rgba(246,198,36,0.8), 0 0 18px rgba(246,198,36,0.48);
     transform:translate(-50%,-50%);
-    opacity:0;
+    opacity:1;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden; white-space:nowrap;
     padding:0;
@@ -1205,18 +1202,32 @@
 <script>
   // ── Custom cursor ──
   (() => {
-    if (window.matchMedia('(pointer:coarse)').matches) return;
-    const cursor = document.getElementById('site-cursor');
-    let x = 0, y = 0, frame = 0;
-    function paint(){ frame = 0; cursor.style.left = x + 'px'; cursor.style.top = y + 'px'; }
-    document.addEventListener('mousemove', e => {
-      x = e.clientX; y = e.clientY;
-      cursor.classList.add('is-visible');
-      if (!frame) frame = requestAnimationFrame(paint);
-    });
-    document.addEventListener('mouseleave', () => cursor.classList.remove('is-visible'));
+    const startCursor = () => {
+      if (window.matchMedia('(pointer:coarse)').matches) return;
 
-    document.querySelectorAll('a, button, .node, .card, .lane-node').forEach(el => {
+      const cursor = document.getElementById('site-cursor');
+      if (!cursor) return;
+
+      const updateCursor = (x, y) => {
+        cursor.style.left = x + 'px';
+        cursor.style.top = y + 'px';
+        cursor.style.opacity = '1';
+        cursor.classList.add('is-visible');
+      };
+
+      document.addEventListener('pointermove', e => updateCursor(e.clientX, e.clientY));
+      document.addEventListener('pointerleave', () => {
+        cursor.style.opacity = '0';
+        cursor.classList.remove('is-visible');
+      });
+      document.addEventListener('pointerenter', () => {
+        cursor.style.opacity = '1';
+        cursor.classList.add('is-visible');
+      });
+
+      updateCursor(window.innerWidth / 2, window.innerHeight / 2);
+
+      document.querySelectorAll('a, button, .node, .card, .lane-node').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
     });
@@ -1233,16 +1244,31 @@
       });
     });
 
-    document.querySelector('.mark-email').addEventListener('click', async () => {
-      const email = 'bandarapuprashamsa@gmail.com';
-      await navigator.clipboard.writeText(email);
-      document.getElementById('copyStatus').textContent = 'Email copied to clipboard.';
-    });
+    const emailButton = document.querySelector('.mark-email');
+    if (emailButton) {
+      emailButton.addEventListener('click', async () => {
+        const email = 'bandarapuprashamsa@gmail.com';
+        try {
+          await navigator.clipboard.writeText(email);
+          const copyStatus = document.getElementById('copyStatus');
+          if (copyStatus) copyStatus.textContent = 'Email copied to clipboard.';
+        } catch (err) {
+          console.warn('Clipboard copy failed:', err);
+        }
+      });
+    }
 
-    document.querySelectorAll('.elsewhere-card, header, .chip-body').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('is-on-dark'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('is-on-dark'));
-    });
+      document.querySelectorAll('.elsewhere-card, header, .chip-body').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('is-on-dark'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('is-on-dark'));
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      startCursor();
+    } else {
+      window.addEventListener('load', startCursor, { once: true });
+    }
   })();
 
   // ── Header orb circuit minigame ──
