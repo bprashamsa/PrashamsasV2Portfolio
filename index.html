@@ -420,10 +420,6 @@
     border-radius:4px 4px 4px 0; box-shadow:5px 5px 0 rgba(28,88,88,.4);
     font:13px/1.6 'JetBrains Mono', monospace; animation:message-send .55s cubic-bezier(.2,.9,.3,1) both;
   }
-  .collab-message-incoming::before{
-    content:"them"; display:block; margin-bottom:5px; color:var(--ink-dim);
-    font-size:9px; letter-spacing:.1em; text-transform:uppercase;
-  }
   .collab-message-incoming .collab-message-tail{
     left:-1px; right:auto; background:rgba(28,88,88,.85); border-right:1px solid var(--line); border-left:0;
     border-bottom:1px solid var(--line); transform:skewY(-35deg);
@@ -433,10 +429,6 @@
     color:var(--bg); background:var(--gold); border:1px solid var(--gold);
     border-radius:4px 4px 0 4px; box-shadow:5px 5px 0 rgba(246,144,0,.65);
     font:13px/1.6 'JetBrains Mono', monospace; animation:message-send .55s cubic-bezier(.2,.9,.3,1) .15s both;
-  }
-  .collab-message::before{
-    content:"my role"; display:block; margin-bottom:5px; color:rgba(17,34,44,.68);
-    font-size:9px; letter-spacing:.1em; text-transform:uppercase;
   }
   .collab-message::after{
     content:"sent  ✓"; display:block; margin-top:6px; text-align:right; color:rgba(17,34,44,.68); font-size:9px;
@@ -1235,7 +1227,10 @@
   <div class="about-panel" data-panel="behind" role="tabpanel">
     <h3>What’s working for me behind the scenes</h3>
     <p class="lead">The work gets better when it stays connected to people. I love human feedback, learning from other people’s ideas, and building from those conversations instead of working in isolation.</p>
-    <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
+    <div class="collab-thread" aria-label="Text exchange about my role">
+      <div class="collab-message-incoming"><span class="collab-message-tail" aria-hidden="true"></span>What's your role?</div>
+      <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
+    </div>
     <div class="workflow-board" id="workflowBoard" aria-label="Collaborative workflow connected by a signal wire">
       <svg class="workflow-wire-svg" aria-hidden="true">
         <path class="workflow-wire-path"></path>
