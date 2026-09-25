@@ -395,14 +395,6 @@
   }
   .workflow-wire-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:0; }
   .workflow-wire-path{ fill:none; stroke:var(--line); stroke-width:2; }
-  .workflow-wire-trail{
-    fill:none; stroke:var(--gold); stroke-width:2.5; stroke-linecap:round;
-    filter:drop-shadow(0 0 6px rgba(246,198,36,.85)) drop-shadow(0 0 16px rgba(246,198,36,.5));
-  }
-  .workflow-wire-ball{
-    fill:var(--gold);
-    filter:drop-shadow(0 0 5px rgba(246,198,36,1)) drop-shadow(0 0 14px rgba(246,198,36,.85));
-  }
   .workflow-node{
     position:relative; z-index:1; min-width:0; width:min(60%, 300px); padding:16px 14px 14px;
     background:rgba(8,18,24,.78); border:1px solid var(--line); text-align:center;
@@ -1232,8 +1224,6 @@
     <div class="workflow-board" id="workflowBoard" aria-label="Collaborative workflow connected by a signal wire">
       <svg class="workflow-wire-svg" aria-hidden="true">
         <path class="workflow-wire-path"></path>
-        <path class="workflow-wire-trail"></path>
-        <circle class="workflow-wire-ball" r="5"></circle>
       </svg>
       <div class="workflow-node">
         <h4>Listen</h4>
@@ -1826,70 +1816,27 @@
     });
   });
 
-  // ── Behind-the-scenes wire: draws a circuit trace through each card and
-  // animates a glowing gold ball flowing along it, lighting the wire and card as it passes ──
+  // ── Behind-the-scenes wire: draws a static circuit trace through each card ──
   (() => {
     const board = document.getElementById('workflowBoard');
     if (!board) return;
     const svg = board.querySelector('.workflow-wire-svg');
     const path = board.querySelector('.workflow-wire-path');
-    const trail = board.querySelector('.workflow-wire-trail');
-    const ball = board.querySelector('.workflow-wire-ball');
     const nodes = [...board.querySelectorAll('.workflow-node')];
-
-    let points = [];
-    let segLens = [];
-    let totalLen = 0;
-    let litFlags = nodes.map(() => false);
-    let rafId = null;
-    let prevT = 0;
 
     function layout(){
       const boardRect = board.getBoundingClientRect();
       if (boardRect.width === 0 || boardRect.height === 0) return;
       svg.setAttribute('viewBox', `0 0 ${boardRect.width} ${boardRect.height}`);
-      points = nodes.map(node => {
+      const points = nodes.map(node => {
         const r = node.getBoundingClientRect();
         return { x: r.left - boardRect.left + r.width / 2, y: r.top - boardRect.top };
       });
       const d = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
       path.setAttribute('d', d);
-      trail.setAttribute('d', d);
-      segLens = [0];
-      for (let i = 1; i < points.length; i++) {
-        segLens.push(segLens[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y));
-      }
-      totalLen = segLens[segLens.length - 1] || 1;
-    }
-
-    function tick(ts){
-      const duration = 4200;
-      const t = (ts % duration) / duration;
-      if (t < prevT) litFlags = litFlags.map(() => false);
-      prevT = t;
-
-      const dist = t * totalLen;
-      const pt = path.getPointAtLength(dist);
-      ball.setAttribute('cx', pt.x);
-      ball.setAttribute('cy', pt.y);
-
-      const glowLen = Math.min(dist, 70);
-      trail.setAttribute('stroke-dasharray', `${glowLen} ${totalLen}`);
-      trail.setAttribute('stroke-dashoffset', `${totalLen - dist}`);
-
-      nodes.forEach((node, i) => {
-        if (!litFlags[i] && dist >= segLens[i] - 3) {
-          litFlags[i] = true;
-          node.classList.add('is-lit');
-          setTimeout(() => node.classList.remove('is-lit'), 500);
-        }
-      });
-
-      rafId = requestAnimationFrame(tick);
     }
 
     layout();
-    if (!rafId) rafId = requestAnimationFrame(tick);
 
     let resizeTimer = null;
     window.addEventListener('resize', () => {
