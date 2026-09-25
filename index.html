@@ -576,9 +576,9 @@
 
   /* contact — hardware links */
   .elsewhere-card{
-    background:linear-gradient(180deg, rgba(21,10,34,0.96), rgba(58,36,84,0.96));
-    border:1px solid var(--noir-line); padding:26px 22px; display:grid; gap:18px;
-    box-shadow:8px 8px 0 var(--gold);
+    background:#141f34;
+    border:1px solid #f5d76e; padding:26px 22px; display:grid; gap:18px;
+    box-shadow:8px 8px 0 #f5d76e;
   }
   .elsewhere-header{
     display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
@@ -590,23 +590,23 @@
     font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim);
   }
   .status-led{
-    width:9px; height:9px; border-radius:50%; background:var(--gold);
-    box-shadow:0 0 12px rgba(255,244,92,0.9), 0 0 20px rgba(255,244,92,0.5);
+    width:9px; height:9px; border-radius:50%; background:#f5d76e;
+    box-shadow:0 0 12px rgba(245,215,110,0.9), 0 0 20px rgba(245,215,110,0.5);
   }
   .elsewhere-board{
     display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px;
   }
   .elsewhere-link{
     position:relative; display:grid; gap:14px; min-height:112px; padding:14px 16px 12px;
-    background:linear-gradient(180deg, rgba(44,26,72,0.9), rgba(31,16,51,0.85));
-    border:1px solid var(--line); color:var(--noir-ink); cursor:pointer;
+    background:#141f34;
+    border:1px solid #f5d76e; color:#f7f0e1; cursor:pointer;
     transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02);
+    box-shadow:none;
   }
   .elsewhere-link:hover,
   .elsewhere-link:focus-visible{
-    transform:translateY(-2px); border-color:var(--gold);
-    box-shadow:0 0 0 1px rgba(255,244,92,0.2), 6px 6px 0 rgba(255,244,92,0.12);
+    transform:translateY(-2px); border-color:#f5d76e;
+    box-shadow:0 0 0 1px rgba(245,215,110,0.2), 6px 6px 0 rgba(245,215,110,0.12);
   }
   .elsewhere-link:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
   .module-top{
@@ -614,16 +614,16 @@
     font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim);
   }
   .module-led{
-    width:8px; height:8px; border-radius:50%; background:var(--gold);
-    box-shadow:0 0 10px rgba(255,244,92,0.9);
+    width:8px; height:8px; border-radius:50%; background:#f5d76e;
+    box-shadow:0 0 10px rgba(245,215,110,0.9);
   }
   .module-label{
     font-family:'Space Grotesk', sans-serif; font-size:1rem; font-weight:600; line-height:1.2; letter-spacing:-.03em;
-    color:var(--noir-ink);
+    color:#f7f0e1;
   }
   .module-meta{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; }
   .module-meta span{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ink-dim); }
-  .module-icon{ width:26px; height:26px; display:grid; place-items:center; border:1px solid var(--line); background:rgba(255,255,255,0.02); }
+  .module-icon{ width:26px; height:26px; display:grid; place-items:center; border:1px solid #8ba3c7; background:transparent; color:#f7f0e1; }
   .module-icon svg{ width:17px; height:17px; }
   .module-icon .glyph{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:16px; }
 
