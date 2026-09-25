@@ -413,11 +413,26 @@
   .workflow-node h4{ margin-bottom:6px; color:var(--gold); font:11px 'JetBrains Mono', monospace; letter-spacing:.05em; text-transform:uppercase; }
   .workflow-node p{ color:var(--ink-dim); font-size:13px; line-height:1.55; }
   .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--orange); background:rgba(246,144,0,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
-  .collab-message{
-    position:relative; width:min(100%, 600px); margin:22px 0 28px; padding:13px 16px 11px;
-    color:var(--bg); background:var(--gold); border:1px solid var(--gold);
-    border-radius:4px 4px 4px 0; box-shadow:5px 5px 0 rgba(246,144,0,.65);
+  .collab-thread{ display:flex; flex-direction:column; gap:12px; width:min(100%, 600px); margin:22px 0 28px; }
+  .collab-message-incoming{
+    position:relative; align-self:flex-start; max-width:80%; padding:13px 16px 11px;
+    color:var(--ink); background:rgba(28,88,88,.55); border:1px solid var(--line);
+    border-radius:4px 4px 4px 0; box-shadow:5px 5px 0 rgba(28,88,88,.4);
     font:13px/1.6 'JetBrains Mono', monospace; animation:message-send .55s cubic-bezier(.2,.9,.3,1) both;
+  }
+  .collab-message-incoming::before{
+    content:"them"; display:block; margin-bottom:5px; color:var(--ink-dim);
+    font-size:9px; letter-spacing:.1em; text-transform:uppercase;
+  }
+  .collab-message-incoming .collab-message-tail{
+    left:-1px; right:auto; background:rgba(28,88,88,.85); border-right:1px solid var(--line); border-left:0;
+    border-bottom:1px solid var(--line); transform:skewY(-35deg);
+  }
+  .collab-message{
+    position:relative; align-self:flex-end; max-width:85%; padding:13px 16px 11px;
+    color:var(--bg); background:var(--gold); border:1px solid var(--gold);
+    border-radius:4px 4px 0 4px; box-shadow:5px 5px 0 rgba(246,144,0,.65);
+    font:13px/1.6 'JetBrains Mono', monospace; animation:message-send .55s cubic-bezier(.2,.9,.3,1) .15s both;
   }
   .collab-message::before{
     content:"my role"; display:block; margin-bottom:5px; color:rgba(17,34,44,.68);
@@ -427,8 +442,8 @@
     content:"sent  ✓"; display:block; margin-top:6px; text-align:right; color:rgba(17,34,44,.68); font-size:9px;
   }
   .collab-message-tail{
-    position:absolute; left:-1px; bottom:-7px; width:9px; height:9px; background:var(--gold);
-    border-right:1px solid var(--gold); border-bottom:1px solid var(--gold); transform:skewY(-35deg);
+    position:absolute; right:-1px; bottom:-7px; width:9px; height:9px; background:var(--gold);
+    border-left:1px solid var(--gold); border-bottom:1px solid var(--gold); transform:skewY(35deg);
   }
   @keyframes message-send{
     from{ opacity:0; transform:translateY(8px) scale(.96); }
