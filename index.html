@@ -9,17 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:        #1f1033;
-    --canopy:    #2c1a48;
-    --rust:      #cc5220;
-    --orange:    #ff7a3d;
-    --gold:      #fff45c;
-    --ink:       #e8d5f5;
-    --ink-dim:   #c9aee0;
-    --line:      #ff3d9a;
-    --noir:      #150a22;
-    --noir-line: #3a2454;
-    --noir-ink:  #e8d5f5;
+    --bg:        #10190f;
+    --canopy:    #1c2a1a;
+    --rust:      #c85f3f;
+    --orange:    #f2836b;
+    --gold:      #ffc23c;
+    --violet:    #b89bd9;
+    --ink:       #f2e9d8;
+    --ink-dim:   #cfc2a8;
+    --line:      #8fae7f;
+    --noir:      #0b120a;
+    --noir-line: #2a3a26;
+    --noir-ink:  #f2e9d8;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -135,7 +136,7 @@
   .btn::after{ content:"→"; font-size:16px; line-height:1; transition:transform .18s ease; }
   .btn:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(255,244,92,.2), 5px 5px 0 rgba(255,244,92,.18); }
   .btn:hover::after{ transform:translateX(3px); }
-  .btn.ghost{ background:transparent; color:var(--ink); border-color:var(--ink); box-shadow:none; }
+  .btn.ghost{ background:transparent; color:var(--line); border-color:var(--line); box-shadow:none; }
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 1px rgba(255,244,92,.2), 5px 5px 0 rgba(255,244,92,.12); }
 
   .board-holder{
