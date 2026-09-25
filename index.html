@@ -1823,21 +1823,78 @@
     });
   });
 
-  document.querySelectorAll('.workflow-board').forEach(board => {
-    const workflowNodes = board.querySelectorAll('.workflow-node');
-    workflowNodes.forEach(node => {
-      node.addEventListener('focus', () => {
-        workflowNodes.forEach(item => item.classList.toggle('is-expanded', item === node));
-        board.classList.add('has-expanded');
+  // ── Behind-the-scenes wire: draws a circuit trace through each card and
+  // animates a glowing gold ball flowing along it, lighting the wire and card as it passes ──
+  (() => {
+    const board = document.getElementById('workflowBoard');
+    if (!board) return;
+    const svg = board.querySelector('.workflow-wire-svg');
+    const path = board.querySelector('.workflow-wire-path');
+    const trail = board.querySelector('.workflow-wire-trail');
+    const ball = board.querySelector('.workflow-wire-ball');
+    const nodes = [...board.querySelectorAll('.workflow-node')];
+
+    let points = [];
+    let segLens = [];
+    let totalLen = 0;
+    let litFlags = nodes.map(() => false);
+    let rafId = null;
+    let prevT = 0;
+
+    function layout(){
+      const boardRect = board.getBoundingClientRect();
+      if (boardRect.width === 0 || boardRect.height === 0) return;
+      svg.setAttribute('viewBox', `0 0 ${boardRect.width} ${boardRect.height}`);
+      points = nodes.map(node => {
+        const r = node.getBoundingClientRect();
+        return { x: r.left - boardRect.left + r.width / 2, y: r.top - boardRect.top };
       });
-      node.addEventListener('blur', () => {
-        node.classList.remove('is-expanded');
-        if (![...workflowNodes].some(item => item.matches(':focus'))) {
-          board.classList.remove('has-expanded');
+      const d = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+      path.setAttribute('d', d);
+      trail.setAttribute('d', d);
+      segLens = [0];
+      for (let i = 1; i < points.length; i++) {
+        segLens.push(segLens[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y));
+      }
+      totalLen = segLens[segLens.length - 1] || 1;
+    }
+
+    function tick(ts){
+      const duration = 4200;
+      const t = (ts % duration) / duration;
+      if (t < prevT) litFlags = litFlags.map(() => false);
+      prevT = t;
+
+      const dist = t * totalLen;
+      const pt = path.getPointAtLength(dist);
+      ball.setAttribute('cx', pt.x);
+      ball.setAttribute('cy', pt.y);
+
+      const glowLen = Math.min(dist, 70);
+      trail.setAttribute('stroke-dasharray', `${glowLen} ${totalLen}`);
+      trail.setAttribute('stroke-dashoffset', `${totalLen - dist}`);
+
+      nodes.forEach((node, i) => {
+        if (!litFlags[i] && dist >= segLens[i] - 3) {
+          litFlags[i] = true;
+          node.classList.add('is-lit');
+          setTimeout(() => node.classList.remove('is-lit'), 500);
         }
       });
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    layout();
+    if (!rafId) rafId = requestAnimationFrame(tick);
+
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(layout, 120);
     });
-  });
+    new ResizeObserver(() => layout()).observe(board);
+  })();
 
   document.querySelectorAll('.card[data-case]').forEach(card => {
     card.addEventListener('click', () => openSheet(card.dataset.case, card));
