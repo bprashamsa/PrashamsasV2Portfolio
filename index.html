@@ -387,33 +387,35 @@
   .ai-lab-check{ display:flex; align-items:flex-start; gap:9px; color:var(--ink-dim); font-size:12.5px; line-height:1.6; }
   .ai-lab-check::before{ content:""; flex:none; width:7px; height:7px; margin-top:.55em; border-radius:50%; background:#49e27d; box-shadow:0 0 8px rgba(73,226,125,.7); }
   .workflow-board{
-    position:relative; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 34px;
-    margin-top:24px; padding:34px 30px; border:1px solid var(--line);
+    position:relative; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:34px 34px;
+    margin-top:24px; padding:40px 30px 34px; border:1px solid var(--line);
     background-color:rgba(8,18,24,.58);
     background-image:radial-gradient(var(--line) 1px, transparent 1px);
     background-size:18px 18px; overflow:visible;
   }
-  .workflow-board::before{
-    content:""; position:absolute; inset:16px; border:2px dashed var(--orange); border-radius:18px;
-    opacity:.7; animation:workflow-flow 2.2s linear infinite; pointer-events:none;
+  .workflow-wire-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:0; }
+  .workflow-wire-path{ fill:none; stroke:var(--line); stroke-width:2; }
+  .workflow-wire-trail{
+    fill:none; stroke:var(--gold); stroke-width:2.5; stroke-linecap:round;
+    filter:drop-shadow(0 0 6px rgba(246,198,36,.85)) drop-shadow(0 0 16px rgba(246,198,36,.5));
   }
-  .workflow-board::after{
-    content:""; position:absolute; left:50%; top:16px; bottom:16px; width:2px;
-    background:var(--orange); opacity:.38; transform:translateX(-50%); pointer-events:none;
+  .workflow-wire-ball{
+    fill:var(--gold);
+    filter:drop-shadow(0 0 5px rgba(246,198,36,1)) drop-shadow(0 0 14px rgba(246,198,36,.85));
   }
-  @keyframes workflow-flow{ to{ border-color:var(--gold); opacity:1; } }
   .workflow-node{
     position:relative; z-index:1; min-width:0; padding:16px 14px 14px;
     background:rgba(8,18,24,.78); border:1px solid var(--line); text-align:center;
-    transition:transform .22s cubic-bezier(.2,.9,.3,1), opacity .2s ease, border-color .18s ease, box-shadow .18s ease;
+    transition:border-color .3s ease, box-shadow .3s ease;
   }
-  .workflow-node:hover, .workflow-node:focus, .workflow-node.is-expanded{ transform:scale(1.08); border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.2), 5px 5px 0 rgba(246,198,36,.16); outline:none; }
-  .workflow-board.has-expanded .workflow-node:not(.is-expanded){ opacity:.42; }
+  .workflow-node.is-lit{ border-color:var(--gold); box-shadow:0 0 0 1px rgba(246,198,36,.3), 0 0 16px rgba(246,198,36,.4); }
   .workflow-node::before{
     content:""; display:block; width:12px; height:12px; margin:-20px auto 9px;
     border-radius:50%; background:var(--bg); border:2px solid var(--gold);
     box-shadow:0 0 0 4px rgba(246,198,36,.1), 0 0 10px rgba(246,198,36,.65);
+    transition:box-shadow .3s ease;
   }
+  .workflow-node.is-lit::before{ box-shadow:0 0 0 5px rgba(246,198,36,.22), 0 0 18px rgba(246,198,36,.95); }
   .workflow-node h4{ margin-bottom:6px; color:var(--gold); font:11px 'JetBrains Mono', monospace; letter-spacing:.05em; text-transform:uppercase; }
   .workflow-node p{ color:var(--ink-dim); font-size:13px; line-height:1.55; }
   .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--orange); background:rgba(246,144,0,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
@@ -439,9 +441,7 @@
     to{ opacity:1; transform:translateY(0) scale(1); }
   }
   @media (max-width: 680px){
-    .workflow-board{ gap:22px 14px; padding:30px 20px; }
-    .workflow-board::before{ inset:14px; }
-    .workflow-board::after{ top:14px; bottom:14px; }
+    .workflow-board{ gap:26px 14px; padding:34px 20px 26px; }
   }
   @media (max-width: 560px){
     .ai-lab-head{ align-items:flex-start; flex-direction:column; gap:5px; }
@@ -1226,20 +1226,25 @@
     <h3>What’s working for me behind the scenes</h3>
     <p class="lead">The work gets better when it stays connected to people. I love human feedback, learning from other people’s ideas, and building from those conversations instead of working in isolation.</p>
     <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
-    <div class="workflow-board" aria-label="Collaborative workflow circuit board">
-      <div class="workflow-node" tabindex="0">
+    <div class="workflow-board" id="workflowBoard" aria-label="Collaborative workflow connected by a signal wire">
+      <svg class="workflow-wire-svg" aria-hidden="true">
+        <path class="workflow-wire-path"></path>
+        <path class="workflow-wire-trail"></path>
+        <circle class="workflow-wire-ball" r="5"></circle>
+      </svg>
+      <div class="workflow-node">
         <h4>Listen</h4>
         <p>I start by understanding the problem, the people affected, and the feedback already in the room.</p>
       </div>
-      <div class="workflow-node" tabindex="0">
+      <div class="workflow-node">
         <h4>Connect</h4>
         <p>I collect ideas from people with different experiences and look for patterns, gaps, and better questions.</p>
       </div>
-      <div class="workflow-node" tabindex="0">
+      <div class="workflow-node">
         <h4>Build</h4>
         <p>I turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
       </div>
-      <div class="workflow-node" tabindex="0">
+      <div class="workflow-node">
         <h4>Iterate</h4>
         <p>I use feedback to test assumptions, refine the work, and keep improving the result with the people involved.</p>
       </div>
