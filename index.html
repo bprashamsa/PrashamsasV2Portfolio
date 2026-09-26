@@ -9,17 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:        #0a0e27;
-    --canopy:    #111640;
-    --rust:      #5fa378;
-    --orange:    #8fd9a8;
-    --gold:      #f4d35e;
-    --ink:       #f7f8fc;
-    --ink-dim:   #a4aad4;
-    --line:      #2a3166;
-    --noir:      #080b20;
-    --noir-line: #3d4580;
-    --noir-ink:  #f7f8fc;
+    --bg:        #12151c;
+    --canopy:    #1b2029;
+    --rust:      #c99a5b;
+    --orange:    #7fa89a;
+    --gold:      #7fa8b3;
+    --cta:       #7c9473;
+    --ink:       #e8e6df;
+    --ink-dim:   #8b93a1;
+    --line:      #374151;
+    --noir:      #0e1117;
+    --noir-line: #374151;
+    --noir-ink:  #e8e6df;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -47,7 +48,7 @@
   /* ---------- header ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(17,17,68,0.9);
+    background:rgba(18,21,28,0.9);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
   }
@@ -127,13 +128,13 @@
   .btn{
     display:inline-flex; align-items:center; gap:10px; padding:12px 17px 12px 14px;
     font-family:'JetBrains Mono', monospace; font-weight:500; font-size:12px; letter-spacing:.02em;
-    background:var(--orange); color:var(--bg); border:1.5px solid var(--orange);
+    background:var(--cta); color:var(--bg); border:1.5px solid var(--cta);
     box-shadow:5px 5px 0 var(--rust);
     transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, color .18s ease;
   }
   .btn::before{ content:""; width:9px; height:9px; border:2px solid currentColor; border-radius:50%; }
   .btn::after{ content:"→"; font-size:16px; line-height:1; transition:transform .18s ease; }
-  .btn:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(244,211,94,.2), 5px 5px 0 rgba(244,211,94,.18); }
+  .btn:hover{ transform:translateY(-2px); border-color:var(--cta); box-shadow:5px 5px 0 rgba(124,148,115,.42); }
   .btn:hover::after{ transform:translateX(3px); }
   .btn.ghost{ background:transparent; color:var(--line); border-color:var(--line); box-shadow:none; }
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 1px rgba(244,211,94,.2), 5px 5px 0 rgba(244,211,94,.12); }
