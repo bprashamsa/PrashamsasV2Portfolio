@@ -9,18 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:        #12151c;
+    --bg:        #161a22;
     --canopy:    #1b2029;
-    --rust:      #c99a5b;
-    --orange:    #7fa89a;
-    --gold:      #7fa8b3;
-    --cta:       #7c9473;
-    --ink:       #e8e6df;
-    --ink-dim:   #8b93a1;
-    --line:      #374151;
+    --rust:      #dcae72;
+    --orange:    #95c2b2;
+    --gold:      #9bc2cc;
+    --cta:       #93ab89;
+    --ink:       #f2f0e9;
+    --ink-dim:   #a3abb8;
+    --line:      #4b5768;
     --noir:      #0e1117;
     --noir-line: #374151;
-    --noir-ink:  #e8e6df;
+    --noir-ink:  #f2f0e9;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -48,7 +48,7 @@
   /* ---------- header ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(18,21,28,0.9);
+    background:rgba(22,26,34,0.9);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
   }
@@ -134,7 +134,7 @@
   }
   .btn::before{ content:""; width:9px; height:9px; border:2px solid currentColor; border-radius:50%; }
   .btn::after{ content:"→"; font-size:16px; line-height:1; transition:transform .18s ease; }
-  .btn:hover{ transform:translateY(-2px); border-color:var(--cta); box-shadow:5px 5px 0 rgba(124,148,115,.42); }
+  .btn:hover{ transform:translateY(-2px); border-color:var(--cta); box-shadow:5px 5px 0 rgba(147,171,137,.42); }
   .btn:hover::after{ transform:translateX(3px); }
   .btn.ghost{ background:transparent; color:var(--line); border-color:var(--line); box-shadow:none; }
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 1px rgba(244,211,94,.2), 5px 5px 0 rgba(244,211,94,.12); }
@@ -599,7 +599,7 @@
   }
   .elsewhere-link{
     position:relative; display:grid; gap:14px; min-height:112px; padding:14px 16px 12px;
-    background:#1c2029;
+    background:#232833;
     border:1px solid rgba(201,154,91,.3); color:var(--ink); cursor:pointer;
     transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     box-shadow:none;
