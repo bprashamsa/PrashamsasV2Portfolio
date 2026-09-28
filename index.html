@@ -281,7 +281,13 @@
     font-family:'JetBrains Mono', monospace; font-size:12px; fill:var(--ink);
     opacity:.82; transition:opacity .15s ease, transform .15s ease; pointer-events:none;
   }
+  .node-label-plate{
+    fill:var(--canopy); stroke:var(--line); stroke-width:1.5; opacity:.9;
+    transition:fill .2s ease, stroke .2s ease, opacity .2s ease, transform .2s ease;
+    transform-box:fill-box; transform-origin:center;
+  }
   .node:hover .node-label{ opacity:1; }
+  .node:hover .node-label-plate{ fill:var(--noir); stroke:var(--gold); opacity:1; transform:scale(1.06); }
 
   .scroll-cue{
     position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
@@ -969,6 +975,7 @@
               <circle class="node-ring" cx="150" cy="175" r="26" stroke="var(--orange)"/>
               <circle class="block node-pad" cx="150" cy="175" r="17" fill="var(--orange)" style="animation-delay:.50s"/>
               <circle class="via" cx="150" cy="175" r="6"/>
+              <rect class="node-label-plate" x="111" y="119" width="78" height="28" rx="14"/>
               <text class="node-label" x="150" y="138" text-anchor="middle">about</text>
             </g>
           </a>
@@ -977,6 +984,7 @@
               <circle class="node-ring" cx="360" cy="108" r="27" stroke="var(--gold)"/>
               <circle class="block node-pad" cx="360" cy="108" r="18" fill="var(--gold)" style="animation-delay:.54s"/>
               <circle class="via" cx="360" cy="108" r="6"/>
+              <rect class="node-label-plate" x="321" y="51" width="78" height="28" rx="14"/>
               <text class="node-label" x="360" y="70" text-anchor="middle">work</text>
             </g>
           </a>
@@ -985,6 +993,7 @@
               <circle class="node-ring" cx="500" cy="220" r="26" stroke="var(--orange)"/>
               <circle class="block node-pad" cx="500" cy="220" r="17" fill="var(--orange)" style="animation-delay:.58s"/>
               <circle class="via" cx="500" cy="220" r="6"/>
+              <rect class="node-label-plate" x="457" y="164" width="86" height="28" rx="14"/>
               <text class="node-label" x="500" y="183" text-anchor="middle">skills</text>
             </g>
           </a>
@@ -993,6 +1002,7 @@
               <circle class="node-ring" cx="320" cy="558" r="26" stroke="var(--gold)"/>
               <circle class="block node-pad" cx="320" cy="558" r="17" fill="var(--gold)" style="animation-delay:.62s"/>
               <circle class="via" cx="320" cy="558" r="6"/>
+              <rect class="node-label-plate" x="270" y="614" width="100" height="28" rx="14"/>
               <text class="node-label" x="320" y="602" text-anchor="middle">contact</text>
             </g>
           </a>
