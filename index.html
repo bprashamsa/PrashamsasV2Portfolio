@@ -270,8 +270,12 @@
     transform-origin:center; transform-box:fill-box;
   }
   .node:hover .node-pad{ transform:scale(1.16); }
-  .node:hover .node-ring{ opacity:1; transform:scale(1.35); }
+  .node:hover .node-ring{ opacity:1; transform:scale(1.35); animation:node-hover-pulse 1.2s ease-in-out infinite; }
   .node.pulse .node-pad{ animation:pulse .5s ease; }
+  @keyframes node-hover-pulse{
+    0%, 100%{ opacity:.55; transform:scale(1); }
+    50%{ opacity:1; transform:scale(1.35); }
+  }
   @keyframes pulse{ 0%{ transform:scale(1); } 40%{ transform:scale(1.5); } 100%{ transform:scale(1); } }
   .node-label{
     font-family:'JetBrains Mono', monospace; font-size:12px; fill:var(--ink);
@@ -873,6 +877,7 @@
     .chip-pulse{ animation:none; opacity:0; }
     .board-bulb{ display:none; }
     .node{ animation:none; }
+    .node:hover .node-ring{ animation:none; opacity:1; transform:scale(1.35); }
     .hero-name{ animation:none; }
     html{ scroll-behavior:auto; }
     * { cursor:auto !important; }
