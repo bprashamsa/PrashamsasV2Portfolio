@@ -1170,9 +1170,9 @@
     <div class="sheet-head-left">
       <span class="sheet-tag">about detail</span>
       <div class="about-tabs" role="tablist" aria-label="About details navigation">
-        <button class="about-tab is-active" type="button" role="tab" aria-selected="true" data-tab="experience">Experience</button>
+        <button class="about-tab is-active" type="button" role="tab" aria-selected="true" data-tab="behind">Behind the scenes</button>
+        <button class="about-tab" type="button" role="tab" aria-selected="false" data-tab="experience">Experience</button>
         <button class="about-tab" type="button" role="tab" aria-selected="false" data-tab="ai">How I use AI</button>
-        <button class="about-tab" type="button" role="tab" aria-selected="false" data-tab="behind">Behind the scenes</button>
         <button class="about-tab" type="button" role="tab" aria-selected="false" data-tab="doing">Currently doing</button>
       </div>
     </div>
@@ -1181,8 +1181,38 @@
     </button>
   </div>
 
-  <div class="about-panel is-active" data-panel="experience" role="tabpanel">
-    <h3 id="aboutDetailTitle">Experience</h3>
+  <div class="about-panel" data-panel="behind" role="tabpanel">
+    <h3>What’s working for me behind the scenes:</h3>
+    <p class="lead">The work gets better when it stays connected to people. I love human feedback, learning from other people’s ideas, and building from those conversations instead of working in isolation.</p>
+    <div class="collab-thread" aria-label="Text exchange about my role">
+      <div class="collab-message-incoming"><span class="collab-message-tail" aria-hidden="true"></span>What's your role?</div>
+      <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
+    </div>
+    <div class="workflow-board" id="workflowBoard" aria-label="Collaborative workflow connected by a signal wire">
+      <svg class="workflow-wire-svg" aria-hidden="true">
+        <path class="workflow-wire-path"></path>
+      </svg>
+      <div class="workflow-node">
+        <h4>Listen</h4>
+        <p>I start by understanding the problem, the people affected, and the feedback already in the room.</p>
+      </div>
+      <div class="workflow-node">
+        <h4>Connect</h4>
+        <p>I collect ideas from people with different experiences and look for patterns, gaps, and better questions.</p>
+      </div>
+      <div class="workflow-node">
+        <h4>Build</h4>
+        <p>I turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
+      </div>
+      <div class="workflow-node">
+        <h4>Iterate</h4>
+        <p>I use feedback to test assumptions, refine the work, and keep improving the result with the people involved.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-panel" data-panel="experience" role="tabpanel">
+    <h3>Experience</h3>
     <p class="lead">I’ve built my work around asking better questions, testing assumptions, and turning messy information into something useful.</p>
     <div class="detail-grid">
       <div class="detail-block">
@@ -1224,36 +1254,6 @@
     <div class="detail-block ai-principle">
       <h4>The rule I keep</h4>
       <p>Across security, engineering, and data science, AI helps me turn vague ideas into structured plans, explore alternatives, and identify edge cases I may not have considered. I still own the reasoning: I check the evidence, test the behavior, and decide whether the result actually makes sense. AI is a starting point for me, never the answer, especially when the work involves security, sensitive data, or real-world consequences.</p>
-    </div>
-  </div>
-
-  <div class="about-panel" data-panel="behind" role="tabpanel">
-    <h3>What’s working for me behind the scenes:</h3>
-    <p class="lead">The work gets better when it stays connected to people. I love human feedback, learning from other people’s ideas, and building from those conversations instead of working in isolation.</p>
-    <div class="collab-thread" aria-label="Text exchange about my role">
-      <div class="collab-message-incoming"><span class="collab-message-tail" aria-hidden="true"></span>What's your role?</div>
-      <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
-    </div>
-    <div class="workflow-board" id="workflowBoard" aria-label="Collaborative workflow connected by a signal wire">
-      <svg class="workflow-wire-svg" aria-hidden="true">
-        <path class="workflow-wire-path"></path>
-      </svg>
-      <div class="workflow-node">
-        <h4>Listen</h4>
-        <p>I start by understanding the problem, the people affected, and the feedback already in the room.</p>
-      </div>
-      <div class="workflow-node">
-        <h4>Connect</h4>
-        <p>I collect ideas from people with different experiences and look for patterns, gaps, and better questions.</p>
-      </div>
-      <div class="workflow-node">
-        <h4>Build</h4>
-        <p>I turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
-      </div>
-      <div class="workflow-node">
-        <h4>Iterate</h4>
-        <p>I use feedback to test assumptions, refine the work, and keep improving the result with the people involved.</p>
-      </div>
     </div>
   </div>
 
