@@ -68,8 +68,16 @@
     47%{ opacity:.55; text-shadow:0 0 3px rgba(169,184,60,.65); }
     62%, 100%{ opacity:1; color:inherit; text-shadow:none; }
   }
-  .mark-email{ padding:0; border:0; background:transparent; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:400; color:var(--ink-dim); cursor:pointer; transition:color .15s ease; }
+  .mark-email{ position:relative; padding:0; border:0; background:transparent; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:400; color:var(--ink-dim); cursor:pointer; transition:color .15s ease; }
   .mark-email:hover{ color:var(--gold); }
+  .mark-email::after{
+    content:attr(data-tooltip); position:absolute; left:50%; top:calc(100% + 8px); z-index:2;
+    padding:5px 9px; background:var(--gold); color:var(--bg); border:1px solid var(--gold);
+    font:10px 'JetBrains Mono', monospace; text-transform:uppercase; white-space:nowrap;
+    opacity:0; transform:translate(-50%, -4px); pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .mark-email:hover::after, .mark-email:focus-visible::after{ opacity:1; transform:translate(-50%, 0); }
   .header-orb{
     position:relative; flex:none; width:8px; height:8px; border-radius:50%;
     background:radial-gradient(circle at 35% 35%, #EFE9DA 0%, var(--gold) 28%, rgba(169,184,60,0.78) 60%, rgba(169,184,60,0.22) 100%);
@@ -902,7 +910,7 @@
 
 <header>
   <div class="header-row">
-    <div class="mark">Prashamsa Bandarapu <span class="header-orb" aria-hidden="true"></span><button class="mark-email" type="button" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard">bandarapuprashamsa@gmail.com</button></div>
+    <div class="mark">Prashamsa Bandarapu <span class="header-orb" aria-hidden="true"></span><button class="mark-email" type="button" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard" data-tooltip="Copy email">bandarapuprashamsa@gmail.com</button></div>
     <nav>
       <ul>
         <li><a href="#about">About</a></li>
