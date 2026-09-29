@@ -131,6 +131,52 @@
     display:inline-block;
     animation:circuit-boot 1.25s steps(1, end) both;
   }
+  .hero-runner{ width:min(100%, 360px); margin:6px 0 2px; overflow:hidden; }
+  .hero-runner svg{ display:block; width:100%; height:auto; }
+  .runner-track-line{ fill:none; stroke:var(--line); stroke-width:2; stroke-dasharray:3 7; }
+  .runner-figure{ opacity:0; animation:runner-cross 4.8s linear infinite; }
+  .runner-hair{ transform-origin:27px 18px; animation:runner-hair-bounce .6s ease-in-out infinite alternate; }
+  .runner-leg-front, .runner-leg-back, .runner-run-arm, .runner-wave-arm{ transform-box:view-box; }
+  .runner-leg-front{ transform-origin:29px 38px; animation:runner-leg-front 4.8s linear infinite; }
+  .runner-leg-back{ transform-origin:27px 38px; animation:runner-leg-back 4.8s linear infinite; }
+  .runner-run-arm{ transform-origin:29px 28px; animation:runner-run-arm 4.8s linear infinite; }
+  .runner-wave-arm{ transform-origin:27px 28px; animation:runner-wave 4.8s ease-in-out infinite; }
+  .runner-greeting{ opacity:0; animation:runner-greeting 4.8s linear infinite; }
+  @keyframes runner-cross{
+    0%{ opacity:0; transform:translateX(-52px); }
+    6%{ opacity:1; transform:translateX(-4px); }
+    62%{ opacity:1; transform:translateX(255px); }
+    88%{ opacity:1; transform:translateX(255px); }
+    96%{ opacity:1; transform:translateX(278px); }
+    100%{ opacity:0; transform:translateX(292px); }
+  }
+  @keyframes runner-hair-bounce{ to{ transform:rotate(8deg); } }
+  @keyframes runner-leg-front{
+    0%, 20%, 40%{ transform:rotate(24deg); }
+    10%, 30%, 50%{ transform:rotate(-24deg); }
+    62%, 100%{ transform:rotate(0); }
+  }
+  @keyframes runner-leg-back{
+    0%, 20%, 40%{ transform:rotate(-24deg); }
+    10%, 30%, 50%{ transform:rotate(24deg); }
+    62%, 100%{ transform:rotate(0); }
+  }
+  @keyframes runner-run-arm{
+    0%, 20%, 40%{ transform:rotate(-24deg); }
+    10%, 30%, 50%{ transform:rotate(24deg); }
+    62%, 100%{ transform:rotate(0); }
+  }
+  @keyframes runner-wave{
+    0%, 62%{ transform:rotate(0); }
+    66%, 74%, 82%{ transform:rotate(-108deg); }
+    70%, 78%, 86%{ transform:rotate(-138deg); }
+    90%, 100%{ transform:rotate(0); }
+  }
+  @keyframes runner-greeting{
+    0%, 64%{ opacity:0; }
+    68%, 84%{ opacity:1; }
+    90%, 100%{ opacity:0; }
+  }
   .hero-copy .role{
     margin-top:10px;
     color:var(--gold);
