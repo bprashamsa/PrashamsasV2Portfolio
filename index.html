@@ -79,11 +79,6 @@
   .header-orb:hover{
     filter:drop-shadow(0 0 5px rgba(169,184,60,0.6));
   }
-  header:has(nav a:hover) .header-orb,
-  header:has(nav a:focus-visible) .header-orb{
-    filter:drop-shadow(0 0 8px rgba(239,233,218,0.9));
-    box-shadow:0 0 0 2px rgba(239,233,218,0.55), 0 0 12px rgba(169,184,60,1), 0 0 24px rgba(169,184,60,0.75);
-  }
   .header-orb::after{
     content:""; position:absolute; inset:-3px; border-radius:50%;
     border:1px solid rgba(169,184,60,0.3); opacity:.7;
@@ -96,8 +91,9 @@
     text-transform:uppercase; letter-spacing:.04em;
     transition:color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
   }
-  nav a::before{ content:""; width:5px; height:5px; border:1px solid currentColor; border-radius:50%; }
+  nav a::before{ content:""; width:5px; height:5px; border:1px solid currentColor; border-radius:50%; transition:background .15s ease, box-shadow .15s ease; }
   nav a:hover{ color:var(--gold); border-color:var(--gold); background:var(--noir); transform:translateY(-1px); }
+  nav a:hover::before, nav a:focus-visible::before{ background:var(--gold); box-shadow:0 0 7px rgba(169,184,60,.95); }
   nav a:focus-visible, a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
 
   /* ---------- hero ---------- */
