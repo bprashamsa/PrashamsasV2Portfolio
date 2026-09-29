@@ -131,52 +131,6 @@
     display:inline-block;
     animation:circuit-boot 1.25s steps(1, end) both;
   }
-  .hero-runner{ width:min(100%, 360px); margin:6px 0 2px; overflow:hidden; }
-  .hero-runner svg{ display:block; width:100%; height:auto; }
-  .runner-track-line{ fill:none; stroke:var(--line); stroke-width:2; stroke-dasharray:3 7; }
-  .runner-figure{ opacity:0; animation:runner-cross 4.8s linear infinite; }
-  .runner-hair{ transform-origin:27px 18px; animation:runner-hair-bounce .6s ease-in-out infinite alternate; }
-  .runner-leg-front, .runner-leg-back, .runner-run-arm, .runner-wave-arm{ transform-box:view-box; }
-  .runner-leg-front{ transform-origin:29px 38px; animation:runner-leg-front 4.8s linear infinite; }
-  .runner-leg-back{ transform-origin:27px 38px; animation:runner-leg-back 4.8s linear infinite; }
-  .runner-run-arm{ transform-origin:29px 28px; animation:runner-run-arm 4.8s linear infinite; }
-  .runner-wave-arm{ transform-origin:27px 28px; animation:runner-wave 4.8s ease-in-out infinite; }
-  .runner-greeting{ opacity:0; animation:runner-greeting 4.8s linear infinite; }
-  @keyframes runner-cross{
-    0%{ opacity:0; transform:translateX(-52px); }
-    6%{ opacity:1; transform:translateX(-4px); }
-    62%{ opacity:1; transform:translateX(255px); }
-    88%{ opacity:1; transform:translateX(255px); }
-    96%{ opacity:1; transform:translateX(278px); }
-    100%{ opacity:0; transform:translateX(292px); }
-  }
-  @keyframes runner-hair-bounce{ to{ transform:rotate(8deg); } }
-  @keyframes runner-leg-front{
-    0%, 20%, 40%{ transform:rotate(24deg); }
-    10%, 30%, 50%{ transform:rotate(-24deg); }
-    62%, 100%{ transform:rotate(0); }
-  }
-  @keyframes runner-leg-back{
-    0%, 20%, 40%{ transform:rotate(-24deg); }
-    10%, 30%, 50%{ transform:rotate(24deg); }
-    62%, 100%{ transform:rotate(0); }
-  }
-  @keyframes runner-run-arm{
-    0%, 20%, 40%{ transform:rotate(-24deg); }
-    10%, 30%, 50%{ transform:rotate(24deg); }
-    62%, 100%{ transform:rotate(0); }
-  }
-  @keyframes runner-wave{
-    0%, 62%{ transform:rotate(0); }
-    66%, 74%, 82%{ transform:rotate(-108deg); }
-    70%, 78%, 86%{ transform:rotate(-138deg); }
-    90%, 100%{ transform:rotate(0); }
-  }
-  @keyframes runner-greeting{
-    0%, 64%{ opacity:0; }
-    68%, 84%{ opacity:1; }
-    90%, 100%{ opacity:0; }
-  }
   .hero-copy .role{
     margin-top:10px;
     color:var(--gold);
@@ -947,10 +901,6 @@
     .node{ animation:none; }
     .node:hover .node-ring{ animation:none; opacity:1; transform:scale(1.35); }
     .hero-name{ animation:none; }
-    .runner-figure{ animation:none; opacity:1; transform:translateX(255px); }
-    .runner-leg-front, .runner-leg-back, .runner-run-arm, .runner-hair{ animation:none; }
-    .runner-wave-arm{ animation:none; transform:rotate(-108deg); }
-    .runner-greeting{ animation:none; opacity:1; }
     html{ scroll-behavior:auto; }
     * { cursor:auto !important; }
   }
@@ -976,36 +926,6 @@
   <div class="hero-inner">
     <div class="hero-copy">
       <h1>Hey! I'm <span class="hero-name">Prashamsa</span>.</h1>
-      <figure class="hero-runner" role="img" aria-label="An animated girl runs across the track, then waves hello">
-        <svg viewBox="0 0 360 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path class="runner-track-line" d="M4 57H356"/>
-          <g class="runner-figure" stroke-linecap="round" stroke-linejoin="round">
-            <path class="runner-hair" d="M25 16C14 10 12 18 18 23C10 25 13 31 23 28L31 21Z" fill="var(--orange)"/>
-            <circle cx="29" cy="16" r="7" fill="var(--rust)"/>
-            <path d="M25 13C26 6 37 8 36 16C33 12 29 11 25 13Z" fill="var(--gold)"/>
-            <path d="M26 25L29 36" fill="none" stroke="var(--ink)" stroke-width="5"/>
-            <path d="M26 30L20 38L35 38L31 29Z" fill="var(--orange)" stroke="var(--rust)" stroke-width="1.5"/>
-            <g class="runner-leg runner-leg-back" fill="none" stroke="var(--rust)" stroke-width="3.5">
-              <path d="M27 38L20 46L13 52L7 52"/>
-            </g>
-            <g class="runner-leg runner-leg-front" fill="none" stroke="var(--ink)" stroke-width="3.5">
-              <path d="M30 38L37 45L42 51L48 51"/>
-            </g>
-            <g class="runner-run-arm" fill="none" stroke="var(--ink)" stroke-width="3.5">
-              <path d="M28 27L35 33L40 29"/>
-            </g>
-            <g class="runner-wave-arm" fill="none" stroke="var(--gold)" stroke-width="3.5">
-              <path d="M27 27L20 33L17 40"/>
-              <path d="M17 40L14 36M17 40L19 35M17 40L22 38" stroke-width="2"/>
-            </g>
-          </g>
-          <g class="runner-greeting">
-            <rect x="307" y="7" width="42" height="24" rx="3" fill="var(--gold)"/>
-            <path d="M313 31L309 36L321 31" fill="var(--gold)"/>
-            <text x="328" y="23" text-anchor="middle" fill="var(--bg)" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">HI!</text>
-          </g>
-        </svg>
-      </figure>
       <div class="role mono">cybersecurity · data science · engineering</div>
       <p class="tag">Professionally suspicious of everything, occasionally may be right.</p>
       <div class="cta-row">
