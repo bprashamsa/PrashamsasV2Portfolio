@@ -613,6 +613,15 @@
     transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     box-shadow:none;
   }
+  .elsewhere-link::after{
+    content:attr(aria-label); position:absolute; left:50%; bottom:calc(100% + 8px); z-index:2;
+    padding:5px 9px; background:var(--gold); color:var(--bg); border:1px solid var(--gold);
+    font:10px 'JetBrains Mono', monospace; text-transform:uppercase; white-space:nowrap;
+    opacity:0; transform:translate(-50%, 4px); pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .elsewhere-link:hover::after,
+  .elsewhere-link:focus-visible::after{ opacity:1; transform:translate(-50%, 0); }
   .elsewhere-link:hover,
   .elsewhere-link:focus-visible{
     transform:translateY(-2px); border-color:var(--rust);
