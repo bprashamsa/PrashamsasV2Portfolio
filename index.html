@@ -1729,6 +1729,13 @@
     aboutScrim?.classList.add('open');
     aboutSheet?.classList.add('open');
     document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      const board = document.getElementById('workflowBoard');
+      if (board) {
+        const selected = document.querySelector('.about-tab.is-active')?.dataset.tab;
+        if (selected === 'behind') drawWorkflowBoard();
+      }
+    });
   }
 
   function closeAboutDetail(){
@@ -1752,6 +1759,10 @@
       aboutPanels.forEach(panel => {
         panel.classList.toggle('is-active', panel.dataset.panel === selected);
       });
+
+      if (selected === 'behind') {
+        requestAnimationFrame(drawWorkflowBoard);
+      }
     });
   });
 
@@ -1827,35 +1838,35 @@
     });
   });
 
-  // ── Behind-the-scenes wire: draws a static circuit trace through each card ──
-  (() => {
+  // ── Behind-the-scenes wire: draw the path only when the panel is active ──
+  function drawWorkflowBoard(){
     const board = document.getElementById('workflowBoard');
     if (!board) return;
     const svg = board.querySelector('.workflow-wire-svg');
     const path = board.querySelector('.workflow-wire-path');
+    if (!svg || !path) return;
+
+    const boardRect = board.getBoundingClientRect();
+    if (boardRect.width === 0 || boardRect.height === 0) return;
+
     const nodes = [...board.querySelectorAll('.workflow-node')];
+    if (!nodes.length) return;
 
-    function layout(){
-      const boardRect = board.getBoundingClientRect();
-      if (boardRect.width === 0 || boardRect.height === 0) return;
-      svg.setAttribute('viewBox', `0 0 ${boardRect.width} ${boardRect.height}`);
-      const points = nodes.map(node => {
-        const r = node.getBoundingClientRect();
-        return { x: r.left - boardRect.left + r.width / 2, y: r.top - boardRect.top };
-      });
-      const d = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
-      path.setAttribute('d', d);
-    }
-
-    layout();
-
-    let resizeTimer = null;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(layout, 120);
+    svg.setAttribute('viewBox', `0 0 ${boardRect.width} ${boardRect.height}`);
+    const points = nodes.map(node => {
+      const r = node.getBoundingClientRect();
+      return { x: r.left - boardRect.left + r.width / 2, y: r.top - boardRect.top };
     });
-    new ResizeObserver(() => layout()).observe(board);
-  })();
+    const d = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+    path.setAttribute('d', d);
+  }
+
+  window.addEventListener('resize', () => {
+    const activeTab = document.querySelector('.about-tab.is-active')?.dataset.tab;
+    if (activeTab === 'behind') {
+      requestAnimationFrame(drawWorkflowBoard);
+    }
+  });
 
   document.querySelectorAll('.card[data-case]').forEach(card => {
     card.addEventListener('click', () => openSheet(card.dataset.case, card));
