@@ -196,15 +196,15 @@
   @keyframes flow{ to{ stroke-dashoffset:-280; } }
 
   .board-bulb{ 
-    filter:drop-shadow(0 0 6px var(--gold)); 
+    filter:drop-shadow(0 0 4px rgba(246,216,126,0.7)) drop-shadow(0 0 14px rgba(246,216,126,0.22));
     pointer-events:auto; 
     cursor:pointer;
     transition:filter .2s ease;
   }
   .board-bulb:hover{
-    filter:drop-shadow(0 0 12px rgba(169,184,60,0.9));
+    filter:drop-shadow(0 0 6px rgba(246,216,126,0.85)) drop-shadow(0 0 18px rgba(246,216,126,0.3));
   }
-  .board-bulb-dot{ fill:var(--gold); stroke:var(--orange); stroke-width:3; }
+  .board-bulb-dot{ fill:#f6d87e; stroke:rgba(255,180,86,0.9); stroke-width:2.8; }
 
   .power-switch{
     cursor:pointer;
