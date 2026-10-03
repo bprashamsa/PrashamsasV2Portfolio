@@ -1173,7 +1173,6 @@
       <nav class="sheet-project-nav" aria-label="Projects">
         <button type="button" data-case="ids">NVD + CWE</button>
         <button type="button" data-case="crime">Crime Trends</button>
-        <button type="button" data-case="infra">Infrastructure</button>
       </nav>
     </div>
     <button class="sheet-close" id="sheetClose" aria-label="Close case study">
@@ -1518,23 +1517,6 @@
       },
       impact: 'Turns public county-level crime data into an accessible view of how crime patterns vary across Washington State and change over time.',
       tags: ['RStudio','R','Public Data','Data Analysis','Washington State']
-    },
-    infra: {
-      tag: 'Engineering · Case Study',
-      title: 'Infrastructure automation',
-      lead: 'Terraform-managed AWS infrastructure and a CI/CD pipeline that replaced a fully manual, tribal-knowledge deployment process.',
-      facts: [['Role','Infrastructure engineer'],['Stack','Terraform, AWS, Kubernetes'],['Timeframe','10 weeks'],['Status','In production']],
-      sections: [
-        ['The problem', ['Deployments depended on one engineer running a checklist of manual steps by hand, which made releases slow and error-prone and created a single point of failure.']],
-        ['What I built', [
-          'Modeled the existing AWS environment in Terraform so infrastructure changes became reviewable, versioned code.',
-          'Moved services onto Kubernetes for consistent scaling and rollout behavior.',
-          'Built a CI/CD pipeline that runs tests, plans the infrastructure diff, and deploys on merge.'
-        ]],
-        ['Outcome', ['Deployments went from a manual, hours-long process to a reviewed pull request, removing the single point of failure and shortening the release cycle.']]
-      ],
-      impact: 'Replace with your real numbers: deploy frequency, time saved, or incident reduction.',
-      tags: ['Terraform','AWS','Kubernetes','CI/CD']
     }
   };
 
