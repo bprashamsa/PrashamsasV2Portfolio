@@ -409,33 +409,24 @@
   .ai-lab-output p{ color:var(--ink); font-size:14px; line-height:1.7; margin-bottom:14px; }
   .ai-lab-check{ display:flex; align-items:flex-start; gap:9px; color:var(--ink-dim); font-size:12.5px; line-height:1.6; }
   .ai-lab-check::before{ content:""; flex:none; width:7px; height:7px; margin-top:.55em; border-radius:50%; background:#49e27d; box-shadow:0 0 8px rgba(73,226,125,.7); }
-  .workflow-board{
-    position:relative; display:flex; flex-direction:column; gap:56px;
-    margin-top:24px; padding:48px 6% 44px; border:1px solid var(--line);
-    background-color:rgba(22,18,24,.58);
-    background-image:radial-gradient(var(--line) 1px, transparent 1px);
-    background-size:18px 18px; overflow:visible;
+  .behind-grid{
+    display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px; margin-top:26px;
   }
-  .workflow-wire-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:0; }
-  .workflow-wire-path{ fill:none; stroke:var(--line); stroke-width:2; }
-  .workflow-node{
-    position:relative; z-index:1; min-width:0; width:min(60%, 300px); padding:16px 14px 14px;
-    background:rgba(22,18,24,.78); border:1px solid var(--line); text-align:center;
-    transition:border-color .3s ease, box-shadow .3s ease;
+  .behind-card{
+    display:flex; flex-direction:column; justify-content:space-between; gap:14px;
+    min-height:170px; padding:18px 18px 16px; background:rgba(22,18,24,.74); border:1px solid var(--line);
+    box-shadow:6px 6px 0 rgba(169,184,60,.08);
   }
-  .workflow-node:nth-of-type(odd){ align-self:flex-start; }
-  .workflow-node:nth-of-type(even){ align-self:flex-end; }
-  .workflow-node.is-lit{ border-color:var(--gold); box-shadow:0 0 0 1px rgba(169,184,60,.3), 0 0 16px rgba(169,184,60,.4); }
-  .workflow-node::before{
-    content:""; display:block; width:12px; height:12px; margin:-20px auto 9px;
-    border-radius:50%; background:var(--bg); border:2px solid var(--gold);
-    box-shadow:0 0 0 4px rgba(169,184,60,.1), 0 0 10px rgba(169,184,60,.65);
-    transition:box-shadow .3s ease;
+  .behind-card--wide{ grid-column:1 / -1; }
+  .behind-label{
+    color:var(--gold); font:10px 'JetBrains Mono', monospace; letter-spacing:.08em; text-transform:uppercase;
   }
-  .workflow-node.is-lit::before{ box-shadow:0 0 0 5px rgba(169,184,60,.22), 0 0 18px rgba(169,184,60,.95); }
-  .workflow-node h4{ margin-bottom:6px; color:var(--gold); font:11px 'JetBrains Mono', monospace; letter-spacing:.05em; text-transform:uppercase; }
-  .workflow-node p{ color:var(--ink-dim); font-size:13px; line-height:1.55; }
-  .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--rust); background:rgba(229,143,124,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
+  .behind-card h4{
+    font-size:18px; color:var(--ink); margin:0;
+  }
+  .behind-card p{
+    color:var(--ink-dim); font-size:14px; line-height:1.65; margin:0;
+  }
   .collab-thread{ display:flex; flex-direction:column; gap:12px; width:min(100%, 600px); margin:22px 0 28px; }
   .collab-message-incoming{
     position:relative; align-self:flex-start; max-width:80%; padding:13px 16px 11px;
@@ -462,8 +453,7 @@
     to{ opacity:1; transform:translateY(0) scale(1); }
   }
   @media (max-width: 680px){
-    .workflow-board{ gap:40px; padding:38px 5% 32px; }
-    .workflow-node{ width:min(74%, 260px); }
+    .behind-grid{ grid-template-columns:1fr; }
   }
   @media (max-width: 560px){
     .ai-lab-head{ align-items:flex-start; flex-direction:column; gap:5px; }
@@ -1206,26 +1196,27 @@
       <div class="collab-message-incoming"><span class="collab-message-tail" aria-hidden="true"></span>What's your role?</div>
       <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
     </div>
-    <div class="workflow-board" id="workflowBoard" aria-label="Collaborative workflow connected by a signal wire">
-      <svg class="workflow-wire-svg" aria-hidden="true">
-        <path class="workflow-wire-path"></path>
-      </svg>
-      <div class="workflow-node">
-        <h4>Listen</h4>
-        <p>I start by understanding the problem, the people affected, and the feedback already in the room.</p>
-      </div>
-      <div class="workflow-node">
-        <h4>Connect</h4>
-        <p>I collect ideas from people with different experiences and look for patterns, gaps, and better questions.</p>
-      </div>
-      <div class="workflow-node">
-        <h4>Build</h4>
-        <p>I turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
-      </div>
-      <div class="workflow-node">
-        <h4>Iterate</h4>
-        <p>I use feedback to test assumptions, refine the work, and keep improving the result with the people involved.</p>
-      </div>
+    <div class="behind-grid" aria-label="Life and interests overview">
+      <article class="behind-card behind-card--wide">
+        <span class="behind-label">signal</span>
+        <h4>Life outside the screen</h4>
+        <p>Beyond school, the computers, and phones, I’m usually moving, creating, or trying something new—whether that’s a workout, a coffee spot, or a home project.</p>
+      </article>
+      <article class="behind-card">
+        <span class="behind-label">move</span>
+        <h4>Gym + hikes</h4>
+        <p>I like getting outside and staying active. The gym and a good hike usually reset my brain faster than anything else.</p>
+      </article>
+      <article class="behind-card">
+        <span class="behind-label">ritual</span>
+        <h4>Coffee + matcha</h4>
+        <p>Trying new coffee spots, making my own matcha at home, and turning little rituals into a daily reset keeps the rest of life feeling grounded.</p>
+      </article>
+      <article class="behind-card">
+        <span class="behind-label">make</span>
+        <h4>Cook + tinker</h4>
+        <p>I enjoy cooking, baking, and making small home projects that turn ideas into something tangible and useful.</p>
+      </article>
     </div>
   </div>
 
@@ -1729,13 +1720,6 @@
     aboutScrim?.classList.add('open');
     aboutSheet?.classList.add('open');
     document.body.style.overflow = 'hidden';
-    requestAnimationFrame(() => {
-      const board = document.getElementById('workflowBoard');
-      if (board) {
-        const selected = document.querySelector('.about-tab.is-active')?.dataset.tab;
-        if (selected === 'behind') drawWorkflowBoard();
-      }
-    });
   }
 
   function closeAboutDetail(){
@@ -1759,10 +1743,6 @@
       aboutPanels.forEach(panel => {
         panel.classList.toggle('is-active', panel.dataset.panel === selected);
       });
-
-      if (selected === 'behind') {
-        requestAnimationFrame(drawWorkflowBoard);
-      }
     });
   });
 
@@ -1836,36 +1816,6 @@
       selectedAiStep = Number(button.dataset.aiStep);
       updateAiLab();
     });
-  });
-
-  // ── Behind-the-scenes wire: draw the path only when the panel is active ──
-  function drawWorkflowBoard(){
-    const board = document.getElementById('workflowBoard');
-    if (!board) return;
-    const svg = board.querySelector('.workflow-wire-svg');
-    const path = board.querySelector('.workflow-wire-path');
-    if (!svg || !path) return;
-
-    const boardRect = board.getBoundingClientRect();
-    if (boardRect.width === 0 || boardRect.height === 0) return;
-
-    const nodes = [...board.querySelectorAll('.workflow-node')];
-    if (!nodes.length) return;
-
-    svg.setAttribute('viewBox', `0 0 ${boardRect.width} ${boardRect.height}`);
-    const points = nodes.map(node => {
-      const r = node.getBoundingClientRect();
-      return { x: r.left - boardRect.left + r.width / 2, y: r.top - boardRect.top };
-    });
-    const d = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
-    path.setAttribute('d', d);
-  }
-
-  window.addEventListener('resize', () => {
-    const activeTab = document.querySelector('.about-tab.is-active')?.dataset.tab;
-    if (activeTab === 'behind') {
-      requestAnimationFrame(drawWorkflowBoard);
-    }
   });
 
   document.querySelectorAll('.card[data-case]').forEach(card => {
