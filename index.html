@@ -418,31 +418,25 @@
     box-shadow:6px 6px 0 rgba(169,184,60,.08);
   }
   .workflow-board{
-    position:relative; display:flex; flex-direction:column; gap:56px;
-    margin-top:24px; padding:48px 6% 44px; border:1px solid var(--line);
-    background-color:rgba(22,18,24,.58);
-    background-image:radial-gradient(var(--line) 1px, transparent 1px);
-    background-size:18px 18px; overflow:visible;
+    position:relative; display:grid; gap:0;
+    margin-top:24px; padding:28px 28px 28px 56px; border:1px solid #d4c7b1;
+    background-color:#f2eadb;
+    background-image:linear-gradient(90deg, transparent 39px, rgba(190,91,82,.35) 40px, transparent 41px), repeating-linear-gradient(transparent 0 37px, rgba(93,126,145,.2) 38px 39px);
+    box-shadow:6px 7px 0 rgba(229,143,124,.55); overflow:visible;
   }
-  .workflow-wire-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:0; }
-  .workflow-wire-path{ fill:none; stroke:var(--line); stroke-width:2; }
   .workflow-node{
-    position:relative; z-index:1; min-width:0; width:min(60%, 300px); padding:16px 14px 14px;
-    background:rgba(22,18,24,.78); border:1px solid var(--line); text-align:center;
-    transition:border-color .3s ease, box-shadow .3s ease;
+    counter-increment:workflow-step;
+    position:relative; min-width:0; display:grid; grid-template-columns:32px minmax(0, 1fr); column-gap:10px;
+    align-items:baseline; padding:10px 0 12px; color:#302b2b;
+    border-bottom:1px dashed rgba(93,126,145,.35);
   }
-  .workflow-node:nth-of-type(odd){ align-self:flex-start; }
-  .workflow-node:nth-of-type(even){ align-self:flex-end; }
-  .workflow-node.is-lit{ border-color:var(--gold); box-shadow:0 0 0 1px rgba(169,184,60,.3), 0 0 16px rgba(169,184,60,.4); }
   .workflow-node::before{
-    content:""; display:block; width:12px; height:12px; margin:-20px auto 9px;
-    border-radius:50%; background:var(--bg); border:2px solid var(--gold);
-    box-shadow:0 0 0 4px rgba(169,184,60,.1), 0 0 10px rgba(169,184,60,.65);
-    transition:box-shadow .3s ease;
+    content:counter(workflow-step) "."; grid-column:1; grid-row:1 / span 2;
+    color:#9b574c; font:600 15px 'JetBrains Mono', monospace;
   }
-  .workflow-node.is-lit::before{ box-shadow:0 0 0 5px rgba(169,184,60,.22), 0 0 18px rgba(169,184,60,.95); }
-  .workflow-node h4{ margin-bottom:6px; color:var(--gold); font:11px 'JetBrains Mono', monospace; letter-spacing:.05em; text-transform:uppercase; }
-  .workflow-node p{ color:var(--ink-dim); font-size:13px; line-height:1.55; }
+  .workflow-node:last-child{ border-bottom:0; }
+  .workflow-node h4{ grid-column:2; margin-bottom:3px; color:#435d68; font:600 13px 'JetBrains Mono', monospace; text-transform:uppercase; }
+  .workflow-node p{ grid-column:2; color:#514b45; font-size:13px; line-height:1.55; }
   .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--rust); background:rgba(229,143,124,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
   .collab-thread{ display:flex; flex-direction:column; gap:12px; width:min(100%, 600px); margin:22px 0 28px; }
   .collab-message-incoming{
@@ -470,8 +464,7 @@
     to{ opacity:1; transform:translateY(0) scale(1); }
   }
   @media (max-width: 680px){
-    .workflow-board{ gap:40px; padding:38px 5% 32px; }
-    .workflow-node{ width:min(74%, 260px); }
+    .workflow-board{ padding:20px 16px 20px 48px; }
   }
   @media (max-width: 560px){
     .ai-lab-head{ align-items:flex-start; flex-direction:column; gap:5px; }
@@ -1214,27 +1207,24 @@
       <div class="collab-message-incoming"><span class="collab-message-tail" aria-hidden="true"></span>What's your role?</div>
       <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
     </div>
-    <div class="workflow-board" id="workflowBoard" aria-label="Collaborative workflow connected by a signal wire">
-      <svg class="workflow-wire-svg" aria-hidden="true">
-        <path class="workflow-wire-path"></path>
-      </svg>
-      <div class="workflow-node">
+    <ol class="workflow-board" aria-label="Collaborative workflow checklist">
+      <li class="workflow-node">
         <h4>Listen</h4>
         <p>I start by understanding the problem, the people affected, and the feedback already in the room.</p>
-      </div>
-      <div class="workflow-node">
+      </li>
+      <li class="workflow-node">
         <h4>Connect</h4>
         <p>I collect ideas from people with different experiences and look for patterns, gaps, and better questions.</p>
-      </div>
-      <div class="workflow-node">
+      </li>
+      <li class="workflow-node">
         <h4>Build</h4>
         <p>I turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
-      </div>
-      <div class="workflow-node">
+      </li>
+      <li class="workflow-node">
         <h4>Iterate</h4>
         <p>I use feedback to test assumptions, refine the work, and keep improving the result with the people involved.</p>
-      </div>
-    </div>
+      </li>
+    </ol>
   </div>
 
   <div class="about-panel" data-panel="experience" role="tabpanel">
