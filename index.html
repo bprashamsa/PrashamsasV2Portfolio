@@ -433,9 +433,19 @@
   }
   .workflow-checkbox{
     grid-column:1; grid-row:1 / span 2; align-self:start; margin-top:2px;
-    width:15px; height:15px; accent-color:var(--gold); cursor:pointer;
+    appearance:none; display:grid; place-content:center;
+    width:16px; height:16px; border:1px solid var(--rust); border-radius:2px;
+    background:var(--noir); cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;
   }
-  .workflow-checkbox:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+  .workflow-checkbox::before{
+    content:""; width:8px; height:5px; border-left:2px solid var(--bg); border-bottom:2px solid var(--bg);
+    transform:rotate(-45deg) scale(0); transition:transform .12s ease;
+  }
+  .workflow-checkbox:hover{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(169,184,60,.12); }
+  .workflow-checkbox:checked{ background:var(--gold); border-color:var(--gold); box-shadow:0 0 9px rgba(169,184,60,.4); }
+  .workflow-checkbox:checked::before{ transform:rotate(-45deg) scale(1); }
+  .workflow-checkbox:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
   .workflow-node::before{
     content:counter(workflow-step, decimal-leading-zero) "."; grid-column:2; grid-row:1 / span 2;
     color:var(--rust); font:600 15px 'JetBrains Mono', monospace;
