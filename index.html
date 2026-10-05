@@ -432,7 +432,7 @@
     border-bottom:1px dashed rgba(74,61,82,.8);
   }
   .workflow-node::before{
-    content:counter(workflow-step) "."; grid-column:1; grid-row:1 / span 2;
+    content:counter(workflow-step, decimal-leading-zero) "."; grid-column:1; grid-row:1 / span 2;
     color:var(--rust); font:600 15px 'JetBrains Mono', monospace;
   }
   .workflow-node:last-child{ border-bottom:0; }
@@ -1177,16 +1177,16 @@
   </div>
 
   <div class="about-panel is-active" data-panel="behind" role="tabpanel">
-    <h3>What’s working for me behind the scenes:</h3>
-    <p class="lead">The work gets better when it stays connected to people. I love human feedback, learning from other people’s ideas, and building from those conversations instead of working in isolation.</p>
+    <h3>How I work</h3>
+    <p class="lead"><em>Start with people, build something small, and let feedback decide what's next.</em></p>
     <ol class="workflow-board" aria-label="Collaborative workflow checklist">
       <li class="workflow-node">
         <h4>Listen</h4>
-        <p>I start by understanding the problem, the people affected, and the feedback already in the room.</p>
+        <p>Before proposing anything, I find out what's actually broken, who feels it, and what's already been tried. The real problem is rarely the one in the brief.</p>
       </li>
       <li class="workflow-node">
         <h4>Connect</h4>
-        <p>I collect ideas from people with different experiences and look for patterns, gaps, and better questions.</p>
+        <p>I bring in people who see the problem differently, then look for the overlap, the blind spots, and the question nobody has asked yet.</p>
       </li>
       <li class="workflow-node">
         <h4>Build</h4>
@@ -1194,7 +1194,7 @@
       </li>
       <li class="workflow-node">
         <h4>Iterate</h4>
-        <p>I use feedback to test assumptions, refine the work, and keep improving the result with the people involved.</p>
+        <p>I treat feedback as data. What surprises us gets tested, what holds up gets kept, and the people closest to the problem stay in the room.</p>
       </li>
     </ol>
   </div>
