@@ -427,17 +427,26 @@
   }
   .workflow-node{
     counter-increment:workflow-step;
-    position:relative; min-width:0; display:grid; grid-template-columns:32px minmax(0, 1fr); column-gap:10px;
+    position:relative; min-width:0; display:grid; grid-template-columns:18px 32px minmax(0, 1fr); column-gap:10px;
     align-items:baseline; padding:10px 0 12px;
     border-bottom:1px dashed rgba(74,61,82,.8);
   }
+  .workflow-checkbox{
+    grid-column:1; grid-row:1 / span 2; align-self:start; margin-top:2px;
+    width:15px; height:15px; accent-color:var(--gold); cursor:pointer;
+  }
+  .workflow-checkbox:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
   .workflow-node::before{
-    content:counter(workflow-step, decimal-leading-zero) "."; grid-column:1; grid-row:1 / span 2;
+    content:counter(workflow-step, decimal-leading-zero) "."; grid-column:2; grid-row:1 / span 2;
     color:var(--rust); font:600 15px 'JetBrains Mono', monospace;
   }
   .workflow-node:last-child{ border-bottom:0; }
-  .workflow-node h4{ grid-column:2; margin-bottom:3px; color:var(--gold); font:600 13px 'JetBrains Mono', monospace; text-transform:uppercase; }
-  .workflow-node p{ grid-column:2; color:var(--ink-dim); font-size:13px; line-height:1.55; }
+  .workflow-copy{ grid-column:3; grid-row:1 / span 2; }
+  .workflow-checkbox:checked ~ .workflow-copy{
+    text-decoration:line-through; text-decoration-color:var(--rust); text-decoration-thickness:1px; opacity:.7;
+  }
+  .workflow-node h4{ margin-bottom:3px; color:var(--gold); font:600 13px 'JetBrains Mono', monospace; text-transform:uppercase; }
+  .workflow-node p{ color:var(--ink-dim); font-size:13px; line-height:1.55; }
   .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--rust); background:rgba(229,143,124,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
   @media (max-width: 680px){
     .workflow-board{ padding:20px 16px 20px 48px; }
@@ -1181,20 +1190,32 @@
     <p class="lead"><em>Start with people, build something small, and let feedback decide what's next.</em></p>
     <ol class="workflow-board" aria-label="Collaborative workflow checklist">
       <li class="workflow-node">
-        <h4>Listen</h4>
-        <p>Before proposing anything, I find out what's actually "broken", who feels it, and what's already been tried. What people ask for and what they need are often different things.</p>
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Listen complete">
+        <div class="workflow-copy">
+          <h4>Listen</h4>
+          <p>Before proposing anything, I find out what's actually "broken", who feels it, and what's already been tried. What people ask for and what they need are often different things.</p>
+        </div>
       </li>
       <li class="workflow-node">
-        <h4>Connect</h4>
-        <p>Bring in people who see the problem differently, then look for the overlap, the blind spots, and the question nobody has asked yet.</p>
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Connect complete">
+        <div class="workflow-copy">
+          <h4>Connect</h4>
+          <p>Bring in people who see the problem differently, then look for the overlap, the blind spots, and the question nobody has asked yet.</p>
+        </div>
       </li>
       <li class="workflow-node">
-        <h4>Build</h4>
-        <p>Turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Build complete">
+        <div class="workflow-copy">
+          <h4>Build</h4>
+          <p>Turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
+        </div>
       </li>
       <li class="workflow-node">
-        <h4>Iterate</h4>
-        <p>Treat feedback as data. What surprises us gets tested, what holds up gets kept, and the people closest to the problem stay in the room.</p>
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Iterate complete">
+        <div class="workflow-copy">
+          <h4>Iterate</h4>
+          <p>Treat feedback as data. What surprises us gets tested, what holds up gets kept, and the people closest to the problem stay in the room.</p>
+        </div>
       </li>
     </ol>
   </div>
