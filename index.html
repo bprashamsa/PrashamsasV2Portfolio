@@ -1734,37 +1734,46 @@
   let workflowTypingTimer = null;
   function typeWorkflowChecklist(){
     const workflowBoard = document.querySelector('.workflow-board');
-    const targets = Array.from(workflowBoard?.querySelectorAll('.workflow-node h4, .workflow-node p') || []);
-    if (!targets.length) return;
-    if (workflowTypingTimer) clearInterval(workflowTypingTimer);
+    const workflowNodes = Array.from(workflowBoard?.querySelectorAll('.workflow-node') || []);
+    if (!workflowNodes.length) return;
+    if (workflowTypingTimer){
+      clearInterval(workflowTypingTimer);
+      workflowTypingTimer = null;
+    }
 
-    const phrases = targets.map(target => {
-      const text = target.textContent.trim();
-      const typedText = document.createElement('span');
-      typedText.setAttribute('aria-hidden', 'true');
-      target.setAttribute('aria-label', text);
-      target.replaceChildren(typedText);
-      return { text, typedText, position: 0 };
+    const steps = workflowNodes.map(node => {
+      return Array.from(node.querySelectorAll('h4, p')).map(target => {
+        const text = target.getAttribute('aria-label') || target.textContent.trim();
+        const typedText = document.createElement('span');
+        typedText.setAttribute('aria-hidden', 'true');
+        target.setAttribute('aria-label', text);
+        target.replaceChildren(typedText);
+        return { text, typedText, position: 0 };
+      });
     });
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      phrases.forEach(phrase => { phrase.typedText.textContent = phrase.text; });
+      steps.flat().forEach(phrase => { phrase.typedText.textContent = phrase.text; });
       return;
     }
 
+    let stepPosition = 0;
     workflowTypingTimer = setInterval(() => {
-      let hasMoreText = false;
-      phrases.forEach(phrase => {
-        if (phrase.position >= phrase.text.length) return;
-        phrase.typedText.textContent += phrase.text[phrase.position];
-        phrase.position += 1;
-        hasMoreText = true;
+      const activeStep = steps[stepPosition];
+      activeStep.forEach(phrase => {
+        if (phrase.position < phrase.text.length){
+          phrase.typedText.textContent += phrase.text[phrase.position];
+          phrase.position += 1;
+        }
       });
-      if (!hasMoreText){
+      if (activeStep.every(phrase => phrase.position >= phrase.text.length)){
+        stepPosition += 1;
+      }
+      if (stepPosition >= steps.length){
         clearInterval(workflowTypingTimer);
         workflowTypingTimer = null;
       }
-    }, 18);
+    }, 12);
   }
 
   function closeAboutDetail(){
