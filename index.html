@@ -1201,7 +1201,7 @@
     </button>
   </div>
 
-  <div class="about-panel" data-panel="behind" role="tabpanel">
+  <div class="about-panel is-active" data-panel="behind" role="tabpanel">
     <h3>What’s working for me behind the scenes:</h3>
     <p class="lead">The work gets better when it stays connected to people. I love human feedback, learning from other people’s ideas, and building from those conversations instead of working in isolation.</p>
     <div class="collab-thread" aria-label="Text exchange about my role">
@@ -1725,9 +1725,9 @@
   const aboutPanels = document.querySelectorAll('.about-panel');
 
   function openAboutDetail(){
-    typeWorkflowChecklist();
     aboutScrim?.classList.add('open');
     aboutSheet?.classList.add('open');
+    typeWorkflowChecklist();
     document.body.style.overflow = 'hidden';
   }
 
