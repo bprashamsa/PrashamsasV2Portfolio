@@ -439,31 +439,6 @@
   .workflow-node h4{ grid-column:2; margin-bottom:3px; color:var(--gold); font:600 13px 'JetBrains Mono', monospace; text-transform:uppercase; }
   .workflow-node p{ grid-column:2; color:var(--ink-dim); font-size:13px; line-height:1.55; }
   .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--rust); background:rgba(229,143,124,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
-  .collab-thread{ display:flex; flex-direction:column; gap:12px; width:min(100%, 600px); margin:22px 0 28px; }
-  .collab-message-incoming{
-    position:relative; align-self:flex-start; max-width:80%; padding:13px 16px 11px;
-    color:var(--ink); background:rgba(31,25,36,.55); border:1px solid var(--line);
-    border-radius:4px 4px 4px 0; box-shadow:5px 5px 0 rgba(31,25,36,.4);
-    font:13px/1.6 'JetBrains Mono', monospace; animation:message-send .55s cubic-bezier(.2,.9,.3,1) both;
-  }
-  .collab-message-incoming .collab-message-tail{
-    left:-1px; right:auto; background:rgba(31,25,36,.85); border-right:1px solid var(--line); border-left:0;
-    border-bottom:1px solid var(--line); transform:skewY(-35deg);
-  }
-  .collab-message{
-    position:relative; align-self:flex-end; max-width:85%; padding:13px 16px 11px;
-    color:var(--bg); background:var(--gold); border:1px solid var(--gold);
-    border-radius:4px 4px 0 4px; box-shadow:5px 5px 0 rgba(229,143,124,.65);
-    font:13px/1.6 'JetBrains Mono', monospace; animation:message-send .55s cubic-bezier(.2,.9,.3,1) .15s both;
-  }
-  .collab-message-tail{
-    position:absolute; right:-1px; bottom:-7px; width:9px; height:9px; background:var(--gold);
-    border-left:1px solid var(--gold); border-bottom:1px solid var(--gold); transform:skewY(35deg);
-  }
-  @keyframes message-send{
-    from{ opacity:0; transform:translateY(8px) scale(.96); }
-    to{ opacity:1; transform:translateY(0) scale(1); }
-  }
   @media (max-width: 680px){
     .workflow-board{ padding:20px 16px 20px 48px; }
   }
@@ -1204,10 +1179,6 @@
   <div class="about-panel is-active" data-panel="behind" role="tabpanel">
     <h3>What’s working for me behind the scenes:</h3>
     <p class="lead">The work gets better when it stays connected to people. I love human feedback, learning from other people’s ideas, and building from those conversations instead of working in isolation.</p>
-    <div class="collab-thread" aria-label="Text exchange about my role">
-      <div class="collab-message-incoming"><span class="collab-message-tail" aria-hidden="true"></span>What's your role?</div>
-      <div class="collab-message"><span class="collab-message-tail" aria-hidden="true"></span>I’m a collaborator. I bring structure, technical thinking, and curiosity to shared problems, then build based on what I learn from the people around me.</div>
-    </div>
     <ol class="workflow-board" aria-label="Collaborative workflow checklist">
       <li class="workflow-node">
         <h4>Listen</h4>
