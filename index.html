@@ -419,25 +419,25 @@
   }
   .workflow-board{
     position:relative; display:grid; gap:0;
-    margin-top:24px; padding:28px 28px 28px 56px; border:1px solid #d4c7b1;
+    margin-top:24px; padding:28px 28px 28px 56px; border:1px solid var(--line);
     list-style:none; counter-reset:workflow-step;
-    background-color:#f2eadb;
-    background-image:linear-gradient(90deg, transparent 39px, rgba(190,91,82,.35) 40px, transparent 41px), repeating-linear-gradient(transparent 0 37px, rgba(93,126,145,.2) 38px 39px);
-    box-shadow:6px 7px 0 rgba(229,143,124,.55); overflow:visible;
+    background-color:var(--canopy);
+    background-image:linear-gradient(90deg, transparent 39px, rgba(229,143,124,.42) 40px, transparent 41px), repeating-linear-gradient(transparent 0 37px, rgba(74,61,82,.55) 38px 39px);
+    box-shadow:6px 7px 0 rgba(169,184,60,.18); overflow:visible;
   }
   .workflow-node{
     counter-increment:workflow-step;
     position:relative; min-width:0; display:grid; grid-template-columns:32px minmax(0, 1fr); column-gap:10px;
-    align-items:baseline; padding:10px 0 12px; color:#302b2b;
-    border-bottom:1px dashed rgba(93,126,145,.35);
+    align-items:baseline; padding:10px 0 12px;
+    border-bottom:1px dashed rgba(74,61,82,.8);
   }
   .workflow-node::before{
     content:counter(workflow-step) "."; grid-column:1; grid-row:1 / span 2;
-    color:#9b574c; font:600 15px 'JetBrains Mono', monospace;
+    color:var(--rust); font:600 15px 'JetBrains Mono', monospace;
   }
   .workflow-node:last-child{ border-bottom:0; }
-  .workflow-node h4{ grid-column:2; margin-bottom:3px; color:#435d68; font:600 13px 'JetBrains Mono', monospace; text-transform:uppercase; }
-  .workflow-node p{ grid-column:2; color:#514b45; font-size:13px; line-height:1.55; }
+  .workflow-node h4{ grid-column:2; margin-bottom:3px; color:var(--gold); font:600 13px 'JetBrains Mono', monospace; text-transform:uppercase; }
+  .workflow-node p{ grid-column:2; color:var(--ink-dim); font-size:13px; line-height:1.55; }
   .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--rust); background:rgba(229,143,124,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
   .collab-thread{ display:flex; flex-direction:column; gap:12px; width:min(100%, 600px); margin:22px 0 28px; }
   .collab-message-incoming{
@@ -1725,9 +1725,44 @@
   const aboutPanels = document.querySelectorAll('.about-panel');
 
   function openAboutDetail(){
+    typeWorkflowChecklist();
     aboutScrim?.classList.add('open');
     aboutSheet?.classList.add('open');
     document.body.style.overflow = 'hidden';
+  }
+
+  let workflowChecklistTyped = false;
+  function typeWorkflowChecklist(){
+    if (workflowChecklistTyped) return;
+    workflowChecklistTyped = true;
+    const workflowBoard = document.querySelector('.workflow-board');
+    const targets = Array.from(workflowBoard?.querySelectorAll('.workflow-node h4, .workflow-node p') || []);
+    if (!targets.length) return;
+
+    const phrases = targets.map(target => {
+      const text = target.textContent.trim();
+      const typedText = document.createElement('span');
+      typedText.setAttribute('aria-hidden', 'true');
+      target.setAttribute('aria-label', text);
+      target.replaceChildren(typedText);
+      return { text, typedText, position: 0 };
+    });
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      phrases.forEach(phrase => { phrase.typedText.textContent = phrase.text; });
+      return;
+    }
+
+    const typingTimer = setInterval(() => {
+      let hasMoreText = false;
+      phrases.forEach(phrase => {
+        if (phrase.position >= phrase.text.length) return;
+        phrase.typedText.textContent += phrase.text[phrase.position];
+        phrase.position += 1;
+        hasMoreText = true;
+      });
+      if (!hasMoreText) clearInterval(typingTimer);
+    }, 18);
   }
 
   function closeAboutDetail(){
