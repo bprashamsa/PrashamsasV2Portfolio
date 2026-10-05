@@ -1727,17 +1727,16 @@
   function openAboutDetail(){
     aboutScrim?.classList.add('open');
     aboutSheet?.classList.add('open');
-    typeWorkflowChecklist();
+    if (document.querySelector('.about-tab.is-active')?.dataset.tab === 'behind') typeWorkflowChecklist();
     document.body.style.overflow = 'hidden';
   }
 
-  let workflowChecklistTyped = false;
+  let workflowTypingTimer = null;
   function typeWorkflowChecklist(){
-    if (workflowChecklistTyped) return;
-    workflowChecklistTyped = true;
     const workflowBoard = document.querySelector('.workflow-board');
     const targets = Array.from(workflowBoard?.querySelectorAll('.workflow-node h4, .workflow-node p') || []);
     if (!targets.length) return;
+    if (workflowTypingTimer) clearInterval(workflowTypingTimer);
 
     const phrases = targets.map(target => {
       const text = target.textContent.trim();
@@ -1753,7 +1752,7 @@
       return;
     }
 
-    const typingTimer = setInterval(() => {
+    workflowTypingTimer = setInterval(() => {
       let hasMoreText = false;
       phrases.forEach(phrase => {
         if (phrase.position >= phrase.text.length) return;
@@ -1761,7 +1760,10 @@
         phrase.position += 1;
         hasMoreText = true;
       });
-      if (!hasMoreText) clearInterval(typingTimer);
+      if (!hasMoreText){
+        clearInterval(workflowTypingTimer);
+        workflowTypingTimer = null;
+      }
     }, 18);
   }
 
@@ -1786,6 +1788,7 @@
       aboutPanels.forEach(panel => {
         panel.classList.toggle('is-active', panel.dataset.panel === selected);
       });
+      if (selected === 'behind') typeWorkflowChecklist();
     });
   });
 
