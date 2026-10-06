@@ -1704,6 +1704,7 @@
   function closeSheet(){
     scrim.classList.remove('open');
     sheet.classList.remove('open');
+    if (projectCircuit) projectCircuit.hidden = true;
     document.body.style.overflow = '';
     if (lastTrigger) lastTrigger.focus({ preventScroll:true });
   }
