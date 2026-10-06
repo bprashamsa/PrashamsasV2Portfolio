@@ -68,7 +68,7 @@
     47%{ opacity:.55; text-shadow:0 0 3px rgba(169,184,60,.65); }
     62%, 100%{ opacity:1; color:inherit; text-shadow:none; }
   }
-  .mark-email{ position:relative; padding:0; border:0; background:transparent; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:400; color:var(--ink-dim); cursor:pointer; transition:color .15s ease; }
+  .mark-email{ position:relative; padding:0; border:0; background:transparent; font-family:inherit; font-size:inherit; font-weight:inherit; color:var(--ink); cursor:pointer; transition:color .15s ease; }
   .mark-email:hover{ color:var(--gold); }
   .mark-email::after{
     content:attr(data-tooltip); position:absolute; left:50%; top:calc(100% + 8px); z-index:2;
@@ -908,7 +908,7 @@
 
 <header>
   <div class="header-row">
-    <div class="mark">Prashamsa Bandarapu <span class="header-orb" aria-hidden="true"></span><button class="mark-email" type="button" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard" data-tooltip="Copy email">bandarapuprashamsa@gmail.com</button></div>
+    <div class="mark"><span class="header-orb" aria-hidden="true"></span><button class="mark-email" type="button" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard" data-tooltip="Copy email">bandarapuprashamsa@gmail.com</button></div>
     <nav>
       <ul>
         <li><a href="#about">About</a></li>
