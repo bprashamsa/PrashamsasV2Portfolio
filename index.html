@@ -575,21 +575,6 @@
   .stack-lane:nth-of-type(4){ --lane-color:var(--gold); }
   .stack-lane:nth-of-type(4) .lane-node:hover::before{ box-shadow:0 0 0 5px rgba(169,184,60,.22); }
   .security-lane:hover .lane-tag::before{ display:none; }
-  .security-status{
-    position:absolute; left:50%; top:-18px; transform:translateX(-50%);
-    width:9px; height:9px; border-radius:50%; background:#49e27d;
-    border:1px solid rgba(255,255,255,.35);
-    box-shadow:0 0 0 0 rgba(73,226,125,.75);
-    animation:security-pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes security-pulse{
-    0%, 100%{ background:#49e27d; box-shadow:0 0 0 0 rgba(73,226,125,.75); }
-    50%{ background:#ff4d5a; box-shadow:0 0 0 6px rgba(255,77,90,0); }
-  }
-  @media (prefers-reduced-motion:reduce){
-    .security-status{ animation:none; }
-  }
-
   /* contact — hardware links */
   .elsewhere-card{
     background:var(--canopy);
@@ -1121,7 +1106,7 @@
         </div>
       </div>
       <div class="stack-lane security-lane">
-        <span class="lane-tag">SECURITY<span class="security-status" role="img" aria-label="Security status changing"></span></span>
+        <span class="lane-tag">SECURITY</span>
         <div class="lane-track" tabindex="0" aria-label="Security and systems">
           <span class="lane-node">Network Security</span>
           <span class="lane-node">SIEM</span>
