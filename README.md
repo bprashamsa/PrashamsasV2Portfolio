@@ -1,2 +1,2 @@
 # PrashamsasV2Portfolio
-Playing around with HTML & just experimenting with it to create a portfolio & find what I like :)
+Official portfolio, still WIP to see what style fits me the best! :)
