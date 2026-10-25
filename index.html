@@ -74,7 +74,6 @@
     position:relative; flex:none; width:8px; height:8px; border-radius:50%;
     background:radial-gradient(circle at 35% 35%, #EFE9DA 0%, var(--gold) 28%, rgba(169,184,60,0.78) 60%, rgba(169,184,60,0.22) 100%);
     box-shadow:0 0 0 1px rgba(169,184,60,0.45), 0 0 7px rgba(169,184,60,0.9), 0 0 12px rgba(169,184,60,0.38);
-    transition:filter .2s ease;
   }
   .header-orb::after{
     content:""; position:absolute; inset:-3px; border-radius:50%;
@@ -129,7 +128,7 @@
     font-size:13.5px;
     letter-spacing:.02em;
   }
-  .hero-copy p.tag{ margin-top:18px; color:var(--ink-dim); font-size:16px; max-width:44ch; }
+  .hero-copy p.tag{ margin:18px auto 0; color:var(--ink-dim); font-size:16px; max-width:44ch; }
   .hero-copy .cta-row{ margin-top:32px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
 
   .btn{
@@ -1039,112 +1038,6 @@
       }
     });
   }
-
-  // ── Header orb circuit minigame ──
-  (() => {
-    const headerOrb = document.querySelector('.header-orb');
-    if (!headerOrb) return;
-    
-    headerOrb.addEventListener('click', () => {
-      const parallaxGroup = document.getElementById('parallax-group');
-      if (!parallaxGroup || parallaxGroup.classList.contains('resetting')) return;
-      
-      // Trigger fade out
-      parallaxGroup.classList.add('resetting');
-      
-      // After fade completes, clone and reset
-      setTimeout(() => {
-        const clone = parallaxGroup.cloneNode(true);
-        clone.classList.remove('resetting');
-        parallaxGroup.parentNode.replaceChild(clone, parallaxGroup);
-      }, 300);
-    });
-  })();
-
-  // ── Node pulse on click ──
-  document.querySelectorAll('.node').forEach((node) => {
-    node.addEventListener('click', () => {
-      node.classList.add('pulse');
-      setTimeout(() => node.classList.remove('pulse'), 500);
-    });
-  });
-
-  // ── Circuit power switch ──
-  (() => {
-    const powerSwitch = document.getElementById('power-switch');
-    const parallelGroup = document.getElementById('parallax-group');
-    
-    let circuitOn = true;
-    
-    if (!powerSwitch || !parallelGroup) return;
-    
-    powerSwitch.addEventListener('click', (e) => {
-      e.stopPropagation();
-      togglePower();
-    });
-    
-    powerSwitch.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        togglePower();
-      }
-    });
-    
-    function togglePower() {
-      circuitOn = !circuitOn;
-      powerSwitch.classList.toggle('on', circuitOn);
-      powerSwitch.classList.toggle('off', !circuitOn);
-      parallelGroup.classList.toggle('circuit-off', !circuitOn);
-      powerSwitch.setAttribute('aria-pressed', circuitOn);
-      
-      // Only randomize path if turning on
-      if (circuitOn && window.randomizePath) {
-        window.randomizePath();
-      }
-    }
-  })();
-
-  // ── Randomize orb path ──
-  (() => {
-    const paths = [
-      'M285 282 L285 235 L225 175 L150 175',           // to about
-      'M285 282 L340 280 L340 150 L360 130 L360 108',   // to work
-      'M370 305 L430 305 L470 265 L500 265 L500 220',   // to skills
-      'M310 380 L310 500 L320 510 L320 555'             // to contact
-    ];
-    
-    function randomizePath(){
-      const bulbRoute = document.getElementById('bulb-route');
-      if (bulbRoute) {
-        const randomPath = paths[Math.floor(Math.random() * paths.length)];
-        bulbRoute.setAttribute('d', randomPath);
-      }
-    }
-    
-    // Initialize on page load
-    randomizePath();
-    
-    // Store function globally so board bulb click can use it
-    window.randomizePath = randomizePath;
-  })();
-
-  // ── Board bulb click to restart ──
-  (() => {
-    const boardBulb = document.querySelector('.board-bulb');
-    if (!boardBulb) return;
-    
-    boardBulb.addEventListener('click', (e) => {
-      e.stopPropagation();
-      
-      const animateMotion = boardBulb.querySelector('animateMotion');
-      if (!animateMotion) return;
-      
-      // Randomize the path before restarting
-      if (window.randomizePath) {
-        window.randomizePath();
-      }
-    });
-  })();
 
   // ── Case study sheet ──
   const CASES = {
