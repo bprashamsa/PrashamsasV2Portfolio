@@ -1,1 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prashamsa Bandarapu — Security, Data & Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #0C0A0D;
+    --canopy:    #161218;
+    --rust:      #e2a395;
+    --orange:    #a2417a;
+    --gold:      #b7c641;
+    --cta:       #BCCB4E;
+    --ink:       #EFE9DA;
+    --ink-dim:   #c2b69d;
+    --line:      #5a4a63;
+    --noir:      #2d2435;
+    --noir-line: #382e40;
+    --noir-ink:  #ede4cb;
+  }
 
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--orange); color:var(--bg); }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(12,10,13,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px 18px 16px; max-width:none; margin:0;
+  }
+  .mark{ 
+    display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
+    position:relative;
+  }
+  .mark-email{ position:relative; padding:0; border:0; background:transparent; font-family:inherit; font-size:inherit; font-weight:inherit; color:var(--ink); cursor:pointer; transition:color .15s ease; }
+  .mark-email:hover{ color:var(--gold); }
+  .mark-email::after{
+    content:attr(data-tooltip); position:absolute; left:50%; top:calc(100% + 8px); z-index:2;
+    padding:5px 9px; background:var(--gold); color:var(--bg); border:1px solid var(--gold);
+    font:10px 'JetBrains Mono', monospace; text-transform:uppercase; white-space:nowrap;
+    opacity:0; transform:translate(-50%, -4px); pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .mark-email:hover::after, .mark-email:focus-visible::after{ opacity:1; transform:translate(-50%, 0); }
+  .header-orb{
+    position:relative; flex:none; width:8px; height:8px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #EFE9DA 0%, var(--gold) 28%, rgba(169,184,60,0.78) 60%, rgba(169,184,60,0.22) 100%);
+    box-shadow:0 0 0 1px rgba(169,184,60,0.45), 0 0 7px rgba(169,184,60,0.9), 0 0 12px rgba(169,184,60,0.38);
+  }
+  .header-orb::after{
+    content:""; position:absolute; inset:-3px; border-radius:50%;
+    border:1px solid rgba(169,184,60,0.3); opacity:.7;
+  }
+  nav ul{ list-style:none; display:flex; align-items:center; gap:8px; font-size:11px; }
+  nav a{
+    position:relative; display:inline-flex; align-items:center; gap:7px;
+    padding:7px 10px; color:var(--ink-dim); border:1px solid var(--line);
+    background:rgba(22,18,24,.72); font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase; letter-spacing:.04em;
+    transition:color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  nav a::before{ content:""; width:5px; height:5px; border:1px solid currentColor; border-radius:50%; transition:background .15s ease, box-shadow .15s ease; }
+  nav a:hover{ color:var(--gold); border-color:var(--gold); background:var(--noir); transform:translateY(-1px); }
+  nav a:hover::before, nav a:focus-visible::before{ background:var(--gold); box-shadow:0 0 7px rgba(169,184,60,.95); }
+  nav a:focus-visible, a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:150px 32px 80px;
+    max-width:1200px;
+    margin:0 auto;
+    position:relative;
+  }
+  .hero-inner{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:32px;
+    width:100%;
+  }
+  .hero-copy{
+    flex:0 1 720px;
+    max-width:720px;
+    text-align:center;
+  }
+  .hero-copy h1{ font-size:clamp(2.1rem, 4vw, 3.1rem); }
+  .hero-copy h1 .hero-name{
+    display:inline-block;
+    animation:none;
+    opacity:1;
+    text-shadow:none;
+  }
+  .hero-copy .role{
+    margin-top:10px;
+    color:var(--gold);
+    font-family:'JetBrains Mono', monospace;
+    font-size:13.5px;
+    letter-spacing:.02em;
+  }
+  .hero-copy p.tag{ margin:18px auto 0; color:var(--ink-dim); font-size:16px; max-width:44ch; }
+  .hero-copy .cta-row{ margin-top:32px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:12px 17px 12px 14px;
+    font-family:'JetBrains Mono', monospace; font-weight:500; font-size:12px; letter-spacing:.02em;
+    background:var(--cta); color:var(--bg); border:1.5px solid var(--cta);
+    box-shadow:5px 5px 0 var(--rust);
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, color .18s ease;
+  }
+  .btn::before{ content:""; width:9px; height:9px; border:2px solid currentColor; border-radius:50%; }
+  .btn::after{ content:"→"; font-size:16px; line-height:1; transition:transform .18s ease; }
+  .btn:hover{ transform:translateY(-2px); border-color:var(--cta); box-shadow:5px 5px 0 rgba(147,171,137,.42); }
+  .btn:hover::after{ transform:translateX(3px); }
+  .btn.ghost{ background:transparent; color:var(--rust); border-color:var(--rust); box-shadow:none; }
+  .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 1px rgba(169,184,60,.2), 5px 5px 0 rgba(169,184,60,.12); }
+
+  .scroll-cue{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim);
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .scroll-cue .stick{ width:1px; height:26px; background:var(--line); }
+
+  /* ---------- sections ---------- */
+  section{ padding:100px 0; position:relative; }
+  section:not(.hero)::before{
+    content:""; position:absolute; top:0; left:32px; right:32px;
+    max-width:1016px; margin:0 auto; height:1px; background:var(--line);
+  }
+  .eyebrow{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--gold); margin-bottom:14px; display:block; }
+  .section-head{ display:grid; grid-template-columns:1fr 1.5fr; gap:40px; margin-bottom:56px; align-items:start; }
+  .section-head h2{ font-size:clamp(1.6rem,3vw,2.2rem); }
+  .section-head .lede{ color:var(--ink-dim); font-size:15.5px; max-width:46ch; }
+
+  /* about */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .about-copy p{ color:var(--ink-dim); margin-bottom:16px; font-size:15.5px; max-width:52ch; }
+  .about-copy p strong{ color:var(--ink); font-weight:600; }
+  .about-actions{ margin-top:20px; }
+  .about-detail-trigger{
+    display:inline-flex; align-items:center; gap:10px; padding:12px 17px 12px 14px;
+    background:transparent; color:var(--ink); border:1.5px solid var(--line);
+    font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; letter-spacing:.02em;
+    cursor:pointer; transition:transform .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+  }
+  .about-detail-trigger::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--gold); box-shadow:0 0 8px rgba(169,184,60,.8); }
+  .about-detail-trigger:hover{ transform:translateY(-2px); border-color:var(--gold); color:var(--gold); box-shadow:0 0 0 1px rgba(169,184,60,.2), 5px 5px 0 rgba(169,184,60,.12); }
+
+  .about-scrim{
+    position:fixed; inset:0; background:rgba(12,10,13,.6); z-index:90;
+    opacity:0; pointer-events:none; transition:opacity 260ms ease;
+  }
+  .about-scrim.open{ opacity:1; pointer-events:auto; }
+  .about-sheet{
+    position:fixed; top:0; right:0; bottom:0; width:min(100vw, 960px);
+    background:var(--bg); border-left:1px solid var(--line); z-index:95;
+    transform:translateX(100%); transition:transform 420ms cubic-bezier(.19,1,.22,1);
+    overflow-y:auto;
+  }
+  .about-sheet.open{ transform:translateX(0); }
+  .about-sheet .sheet-head{ position:sticky; top:0; background:var(--bg); z-index:2; }
+  .about-tabs{ display:flex; gap:8px; flex-wrap:wrap; }
+  .about-tab{
+    padding:6px 10px; border:1px solid var(--line); background:transparent;
+    color:var(--ink-dim); font-family:'JetBrains Mono', monospace; font-size:10.5px;
+    cursor:pointer; transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .about-tab:hover, .about-tab.is-active{
+    color:var(--gold); border-color:var(--gold); background:rgba(169,184,60,.08);
+  }
+  .about-panel{
+    display:none; padding:32px 28px 64px; max-width:760px; margin:0 auto;
+  }
+  .about-panel.is-active{ display:block; }
+  .about-panel h3{
+    font-size:clamp(28px,4vw,38px); margin-bottom:12px; color:var(--ink);
+  }
+  .about-panel .lead{
+    color:var(--ink-dim); font-size:15px; line-height:1.7; margin-bottom:24px;
+  }
+  .about-panel .detail-grid{ display:grid; gap:16px; margin-top:20px; }
+  .about-panel .detail-block{
+    padding:18px 18px 16px; background:rgba(22,18,24,.78); border:1px solid var(--line);
+  }
+  .about-panel .detail-block h4{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--gold);
+    letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px;
+  }
+  .about-panel .detail-block p,
+  .about-panel .detail-block li{ color:var(--ink-dim); font-size:14.5px; line-height:1.7; }
+  .about-panel .detail-block ul{ list-style:none; display:grid; gap:8px; margin:0; }
+  .about-panel .detail-block li{ position:relative; padding-left:16px; }
+  .about-panel .detail-block li::before{
+    content:""; position:absolute; left:0; top:.7em; width:6px; height:6px; border-radius:50%; background:var(--orange);
+  }
+  .ai-lab{
+    margin:28px 0 24px; padding:20px; border:1px solid var(--line);
+    background:rgba(22,18,24,.52); box-shadow:6px 6px 0 rgba(169,184,60,.16);
+  }
+  .ai-lab-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    margin-bottom:16px; padding-bottom:12px; border-bottom:1px dashed var(--line);
+  }
+  .ai-lab-head h4{ color:var(--ink); font-size:16px; }
+  .ai-lab-status{ color:var(--gold); font:10px 'JetBrains Mono', monospace; letter-spacing:.08em; text-transform:uppercase; }
+  .ai-domain-controls{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .ai-domain-button{
+    padding:10px 8px; border:1px solid var(--line); background:transparent; color:var(--ink-dim);
+    font:11px 'JetBrains Mono', monospace; cursor:pointer; transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .ai-domain-button:hover, .ai-domain-button.is-active{
+    color:var(--gold); border-color:var(--gold); background:rgba(169,184,60,.08);
+  }
+  .ai-step-controls{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:12px; }
+  .ai-step-button{
+    padding:8px 5px; border:0; border-top:1px solid var(--line); background:transparent; color:var(--ink-dim);
+    font:10px 'JetBrains Mono', monospace; cursor:pointer; transition:color .15s ease, border-color .15s ease;
+  }
+  .ai-step-button:hover, .ai-step-button.is-active{ color:var(--gold); border-top-color:var(--gold); }
+  .ai-lab-output{ padding:18px 0 4px; }
+  .ai-lab-output h5{ color:var(--gold); font:11px 'JetBrains Mono', monospace; letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
+  .ai-lab-output p{ color:var(--ink); font-size:14px; line-height:1.7; margin-bottom:14px; }
+  .ai-lab-check{ display:flex; align-items:flex-start; gap:9px; color:var(--ink-dim); font-size:12.5px; line-height:1.6; }
+  .ai-lab-check::before{ content:""; flex:none; width:7px; height:7px; margin-top:.55em; border-radius:50%; background:#49e27d; box-shadow:0 0 8px rgba(73,226,125,.7); }
+  .behind-grid{
+    display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px; margin-top:26px;
+  }
+  .behind-card{
+    display:flex; flex-direction:column; justify-content:space-between; gap:14px;
+    min-height:170px; padding:18px 18px 16px; background:rgba(22,18,24,.74); border:1px solid var(--line);
+    box-shadow:6px 6px 0 rgba(169,184,60,.08);
+  }
+  .workflow-board{
+    position:relative; display:grid; gap:0;
+    margin-top:24px; padding:28px 28px 28px 56px; border:1px solid var(--line);
+    list-style:none; counter-reset:workflow-step;
+    background-color:var(--canopy);
+    background-image:linear-gradient(90deg, transparent 39px, rgba(229,143,124,.42) 40px, transparent 41px);
+    box-shadow:6px 7px 0 rgba(169,184,60,.18); overflow:visible;
+  }
+  .workflow-node{
+    counter-increment:workflow-step;
+    position:relative; min-width:0; display:grid; grid-template-columns:18px 32px minmax(0, 1fr); column-gap:10px;
+    align-items:baseline; padding:10px 0 12px;
+    border-bottom:1px dashed rgba(74,61,82,.8);
+  }
+  .workflow-checkbox{
+    grid-column:1; grid-row:1 / span 2; align-self:start; margin-top:2px;
+    appearance:none; display:grid; place-content:center;
+    width:16px; height:16px; border:1px solid var(--rust); border-radius:2px;
+    background:var(--noir); cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .workflow-checkbox::before{
+    content:""; width:8px; height:5px; border-left:2px solid var(--bg); border-bottom:2px solid var(--bg);
+    transform:rotate(-45deg) scale(0); transition:transform .12s ease;
+  }
+  .workflow-checkbox:hover{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(169,184,60,.12); }
+  .workflow-checkbox:checked{ background:var(--gold); border-color:var(--gold); box-shadow:0 0 9px rgba(169,184,60,.4); }
+  .workflow-checkbox:checked::before{ transform:rotate(-45deg) scale(1); }
+  .workflow-checkbox:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .workflow-node::before{
+    content:counter(workflow-step, decimal-leading-zero) "."; grid-column:2; grid-row:1 / span 2;
+    color:var(--rust); font:600 15px 'JetBrains Mono', monospace;
+  }
+  .workflow-node:last-child{ border-bottom:0; }
+  .workflow-copy{ grid-column:3; grid-row:1 / span 2; }
+  .workflow-checkbox:checked ~ .workflow-copy{
+    text-decoration:line-through; text-decoration-color:var(--rust); text-decoration-thickness:1px; opacity:.7;
+  }
+  .workflow-node h4{ margin-bottom:3px; color:var(--gold); font:600 13px 'JetBrains Mono', monospace; text-transform:uppercase; }
+  .workflow-node p{ color:var(--ink-dim); font-size:13px; line-height:1.55; }
+  .workflow-note{ margin-top:14px; padding:14px 16px; border-left:3px solid var(--rust); background:rgba(229,143,124,.08); color:var(--ink); font-size:13.5px; line-height:1.65; }
+  @media (max-width: 680px){
+    .workflow-board{ padding:20px 16px 20px 48px; }
+  }
+  @media (max-width: 560px){
+    .ai-lab-head{ align-items:flex-start; flex-direction:column; gap:5px; }
+    .ai-domain-controls{ grid-template-columns:1fr; }
+    .ai-step-controls{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  .domain-graphic{ display:flex; flex-direction:column; gap:14px; }
+  .domain-row{
+    display:flex; align-items:center; gap:16px; padding:18px 20px;
+    background:var(--canopy); position:relative;
+  }
+  .domain-row:nth-child(1){ box-shadow:6px 6px 0 var(--rust); }
+  .domain-row:nth-child(2){ box-shadow:6px 6px 0 var(--orange); }
+  .domain-row:nth-child(3){ box-shadow:6px 6px 0 var(--gold); }
+  .domain-row .dot{ width:12px; height:12px; border-radius:50%; flex:none; }
+  .domain-row:nth-child(1) .dot{ background:var(--rust); }
+  .domain-row:nth-child(2) .dot{ background:var(--orange); }
+  .domain-row:nth-child(3) .dot{ background:var(--gold); }
+  .domain-row .label{
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
+    transition:color .15s ease, text-shadow .15s ease;
+  }
+  .domain-row:hover .label{ color:var(--gold); text-shadow:0 0 8px rgba(169,184,60,.45); }
+  .domain-row .sub{ margin-left:auto; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-dim); }
+
+  /* work */
+  .work-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; }
+  .card{
+    background:var(--canopy); padding:28px 24px 26px; position:relative;
+    cursor:pointer; text-align:left; border:0; color:inherit; width:100%;
+    transition:transform .18s ease;
+  }
+  .card:hover{ transform:translateY(-4px); }
+  .card:nth-child(1){ box-shadow:7px 7px 0 var(--rust); }
+  .card:nth-child(2){ box-shadow:7px 7px 0 var(--orange); }
+  .card:nth-child(3){ box-shadow:7px 7px 0 var(--gold); }
+  .card .fruit-dot{ width:14px; height:14px; margin-bottom:18px; border-radius:50%; }
+  .card:nth-child(1) .fruit-dot{ background:var(--rust); }
+  .card:nth-child(2) .fruit-dot{ background:var(--orange); }
+  .card:nth-child(3) .fruit-dot{ background:var(--gold); }
+  .card .domain-tag{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--gold); margin-bottom:8px; display:block; }
+  .card h3{ font-size:18px; margin-bottom:10px; }
+  .card p{ color:var(--ink-dim); font-size:14.5px; margin-bottom:18px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .tags span{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--ink-dim); border:1px solid var(--line); padding:4px 9px; }
+  .card .link{ font-family:'Space Grotesk', sans-serif; font-size:13.5px; font-weight:600; color:var(--gold); display:inline-flex; align-items:center; gap:7px; }
+  .trace-icon{ width:22px; height:12px; flex:none; color:var(--gold); transition:transform .18s ease; }
+  .card:hover .trace-icon{ transform:translateX(3px); }
+
+  /* skills — signal chain schematic */
+  .stack-schematic{
+    background:var(--canopy); border:1px solid var(--line);
+    padding:36px 34px 8px; box-shadow:8px 8px 0 var(--gold);
+    overflow:hidden;
+  }
+  .stack-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:16px; flex-wrap:wrap; margin-bottom:8px; padding-bottom:22px;
+    border-bottom:1px dashed var(--line);
+  }
+  .stack-head h3{ font-size:clamp(22px,3vw,28px); }
+  .stack-head span{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim); letter-spacing:.04em; }
+  .stack-lane{
+    display:flex; align-items:center; gap:20px;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .stack-lane:last-child{ border-bottom:none; }
+  .lane-tag{
+    flex:none; width:74px; text-align:center;
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.06em;
+    padding:7px 0; border:1px solid var(--lane-color); color:var(--lane-color);
+    position:relative;
+  }
+  .lane-tag::before{
+    content:""; position:absolute; left:50%; top:-14px; transform:translateX(-50%);
+    width:8px; height:8px; border-radius:50%; background:var(--bg);
+    border:2px solid var(--lane-color); opacity:0;
+  }
+  .stack-lane:hover .lane-tag::before{ opacity:1; }
+  .lane-track{
+    position:relative; flex:1 1 auto; min-width:0;
+    display:flex; align-items:center; gap:28px;
+    padding:14px 4px; overflow-x:auto; scrollbar-width:none;
+  }
+  .lane-track::-webkit-scrollbar{ display:none; }
+  .lane-track::before{
+    content:""; position:absolute; left:0; right:0; top:50%;
+    height:2px; transform:translateY(-50%);
+    background-image:repeating-linear-gradient(90deg, var(--lane-color) 0 9px, transparent 9px 20px);
+    background-size:29px 2px; opacity:.85;
+    animation:lane-flow 1.1s linear infinite;
+  }
+  @keyframes lane-flow{ to{ background-position:-29px 0; } }
+  .lane-node{
+    position:relative; z-index:1; flex:none;
+    display:flex; flex-direction:column; align-items:center; gap:9px;
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--ink);
+    white-space:nowrap; background:var(--canopy); padding:0 4px;
+  }
+  .lane-node::before{
+    content:""; width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--lane-color);
+    transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .15s ease, box-shadow .2s ease;
+  }
+  .lane-node:hover::before, .lane-node:focus-visible::before{
+    transform:scale(1.35); background:var(--lane-color);
+  }
+  .stack-lane:nth-of-type(2){ --lane-color:var(--rust); }
+  .stack-lane:nth-of-type(2) .lane-node:hover::before{ box-shadow:0 0 0 5px rgba(229,143,124,.22); }
+  .stack-lane:nth-of-type(3){ --lane-color:var(--orange); }
+  .stack-lane:nth-of-type(3) .lane-node:hover::before{ box-shadow:0 0 0 5px rgba(138,56,104,.22); }
+  .stack-lane:nth-of-type(4){ --lane-color:var(--gold); }
+  .stack-lane:nth-of-type(4) .lane-node:hover::before{ box-shadow:0 0 0 5px rgba(169,184,60,.22); }
+  .security-lane:hover .lane-tag::before{ display:none; }
+  /* contact — hardware links */
+  .elsewhere-card{
+    background:var(--canopy);
+    border:1px solid var(--orange); padding:26px 22px; display:grid; gap:18px;
+    box-shadow:8px 8px 0 var(--orange);
+  }
+  .elsewhere-header{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    padding-bottom:10px; border-bottom:1px solid var(--noir-line);
+  }
+  .elsewhere-intro{ max-width:20ch; font-size:clamp(24px,3vw,32px); color:var(--noir-ink); }
+  .elsewhere-status{
+    display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace;
+    font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim);
+  }
+  .status-led{
+    width:9px; height:9px; border-radius:50%; background:var(--gold);
+    box-shadow:0 0 12px rgba(169,184,60,0.9), 0 0 20px rgba(169,184,60,0.5);
+  }
+  .elsewhere-board{
+    display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px;
+  }
+  .elsewhere-link{
+    position:relative; display:grid; gap:14px; min-height:112px; padding:14px 16px 12px;
+    background:var(--noir);
+    border:1px solid rgba(138,56,104,.3); color:var(--ink); cursor:pointer;
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    box-shadow:none;
+  }
+  .elsewhere-link::after{
+    content:attr(aria-label); position:absolute; left:50%; bottom:calc(100% + 8px); z-index:2;
+    padding:5px 9px; background:var(--gold); color:var(--bg); border:1px solid var(--gold);
+    font:10px 'JetBrains Mono', monospace; text-transform:uppercase; white-space:nowrap;
+    opacity:0; transform:translate(-50%, 4px); pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .elsewhere-link:hover::after,
+  .elsewhere-link:focus-visible::after{ opacity:1; transform:translate(-50%, 0); }
+  .elsewhere-link:hover,
+  .elsewhere-link:focus-visible{
+    transform:translateY(-2px); border-color:var(--rust);
+    box-shadow:0 0 0 1px rgba(229,143,124,.3), 6px 6px 0 rgba(229,143,124,.18);
+  }
+  .elsewhere-link:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+  .module-top{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
+  }
+  .module-led{
+    width:8px; height:8px; border-radius:50%; background:var(--gold);
+    box-shadow:0 0 10px rgba(169,184,60,0.9);
+  }
+  .module-label{
+    font-family:'Space Grotesk', sans-serif; font-size:1rem; font-weight:600; line-height:1.2; letter-spacing:-.03em;
+    color:var(--ink);
+  }
+  .module-meta{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; }
+  .module-meta span{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ink-dim); }
+  .module-icon{ width:26px; height:26px; display:grid; place-items:center; border:1px solid var(--gold); background:transparent; color:var(--gold); }
+  .module-icon svg{ width:17px; height:17px; }
+  .module-icon .glyph{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:16px; }
+
+  footer{ padding:32px 0 40px; text-align:center; color:var(--ink-dim); font-family:'JetBrains Mono', monospace; font-size:12px; }
+
+  /* ---------- sheet (case study panel) ---------- */
+  .scrim{
+    position:fixed; inset:0; background:rgba(12,10,13,.6); z-index:90;
+    opacity:0; pointer-events:none; transition:opacity 260ms ease;
+  }
+  .scrim.open{ opacity:1; pointer-events:auto; }
+  .sheet{
+    position:fixed; top:0; right:0; bottom:0; width:100vw;
+    background:var(--bg);
+    z-index:95; transform:translateX(100%);
+    transition:transform 420ms cubic-bezier(.19,1,.22,1);
+    overflow-y:auto;
+  }
+  .sheet.open{ transform:translateX(0); }
+  .sheet-head{
+    position:sticky; top:0; background:var(--bg);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 28px; border-bottom:1px solid var(--line); z-index:2;
+  }
+  .sheet-head-left{ display:flex; align-items:center; gap:24px; min-width:0; }
+  .sheet-tag{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; }
+  .sheet-project-nav{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .sheet-project-nav button{
+    padding:6px 9px; border:1px solid var(--line); background:transparent;
+    color:var(--ink-dim); font-family:'JetBrains Mono', monospace; font-size:10px;
+    cursor:pointer; transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .sheet-project-nav button:hover,
+  .sheet-project-nav button.is-active{
+    color:var(--gold); border-color:var(--gold); background:rgba(169,184,60,.08);
+  }
+  .sheet-close{
+    width:38px; height:38px; border-radius:999px; display:grid; place-items:center;
+    color:var(--ink); background:transparent; cursor:pointer; border:1px solid var(--line);
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .sheet-close:hover{ background:var(--canopy); border-color:var(--gold); }
+  .sheet-body{ max-width:860px; margin:0 auto; padding:32px 28px 64px; }
+  .project-circuit{
+    position:fixed; left:24px; top:96px; bottom:28px; z-index:96; width:24px;
+    color:var(--line); pointer-events:none;
+  }
+  .circuit-track{ position:absolute; top:0; bottom:0; left:50%; width:3px; transform:translateX(-50%); background:currentColor; }
+  .circuit-node{ position:absolute; left:50%; width:13px; height:13px; border:2px solid currentColor; border-radius:50%; background:var(--bg); transform:translate(-50%, -50%); }
+  .circuit-node-start{ top:0; }
+  .circuit-node-end{ top:100%; }
+  .circuit-led{ position:absolute; top:0; left:50%; width:18px; height:24px; color:#49e27d; transform:translate(-50%, -50%); transition:top .12s ease, color .2s ease, scale .12s ease; will-change:top; }
+  .circuit-led::before{ content:"↓"; position:absolute; inset:0; font-family:'Space Grotesk', sans-serif; font-size:24px; font-weight:700; line-height:1; text-align:center; text-shadow:0 0 3px #e2ffe8, 0 0 9px rgba(73,226,125,.95), 0 0 16px rgba(73,226,125,.65); }
+  .project-circuit.is-complete{ color:var(--gold); }
+  .project-circuit.is-complete .circuit-led{ scale:1.15; }
+  .sheet-body h2{ font-size:clamp(26px,4vw,34px); margin-bottom:14px; }
+  .sheet-body .lead{ color:var(--ink-dim); font-size:15px; line-height:1.65; margin-bottom:26px; }
+  .sheet-body:has(.case-split){ max-width:1280px; }
+  .case-split{ display:grid; grid-template-columns:minmax(0, 1.45fr) minmax(340px, .85fr); gap:34px; align-items:stretch; }
+  .case-split .sheet-demo{ display:flex; flex-direction:column; }
+  .case-split .sheet-demo h3:first-child{ margin-top:0; }
+  .case-split .sheet-preview-img{ max-height:760px; }
+  .project-glance-stack{ flex:1; display:flex; flex-direction:column; gap:18px; margin-top:18px; }
+  .project-glance{ flex:1; padding:18px; border:1px solid var(--line); background:var(--canopy); }
+  .project-glance h4{ font-family:'JetBrains Mono', monospace; font-size:10.5px; font-weight:500; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; margin-bottom:12px; }
+  .project-glance-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 18px; }
+  .project-glance-item span{ display:block; font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; }
+  .project-glance-item strong{ display:block; margin-top:2px; font-size:13px; color:var(--ink); line-height:1.35; }
+  .project-glance-detail{ padding:18px; border:1px solid var(--line); background:var(--canopy); }
+  .project-glance-detail h5{ font-family:'JetBrains Mono', monospace; font-size:10.5px; font-weight:500; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; }
+  .project-glance-detail p{ font-size:13px; line-height:1.55; color:var(--ink-dim); margin:0; }
+  .sheet-repo{ display:inline-flex; align-items:center; gap:10px; margin:-10px 0 26px; padding:12px 17px 12px 14px; background:var(--orange); border:1.5px solid var(--orange); box-shadow:5px 5px 0 var(--rust); color:var(--ink); font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; letter-spacing:.02em; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+  .sheet-repo:hover{ transform:translateY(-2px); border-color:var(--gold); box-shadow:0 0 0 1px rgba(169,184,60,.2), 5px 5px 0 rgba(169,184,60,.18); }
+  .sheet-repo:hover .trace-icon{ transform:translateX(3px); }
+  .sheet-source{ margin-left:12px; }
+  .sheet-facts{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line); margin-bottom:28px; }
+  .sheet-facts > div{ padding:14px 0; border-bottom:1px solid var(--line); }
+  .sheet-facts dt{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
+  .sheet-facts dd{ font-size:13.5px; color:var(--ink); }
+  .sheet-body h3{ font-size:17px; margin:26px 0 10px; color:var(--gold); }
+  .sheet-body p{ font-size:14.5px; line-height:1.7; color:var(--ink-dim); margin-bottom:12px; }
+  .sheet-body ul{ display:grid; gap:9px; margin:6px 0 18px; list-style:none; }
+  .sheet-body li{ position:relative; padding-left:18px; font-size:14px; line-height:1.6; color:var(--ink-dim); }
+  .sheet-body li::before{ content:""; position:absolute; left:0; top:.6em; width:6px; height:6px; border-radius:50%; background:var(--orange); }
+  .sheet-body ul.arrow-list li::before{ content:"->"; top:0; width:auto; height:auto; border-radius:0; background:none; color:var(--gold); font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:600; }
+  .sheet-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .sheet-tags span{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim); border:1px solid var(--line); padding:5px 10px; }
+  .sheet-impact{
+    margin-top:28px; padding:22px 20px; background:var(--canopy);
+    border-left:3px solid var(--gold);
+  }
+  .sheet-impact span{ display:block; font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .sheet-impact p{ margin:0; color:var(--ink); font-size:14.5px; }
+  .sheet-improvements{ margin-top:20px; padding:22px 20px; border:1px solid var(--line); background:var(--canopy); }
+  .sheet-improvements h3{ margin:0 0 12px; }
+  .sheet-improvements ul{ margin:0; }
+
+  /* ---------- interactive card flip deck ---------- */
+  .sheet-demo-intro{ font-size:14.5px; line-height:1.7; color:var(--ink-dim); margin-bottom:16px; }
+  .sheet-deck-container{
+    margin:18px 0 28px;
+    background:rgba(22,18,24,0.7);
+    border:1px solid var(--noir-line);
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 12px 32px rgba(0,0,0,0.45);
+  }
+  .sheet-deck-controls{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap; margin-bottom:16px;
+    padding-bottom:14px; border-bottom:1px solid var(--noir-line);
+  }
+  .sheet-deck-meta{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .sheet-deck-counter{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:12px; font-weight:600; color:var(--gold);
+    background:var(--noir); border:1px solid var(--line);
+    padding:4px 10px; border-radius:4px;
+  }
+  .sheet-deck-hint{
+    font-size:11px; color:var(--ink-dim); letter-spacing:.02em;
+  }
+  .sheet-deck-nav{
+    display:flex; align-items:center; gap:10px;
+  }
+  .sheet-deck-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:6px;
+    background:var(--canopy); color:var(--ink);
+    border:1px solid var(--line); cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .sheet-deck-btn:hover{
+    background:var(--bg); border-color:var(--gold); color:var(--gold);
+    transform:translateY(-1px);
+    box-shadow:0 0 8px rgba(169,184,60,0.3);
+  }
+  .sheet-deck-btn svg{ width:15px; height:15px; }
+  .sheet-deck-dots{
+    display:flex; align-items:center; gap:6px; margin:0 4px;
+  }
+  .sheet-deck-dot{
+    width:22px; height:8px; border-radius:999px;
+    background:var(--line); border:0; cursor:pointer;
+    transition:background .2s ease, width .2s ease, box-shadow .2s ease;
+  }
+  .sheet-deck-dot:hover{ background:var(--ink); }
+  .sheet-deck-dot.is-active{
+    width:32px; background:var(--gold);
+    box-shadow:0 0 8px rgba(169,184,60,0.6);
+  }
+  .sheet-deck-stage{
+    position:relative;
+    width:100%;
+    min-height:500px;
+    perspective:1400px;
+    cursor:pointer;
+  }
+  .sheet-deck-stage.is-static{ cursor:default; }
+  .sheet-deck-card{
+    position:absolute; inset:0;
+    width:100%;
+    background:var(--noir); border:1.5px solid var(--noir-line);
+    box-shadow:0 10px 30px rgba(0,0,0,0.55);
+    border-radius:8px; overflow:hidden;
+    opacity:0; pointer-events:none;
+    transform:translate3d(0, 0, -80px) rotateY(12deg) scale(0.95);
+    transition:transform .45s cubic-bezier(.2,.85,.3,1), opacity .32s ease, border-color .2s ease, box-shadow .2s ease;
+    will-change:transform, opacity;
+  }
+  .sheet-deck-card:hover{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px rgba(169,184,60,0.35), 0 14px 40px rgba(0,0,0,0.7);
+  }
+  .sheet-deck-card.is-active{
+    position:relative;
+    opacity:1; pointer-events:auto;
+    transform:translate3d(0, 0, 0) rotateY(0deg) scale(1);
+    z-index:4;
+  }
+  .sheet-deck-card.is-prev{
+    opacity:0; pointer-events:none;
+    transform:translate3d(-40px, 0, -100px) rotateY(-18deg) scale(0.92);
+    z-index:2;
+  }
+  .sheet-deck-card.is-next{
+    opacity:0; pointer-events:none;
+    transform:translate3d(40px, 0, -100px) rotateY(18deg) scale(0.92);
+    z-index:2;
+  }
+  .sheet-preview-bar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 14px;
+    background:rgba(42,21,35,0.75); border-bottom:1px solid var(--noir-line);
+  }
+  .sheet-preview-bar-left{
+    display:flex; align-items:center; gap:8px;
+  }
+  .sheet-preview-dot{ width:9px; height:9px; border-radius:50%; }
+  .sheet-preview-dot.red{ background:#ff5f56; }
+  .sheet-preview-dot.yellow{ background:#ffbd2e; }
+  .sheet-preview-dot.green{ background:#27c93f; }
+  .sheet-preview-title{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim); margin-left:6px; }
+  .sheet-preview-pill{
+    font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--gold);
+    border:1px solid rgba(169,184,60,0.3); padding:2px 8px; border-radius:4px; background:rgba(169,184,60,0.08);
+  }
+  .sheet-preview-img{
+    width:100%; height:auto; display:block;
+    max-height:560px; object-fit:contain;
+    background:var(--noir);
+    border-bottom:1px solid var(--noir-line);
+  }
+  .sheet-preview-caption{
+    padding:14px 18px; font-family:'JetBrains Mono', monospace; font-size:12px;
+    color:var(--noir-ink); background:rgba(12,10,13,0.96); line-height:1.6;
+  }
+  .sheet-preview-caption strong{ color:var(--gold); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    .hero-inner{ flex-direction:column-reverse; text-align:center; }
+    .hero-copy{ max-width:520px; text-align:center; }
+    .hero-copy .cta-row{ justify-content:center; }
+    .section-head{ grid-template-columns:1fr; gap:14px; }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+    .work-grid{ grid-template-columns:1fr; }
+    .case-split{ grid-template-columns:1fr; }
+    .elsewhere-card{ flex-direction:column; align-items:flex-start; }
+    .elsewhere-tiles:hover .elsewhere-tile,
+    .elsewhere-tiles:focus-within .elsewhere-tile{ transform:none !important; }
+    nav ul{ display:none; }
+    .sheet{ width:100vw; }
+    .sheet-head{ align-items:flex-start; gap:14px; padding:16px 18px; }
+    .sheet-head-left{ align-items:flex-start; flex-direction:column; gap:10px; }
+    .sheet-project-nav{ gap:6px; }
+  }
+  @media (max-width: 1080px){ .project-circuit{ display:none; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-name{ animation:none; }
+    html{ scroll-behavior:auto; }
+    * { cursor:auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div class="mark"><span class="header-orb" aria-hidden="true"></span><button class="mark-email" type="button" aria-label="Copy bandarapuprashamsa@gmail.com to clipboard" data-tooltip="Copy email">bandarapuprashamsa@gmail.com</button></div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <h1>Hey! I'm <span class="hero-name">Prashamsa</span>.</h1>
+      <div class="role mono">data science · software</div>
+      <p class="tag">need to add a new tagline here.</p>
+      <div class="cta-row">
+        <a class="btn ghost" href="#contact">Connect</a>
+      </div>
+    </div>
+
+
+  </div>
+
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-copy">
+        <span class="eyebrow">about</span>
+        <p>I am currently a student at UW studying Data Science and Computer Science. I keep ending up at the intersection of security, data, and code, because the same question shows up in all three: <strong style="color:var(--gold);">what is actually going on here and what should I do about it?</strong></p>
+        <div class="about-actions">
+          <button class="about-detail-trigger" type="button" aria-haspopup="dialog" aria-controls="aboutDetailSheet">Open my profile</button>
+        </div>
+      </div>
+      <div class="domain-graphic" aria-hidden="true">
+        <div class="domain-row"><span class="dot"></span><span class="label">Security</span><span class="sub">defend &amp; detect</span></div>
+        <div class="domain-row"><span class="dot"></span><span class="label">Data Science</span><span class="sub">model &amp; predict</span></div>
+        <div class="domain-row"><span class="dot"></span><span class="label">Engineering</span><span class="sub">build &amp; automate</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">work</span>
+      <div>
+        <h2>A few things I've built:</h2>
+        <p class="lede">Open a card for the full picture.</p>
+      </div>
+    </div>
+    <div class="work-grid">
+      <button class="card" data-case="ids" aria-haspopup="dialog">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">security</span>
+        <h3>NVD + CWE risk chatbot</h3>
+        <p>A Claude-powered chatbot that turns live vulnerability data into patch-priority guidance.</p>
+        <div class="tags"><span>Python</span><span>Claude</span><span>NVD API</span></div>
+        <span class="link">Open the project<svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg></span>
+      </button>
+      <button class="card" data-case="crime" aria-haspopup="dialog">
+        <div class="fruit-dot"></div>
+        <span class="domain-tag">data 2026 project</span>
+        <h3>Washington State Crime Trends</h3>
+        <p>A county-level analysis of Washington State crime trends from 2016 through 2024, built with publicly available data in RStudio.</p>
+        <div class="tags"><span>RStudio</span><span>Public Data</span><span>Data Analysis</span></div>
+        <span class="link">Open the project<svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">skills</span>
+      <div>
+        <h2>Tools I work with:</h2>
+        <p class="lede">Three signal paths, wired into one stack, try hovering over a node to see it light up.</p>
+      </div>
+    </div>
+    <div class="stack-schematic">
+      <div class="stack-head">
+        <h3>Signal chain</h3>
+        <span class="mono">STACK.SCH · rev 03</span>
+      </div>
+      <div class="stack-lane">
+        <span class="lane-tag">LANG</span>
+        <div class="lane-track" tabindex="0" aria-label="Programming languages">
+          <span class="lane-node">Python</span>
+          <span class="lane-node">SQL</span>
+          <span class="lane-node">C++</span>
+          <span class="lane-node">HTML</span>
+          <span class="lane-node">JavaScript</span>
+          <span class="lane-node">Git</span>
+        </div>
+      </div>
+      <div class="stack-lane">
+        <span class="lane-tag">TOOLS</span>
+        <div class="lane-track" tabindex="0" aria-label="Design and analysis tools">
+          <span class="lane-node">VSCode</span>
+          <span class="lane-node">Arduino IDE</span>
+          <span class="lane-node">Figma</span>
+          <span class="lane-node">Claude</span>
+          <span class="lane-node">RStudio</span>
+          <span class="lane-node">Tableau</span>
+          <span class="lane-node">Excel</span>
+        </div>
+      </div>
+      <div class="stack-lane security-lane">
+        <span class="lane-tag">SECURITY</span>
+        <div class="lane-track" tabindex="0" aria-label="Security and systems">
+          <span class="lane-node">Network Security</span>
+          <span class="lane-node">SIEM</span>
+          <span class="lane-node">Threat Modeling</span>
+          <span class="lane-node">Microsoft365</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <span class="eyebrow">contact</span>
+    <h2 style="margin-bottom:24px;">See you around.</h2>
+    <div class="elsewhere-card">
+      <div class="elsewhere-header">
+        <span class="elsewhere-status"><span class="status-led" aria-hidden="true"></span>online</span>
+      </div>
+      <div class="elsewhere-board" aria-label="Contact links">
+        <a class="elsewhere-link" href="https://github.com/bprashamsa" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <span class="module-top"><span>github</span><span class="module-led" aria-hidden="true"></span></span>
+          <span class="module-label">@bprashamsa</span>
+          <span class="module-meta"><span>repo</span><span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8 5 12l4 4M15 8l4 4-4 4"/></svg></span></span>
+        </a>
+        <a class="elsewhere-link" href="https://www.linkedin.com/in/prashamsab" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <span class="module-top"><span>linkedin</span><span class="module-led" aria-hidden="true"></span></span>
+          <span class="module-label">/in/prashamsa</span>
+          <span class="module-meta"><span>profile</span><span class="module-icon" aria-hidden="true"><span class="glyph">in</span></span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Prashamsa Bandarapu - 2026.</footer>
+
+<!-- Case study sheet -->
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Case study">
+  <div class="sheet-head">
+    <div class="sheet-head-left">
+      <span class="sheet-tag" id="sheetTag"></span>
+      <nav class="sheet-project-nav" aria-label="Projects">
+        <button type="button" data-case="ids">NVD + CWE</button>
+        <button type="button" data-case="crime">Crime Trends</button>
+      </nav>
+    </div>
+    <button class="sheet-close" id="sheetClose" aria-label="Close case study">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
+    </button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<div class="about-scrim" id="aboutScrim"></div>
+<div class="about-sheet" id="aboutDetailSheet" role="dialog" aria-modal="true" aria-labelledby="aboutDetailTitle">
+  <div class="sheet-head">
+    <div class="sheet-head-left">
+      <span class="sheet-tag">about detail</span>
+      <div class="about-tabs" role="tablist" aria-label="About details navigation">
+        <button class="about-tab is-active" type="button" role="tab" aria-selected="true" data-tab="behind">Workflow</button>
+        <button class="about-tab" type="button" role="tab" aria-selected="false" data-tab="experience">Experience</button>
+        <button class="about-tab" type="button" role="tab" aria-selected="false" data-tab="ai">How I use AI</button>
+        <button class="about-tab" type="button" role="tab" aria-selected="false" data-tab="doing">Currently doing</button>
+      </div>
+    </div>
+    <button class="sheet-close" id="aboutDetailClose" aria-label="Close about details">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
+    </button>
+  </div>
+
+  <div class="about-panel is-active" data-panel="behind" role="tabpanel">
+    <h3>How I work:</h3>
+    <p class="lead"><em>Start with people, build something small, and let feedback decide what's next.</em></p>
+    <ol class="workflow-board" aria-label="Collaborative workflow checklist">
+      <li class="workflow-node">
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Listen complete">
+        <div class="workflow-copy">
+          <h4>Listen</h4>
+          <p>Before proposing anything, I find out what's actually "broken", who feels it, and what's already been tried. What people ask for and what they need are often different things.</p>
+        </div>
+      </li>
+      <li class="workflow-node">
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Connect complete">
+        <div class="workflow-copy">
+          <h4>Connect</h4>
+          <p>Bring in people who see the problem differently, then look for the overlap, the blind spots, and the question nobody has asked yet.</p>
+        </div>
+      </li>
+      <li class="workflow-node">
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Build complete">
+        <div class="workflow-copy">
+          <h4>Build</h4>
+          <p>Turn the strongest ideas into small experiments, clear artifacts, and things people can actually respond to.</p>
+        </div>
+      </li>
+      <li class="workflow-node">
+        <input class="workflow-checkbox" type="checkbox" aria-label="Mark Iterate complete">
+        <div class="workflow-copy">
+          <h4>Iterate</h4>
+          <p>Treat feedback as data. What surprises us gets tested, what holds up gets kept, and the people closest to the problem stay in the room.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="about-panel" data-panel="experience" role="tabpanel">
+    <h3>Experience</h3>
+    <p class="lead">I’ve built my work around asking better questions, testing assumptions, and turning messy information into something useful.</p>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h4>What I’ve done</h4>
+        <ul>
+          <li>Studied data science and cybersecurity with a focus on how systems behave under pressure, and how people interpret the signals they get.</li>
+          <li>Built projects that combine public datasets, security analysis, and practical tooling for decision-making.</li>
+          <li>Worked across code, analysis, and communication so the work is not just technically sound, but actually understandable.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-panel" data-panel="ai" role="tabpanel">
+    <h3>How I use AI</h3>
+    <p class="lead">I treat AI as a research partner and thinking accelerator. It helps me move from a vague idea to a structured question, explore multiple directions, and get to a testable starting point faster. The value is not in accepting the first answer; it is in having a collaborator that helps me see the problem from more than one angle.</p>
+    <div class="ai-lab" aria-label="How I use AI by discipline">
+      <div class="ai-lab-head">
+        <h4>Choose a signal path</h4>
+        <span class="ai-lab-status" id="aiLabStatus">security mode</span>
+      </div>
+      <div class="ai-domain-controls" role="tablist" aria-label="AI use cases">
+        <button class="ai-domain-button is-active" type="button" role="tab" aria-selected="true" data-ai-domain="security">Cybersecurity</button>
+        <button class="ai-domain-button" type="button" role="tab" aria-selected="false" data-ai-domain="engineering">Engineering</button>
+        <button class="ai-domain-button" type="button" role="tab" aria-selected="false" data-ai-domain="data">Data science</button>
+      </div>
+      <div class="ai-step-controls" role="tablist" aria-label="AI reasoning workflow">
+        <button class="ai-step-button is-active" type="button" role="tab" aria-selected="true" data-ai-step="0">01 Ask</button>
+        <button class="ai-step-button" type="button" role="tab" aria-selected="false" data-ai-step="1">02 Explore</button>
+        <button class="ai-step-button" type="button" role="tab" aria-selected="false" data-ai-step="2">03 Test</button>
+        <button class="ai-step-button" type="button" role="tab" aria-selected="false" data-ai-step="3">04 Decide</button>
+      </div>
+      <div class="ai-lab-output" role="tabpanel" aria-live="polite" aria-labelledby="aiLabStatus">
+        <h5 id="aiLabTitle">Threat modeling partner</h5>
+        <p id="aiLabText">I use AI to think through potential vulnerabilities, threat scenarios, and edge cases before independently validating the security decision.</p>
+        <div class="ai-lab-check" id="aiLabCheck">I verify the suggestion against security principles, evidence, and the actual system.</div>
+      </div>
+    </div>
+    <div class="detail-block ai-principle">
+      <h4>The rule I keep</h4>
+      <p>Across security, engineering, and data science, AI helps me turn vague ideas into structured plans, explore alternatives, and identify edge cases I may not have considered. I still own the reasoning: I check the evidence, test the behavior, and decide whether the result actually makes sense. AI is a starting point for me, never the answer, especially when the work involves security, sensitive data, or real-world consequences.</p>
+    </div>
+  </div>
+
+  <div class="about-panel" data-panel="doing" role="tabpanel">
+    <h3>Currently doing</h3>
+    <p class="lead">Right now I’m staying in the overlap between security, data, and engineering—building things that help me understand systems better and respond with intention.</p>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h4>Current focus</h4>
+        <ul>
+          <li>Digging deeper into applied cybersecurity, threat modeling, and risk communication.</li>
+          <li>Using data analysis to uncover patterns, ask better questions, and make complex information actionable.</li>
+          <li>Building tools and prototypes that sit between technical depth and real-world clarity.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<aside class="project-circuit" id="projectCircuit" aria-label="Circuit arrow follows project-page scrolling" hidden>
+  <span class="circuit-track"></span>
+  <span class="circuit-node circuit-node-start"></span>
+  <span class="circuit-node circuit-node-end"></span>
+  <span class="circuit-led"></span>
+</aside>
+
+<div class="sr-only" role="status" aria-live="polite" id="copyStatus" style="position:absolute;width:1px;height:1px;overflow:hidden;"></div>
+
+<script>
+  const emailButton = document.querySelector('.mark-email');
+  if (emailButton) {
+    emailButton.addEventListener('click', async () => {
+      const email = 'bandarapuprashamsa@gmail.com';
+      try {
+        await navigator.clipboard.writeText(email);
+        const copyStatus = document.getElementById('copyStatus');
+        if (copyStatus) copyStatus.textContent = 'Email copied to clipboard.';
+      } catch (err) {
+        console.warn('Clipboard copy failed:', err);
+      }
+    });
+  }
+
+  // ── Case study sheet ──
+  const CASES = {
+    ids: {
+      tag: 'Security · Case Study',
+      title: 'NVD + CWE risk chatbot',
+      lead: 'A Claude-powered security chatbot that combines live NVD CVE data, MITRE CWE guidance, CVSS severity, and EPSS exploitation likelihood into practical patch-priority recommendations.',
+      repo: 'https://github.com/bprashamsa/NVD-CWE-ClaudeChatbot',
+      interactiveCircuit: true,
+      facts: [['Role','Developer'],['Stack','Python, Claude, LangChain'],['Data','NVD, MITRE CWE, EPSS'],['Status','Open source']],
+      sections: [
+        ["So here's the issue:", ['Raw vulnerability scores alone do not clearly show which issues deserve attention first. Security teams need current context about both severity and likely real-world exploitation.']],
+        ['What did I build to solve the problem?', [
+          'Built a Claude-powered natural-language interface for CVE, CWE, CVSS, and vulnerability-search questions.',
+          'Connected live NVD CVE and MITRE CWE feeds with normalized lookups and cached CWE data.',
+          'Added composite CVSS and EPSS scoring to rank findings as low, medium, high, or critical based on impact and exploitation likelihood.'
+        ]],
+        ['Well, this is what I learned...', ['This was my first time working directly with APIs. I became comfortable making requests, working with live responses, and integrating external data into an application, building a practical new skill through the project.']],
+        ['Outcome:', ['The chatbot translates vulnerability data into a clearer answer to the operational question: what should be patched first?']]
+      ],
+      demo: {
+        title: 'Interactive Project Previews & Queries',
+        description: 'Flip through the cards below to see the default interface and live query demonstrations against live NVD CVE feeds, MITRE CWE databases, and FIRST EPSS models.',
+        items: [
+          {
+            title: 'interface — nvd-cwe-chatbot.gui',
+            badge: 'Interface Preview',
+            label: 'Default Screen (Search & Routing Interface)',
+            src: 'assets/NVD%2BCWERiskChatbotDefault.png',
+            alt: 'NVD & CWE risk chatbot default screen showing clean chat interface and prompt routing',
+            caption: 'Default Interface — ready to accept CVE identifiers (e.g. CVE-2021-44228), CWE lookups, or conversational security questions with real-time tool orchestration and fallback routing.'
+          },
+          {
+            title: 'query — log4shell-cve-2021-44228.log',
+            badge: 'Live Query 01',
+            label: 'First Question (Direct CVE & Risk Lookup)',
+            src: 'assets/NVD%2BCWERiskChatbotFirstQ.png',
+            alt: 'NVD & CWE security chatbot querying CVE-2021-44228 Log4Shell with CVSS, EPSS, and Risk score',
+            caption: 'Querying Log4Shell (CVE-2021-44228) — retrieves live NVD description, CVSS 10.0 score, EPSS exploitation probability (0.9754), and assigns a composite 100/100 CRITICAL risk rating.'
+          },
+          {
+            title: 'analysis — xz-utils-cve-2024-3094.log',
+            badge: 'Live Query 02',
+            label: 'Second Question (Natural Language Analysis & Risk Explanation)',
+            src: 'assets/NVD%2BCWERiskChatbotSeondQ.png',
+            alt: 'NVD & CWE security chatbot explaining CVSS and risk of CVE-2024-3094 XZ Utils backdoor',
+            caption: 'Asking "What is the CVSS of CVE-2024-3094 and explain its risk" — returns CVSS 10.0, EPSS 0.8932, and an in-depth contextual explanation of the upstream XZ Utils supply chain backdoor.'
+          }
+        ]
+      },
+      improvements: ['Add more resilient API error handling and clearer fallback states.', 'Expand the browser interface with richer vulnerability visualizations.', 'Add automated tests for API responses and risk-score calculations.'],
+      impact: 'Combines theoretical severity with observed exploitation probability for more actionable remediation prioritization.',
+      tags: ['Python','Claude','LangChain','NVD API','MITRE CWE','EPSS']
+    },
+    crime: {
+      tag: 'Data 2026 Project · Case Study',
+      title: 'Washington State Crime Trends',
+      lead: 'A data-driven study of crime trends across Washington State counties from 2016 to 2024, created in RStudio using publicly available government data.',
+      sideBySide: true,
+      source: { href: 'https://sac.ofm.wa.gov/data', label: 'View the public data source' },
+      glance: [['Scope','Every Washington State county'],['Period','2016-2024'],['Dataset','1,505 county-year observations / 299 variables'],['Method','Rates per 1,000 residents'],['Workflow','RStudio with public data']],
+      glanceDetails: [
+        ['Why this study', 'I live in King County, in a neighborhood full of children playing outside and families going about their daily lives. Watching kids ride bikes down the street or play in front yards made me realize how much we take safety for granted and how little most of us actually know about the real numbers behind it. Safety is not just a statistic to me; it is whether a parent feels comfortable letting their kids play outside unsupervised, or whether a family can walk to the park without worry. It is really easy to form opinions about a neighborhood\'s safety based on rumors, news headlines, or gut feelings, but those impressions do not always match reality. This project matters to me because everyone deserves to know how safe the place they call home really is, backed by real data instead of assumptions. Understanding these patterns is about giving families the information they need to feel secure in their own communities.'],
+        ['Key findings', 'Spokane County has the highest crime rate relative to its population, while Ferry County has the lowest. Assault and property crimes make up the largest share of offenses statewide, and the 2021 shift from SRS to NIBRS reporting may affect how recent trends read.']
+      ],
+      facts: [['Role','Data analyst'],['Stack','RStudio, R'],['Data','Publicly available Washington State Statistical Analysis Center data'],['Study period','2016-2024']],
+      sections: [
+        ['The question', ['How did crime rates and crime types vary across Washington State counties before and after the COVID-19 period?']],
+        ['What I analyzed', [
+          'Used publicly available county-level crime and population data from the Washington State Statistical Analysis Center.',
+          'Analyzed 1,505 county-year observations across 299 variables in RStudio to compare crime rates, offense types, and changes over time.',
+          'Calculated county crime rates per 1,000 residents to make comparisons meaningful across different population sizes.',
+          'Examined the 2021 transition from SRS to NIBRS reporting as important context when interpreting recent trends.'
+        ]],
+        ['Findings', ['Crime rates differed significantly across counties. Spokane County had the highest average crime rate relative to its population, while Ferry County had the lowest. Assault and property crimes represented the largest share of offenses, while reporting changes may affect trends in recent years.']],
+        ['Why it matters', [
+          'Public-safety decisions are stronger when they are grounded in comparable, transparent evidence rather than isolated totals or headlines. By calculating population-adjusted rates, this project makes it possible to compare counties of different sizes on a more meaningful basis.',
+          'The analysis highlights where crime patterns differ, which offense categories drive those differences, and how trends changed before and after the COVID-19 period. It also documents the SRS-to-NIBRS reporting transition so recent changes are interpreted with appropriate care.',
+          'Because the data is publicly available and the analysis was created in RStudio, the work is reproducible and accessible. It can help inform conversations about public safety, resource allocation, prevention strategies, and the questions communities should ask of their local data.'
+        ]]
+      ],
+      demo: {
+        title: 'Project Preview',
+        description: 'A visual summary of the RStudio analysis, including county-level crime rates, crime-type distributions, and pre- and post-COVID-19 comparisons.',
+        items: [
+          {
+            title: 'analysis — washington-state-crime-study',
+            badge: 'Data 2026 Project',
+            label: 'Washington State Crime Trends (2016-2024)',
+            src: 'assets/Projectcrime.png',
+            alt: 'Washington State county crime analysis with charts comparing rates, trends, and crime types from 2016 through 2024',
+            caption: 'Created in RStudio with publicly available data from the Washington State Statistical Analysis Center.'
+          }
+        ]
+      },
+      impact: 'Turns public county-level crime data into an accessible view of how crime patterns vary across Washington State and change over time.',
+      tags: ['RStudio','R','Public Data','Data Analysis','Washington State']
+    }
+  };
+
+  const scrim = document.getElementById('scrim');
+  const sheet = document.getElementById('sheet');
+  const sheetTag = document.getElementById('sheetTag');
+  const sheetBody = document.getElementById('sheetBody');
+  const projectNav = document.querySelector('.sheet-project-nav');
+  const projectCircuit = document.getElementById('projectCircuit');
+  let lastTrigger = null;
+  let previousSheetScrollTop = 0;
+  let circuitTimer = null;
+
+  function renderCase(key){
+    const c = CASES[key];
+    if (!c) return '';
+    let html = `<h2>${c.title}</h2><p class="lead">${c.lead}</p>`;
+    if (c.repo) html += `<a class="sheet-repo" href="${c.repo}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>View it on GitHub</a>`;
+    if (c.source) html += `<a class="sheet-repo sheet-source" href="${c.source.href}" target="_blank" rel="noopener noreferrer"><svg class="trace-icon" viewBox="0 0 22 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3" cy="9" r="2.4" fill="currentColor"/><path d="M5.4 9H13L17 3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="19" cy="3" r="2.4" fill="currentColor"/></svg>${c.source.label}</a>`;
+    let infoHtml = '<dl class="sheet-facts">' + c.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
+    c.sections.forEach(([heading, paras]) => {
+      infoHtml += `<h3>${heading}</h3>`;
+      if (paras.length > 1) {
+        infoHtml += `<ul${c.arrowBullets ? ' class="arrow-list"' : ''}>` + paras.map(p => `<li>${p}</li>`).join('') + '</ul>';
+      } else {
+        infoHtml += `<p>${paras[0]}</p>`;
+      }
+    });
+    let demoHtml = '';
+    if (c.demo) {
+      demoHtml += `<h3>${c.demo.title}</h3>`;
+      if (c.demo.description) demoHtml += `<p class="sheet-demo-intro">${c.demo.description}</p>`;
+      if (c.demo.items && c.demo.items.length) {
+        const total = c.demo.items.length;
+        const totalStr = total < 10 ? `0${total}` : `${total}`;
+        const isInteractive = total > 1;
+        demoHtml += `
+          <div class="sheet-deck-container">
+            ${isInteractive ? `<div class="sheet-deck-controls">
+              <div class="sheet-deck-meta">
+                <span class="sheet-deck-counter mono"><span class="deck-current">01</span> / <span class="deck-total">${totalStr}</span></span>
+                <span class="sheet-deck-hint mono">● Click card or arrows to flip</span>
+              </div>
+              <div class="sheet-deck-nav">
+                <button class="sheet-deck-btn deck-prev" type="button" aria-label="Previous card">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 3-5 5 5 5"/></svg>
+                </button>
+                <div class="sheet-deck-dots" role="tablist" aria-label="Card pagination">
+                  ${c.demo.items.map((_, i) => `<button class="sheet-deck-dot${i === 0 ? ' is-active' : ''}" type="button" aria-label="Go to card ${i + 1}" data-deck-index="${i}"></button>`).join('')}
+                </div>
+                <button class="sheet-deck-btn deck-next" type="button" aria-label="Next card">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+                </button>
+              </div>
+            </div>` : ''}
+
+            <div class="sheet-deck-stage${isInteractive ? '' : ' is-static'}"${isInteractive ? ' tabindex="0" role="region" aria-label="Interactive project card deck. Press arrow keys or click to flip cards."' : ''}>
+              ${c.demo.items.map((item, idx) => `
+                <figure class="sheet-deck-card${idx === 0 ? ' is-active' : (idx === 1 ? ' is-next' : '')}" data-card-index="${idx}">
+                  <div class="sheet-preview-bar">
+                    <div class="sheet-preview-bar-left">
+                      <span class="sheet-preview-dot red"></span>
+                      <span class="sheet-preview-dot yellow"></span>
+                      <span class="sheet-preview-dot green"></span>
+                      <span class="sheet-preview-title">${item.title}</span>
+                    </div>
+                    ${item.badge ? `<span class="sheet-preview-pill">${item.badge}</span>` : ''}
+                  </div>
+                  <img class="sheet-preview-img" src="${item.src}" alt="${item.alt || item.title}" />
+                  <figcaption class="sheet-preview-caption"><strong>${item.label}:</strong> ${item.caption}</figcaption>
+                </figure>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      if (c.glance) {
+        demoHtml += `<div class="project-glance-stack"><aside class="project-glance" aria-label="Project at a glance"><h4>At a glance</h4><div class="project-glance-grid">${c.glance.map(item => `<div class="project-glance-item"><span>${item[0]}</span><strong>${item[1]}</strong></div>`).join('')}</div></aside>${c.glanceDetails ? c.glanceDetails.map(item => `<section class="project-glance-detail"><h5>${item[0]}</h5><p>${item[1]}</p></section>`).join('') : ''}</div>`;
+      }
+    }
+    html += c.sideBySide ? `<div class="case-split"><div class="sheet-demo">${demoHtml}</div><div class="case-info">${infoHtml}</div></div>` : infoHtml + demoHtml;
+    html += `<div class="sheet-impact"><span>Impact</span><p>${c.impact}</p></div>`;
+    if (c.improvements) html += `<section class="sheet-improvements"><h3>Things I could improve on:</h3><ul>${c.improvements.map(item => `<li>${item}</li>`).join('')}</ul></section>`;
+    html += '<div class="sheet-tags">' + c.tags.map(t => `<span>${t}</span>`).join('') + '</div>';
+    return html;
+  }
+
+  function initCardDeck() {
+    const deckContainer = sheet.querySelector('.sheet-deck-container');
+    if (!deckContainer) return;
+    const cards = Array.from(deckContainer.querySelectorAll('.sheet-deck-card'));
+    const dots = Array.from(deckContainer.querySelectorAll('.sheet-deck-dot'));
+    const prevBtn = deckContainer.querySelector('.deck-prev');
+    const nextBtn = deckContainer.querySelector('.deck-next');
+    const currentCounter = deckContainer.querySelector('.deck-current');
+    const stage = deckContainer.querySelector('.sheet-deck-stage');
+    if (!cards.length) return;
+
+    let currentIndex = 0;
+    const total = cards.length;
+
+    function updateDeck(newIndex) {
+      currentIndex = (newIndex + total) % total;
+      cards.forEach((card, idx) => {
+        card.classList.remove('is-active', 'is-prev', 'is-next');
+        if (idx === currentIndex) {
+          card.classList.add('is-active');
+        } else if (idx === (currentIndex - 1 + total) % total) {
+          card.classList.add('is-prev');
+        } else {
+          card.classList.add('is-next');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('is-active', idx === currentIndex);
+      });
+
+      if (currentCounter) {
+        currentCounter.textContent = (currentIndex + 1) < 10 ? `0${currentIndex + 1}` : `${currentIndex + 1}`;
+      }
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateDeck(currentIndex - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateDeck(currentIndex + 1);
+      });
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateDeck(idx);
+      });
+    });
+
+    if (total > 1 && stage) {
+      stage.addEventListener('click', () => {
+        updateDeck(currentIndex + 1);
+      });
+
+      stage.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          updateDeck(currentIndex + 1);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          updateDeck(currentIndex - 1);
+        }
+      });
+    }
+
+  }
+
+  function openSheet(key, triggerEl){
+    if (triggerEl) lastTrigger = triggerEl;
+    const c = CASES[key];
+    if (!c) return;
+    sheetTag.textContent = c.tag;
+    if (projectCircuit) {
+      projectCircuit.hidden = !c.interactiveCircuit;
+      projectCircuit.classList.remove('is-complete');
+      projectCircuit.querySelector('.circuit-led').style.top = '0%';
+    }
+    projectNav?.querySelectorAll('button').forEach(button => {
+      button.classList.toggle('is-active', button.dataset.case === key);
+    });
+    sheetBody.innerHTML = renderCase(key);
+    initCardDeck();
+    sheet.scrollTop = 0;
+    previousSheetScrollTop = 0;
+    scrim.classList.add('open');
+    sheet.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('sheetClose').focus({ preventScroll:true }), 300);
+  }
+  function closeSheet(){
+    scrim.classList.remove('open');
+    sheet.classList.remove('open');
+    if (projectCircuit) projectCircuit.hidden = true;
+    document.body.style.overflow = '';
+    if (lastTrigger) lastTrigger.focus({ preventScroll:true });
+  }
+
+  sheet.addEventListener('scroll', () => {
+    const currentScrollTop = sheet.scrollTop;
+    const scrollDirection = currentScrollTop - previousSheetScrollTop;
+    previousSheetScrollTop = currentScrollTop;
+    if (!projectCircuit || projectCircuit.hidden || !scrollDirection) return;
+    const scrollRange = sheet.scrollHeight - sheet.clientHeight;
+    const scrollProgress = scrollRange ? Math.min(1, Math.max(0, currentScrollTop / scrollRange)) : 0;
+    projectCircuit.querySelector('.circuit-led').style.top = `${scrollProgress * 100}%`;
+    projectCircuit.classList.toggle('is-complete', scrollProgress >= 0.99);
+  });
+
+  const aboutScrim = document.getElementById('aboutScrim');
+  const aboutSheet = document.getElementById('aboutDetailSheet');
+  const aboutTrigger = document.querySelector('.about-detail-trigger');
+  const aboutTabs = document.querySelectorAll('.about-tab');
+  const aboutPanels = document.querySelectorAll('.about-panel');
+
+  function openAboutDetail(){
+    aboutScrim?.classList.add('open');
+    aboutSheet?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAboutDetail(){
+    aboutScrim?.classList.remove('open');
+    aboutSheet?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  aboutTrigger?.addEventListener('click', openAboutDetail);
+  document.getElementById('aboutDetailClose')?.addEventListener('click', closeAboutDetail);
+  aboutScrim?.addEventListener('click', closeAboutDetail);
+
+  aboutTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const selected = tab.dataset.tab;
+      aboutTabs.forEach(btn => {
+        const active = btn === tab;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      aboutPanels.forEach(panel => {
+        panel.classList.toggle('is-active', panel.dataset.panel === selected);
+      });
+    });
+  });
+
+  const aiLabContent = {
+    security: {
+      status: 'security mode',
+      steps: [
+        ['Frame the threat', 'I ask what could go wrong, who could be affected, what the attacker or failure mode might look like, and which assumptions need to be challenged. This gives the investigation a clear scope.', 'Start with a specific security question and the system context, not an AI-generated answer.'],
+        ['Expand the scenarios', 'I use AI to explore potential vulnerabilities, threat paths, privilege boundaries, edge cases, and the kinds of weaknesses I might overlook when I am too close to the problem.', 'Treat the output as a list of possibilities to investigate, not as proof that a vulnerability exists.'],
+        ['Validate the evidence', 'I compare suggestions against the actual system, documentation, security principles, and available evidence. I look for false positives, missing context, and recommendations that sound reasonable but do not apply here.', 'Independent validation is required before I trust a security decision or communicate it to someone else.'],
+        ['Make the call', 'I decide what matters based on context, likelihood, impact, and the people or systems affected. AI can help organize the reasoning, but it cannot take responsibility for the risk decision.', 'My judgment remains responsible for the final decision, including when the safest choice is to investigate further.']
+      ]
+    },
+    engineering: {
+      status: 'build mode',
+      steps: [
+        ['Define the build', 'I turn a vague idea into a concrete problem with constraints, inputs, expected behavior, and a testable outcome. AI is useful here because it helps expose requirements I have not written down yet.', 'A smaller, well-defined question produces a more useful first experiment than trying to solve the whole system at once.'],
+        ['Compare approaches', 'I ask AI to prototype options, explain tradeoffs, suggest different abstractions, and break a large problem into smaller pieces. Seeing alternatives helps me avoid committing too early to the first design that comes to mind.', 'Multiple approaches are more useful than one polished-looking answer when I am still learning what the problem requires.'],
+        ['Run the experiment', 'I use the output to write, debug, and test code while watching for behavior the explanation missed. I check edge cases, inspect errors, and adjust the implementation based on what actually happens at runtime.', 'The running system, tests, and observed behavior are the source of truth, not the confidence of the explanation.'],
+        ['Choose deliberately', 'I keep the approach that fits the real constraints, remains understandable, and can be maintained by the people who will use it. The fastest generated solution is not always the best engineering decision.', 'Speed helps me explore; judgment decides what is reliable enough to keep.']
+      ]
+    },
+    data: {
+      status: 'analysis mode',
+      steps: [
+        ['Clarify the question', 'I use AI to turn a broad idea into an analytical question with a defined measure, comparison, population, and timeframe. It helps me separate what I want to know from what the available data can actually answer.', 'A precise question makes weak assumptions, missing variables, and overconfident conclusions easier to see.'],
+        ['Explore the data', 'I ask for possible patterns, useful cuts, and alternative explanations worth investigating. I use those suggestions to decide what to examine next, rather than letting the first interesting pattern become the story.', 'Exploration generates hypotheses; it does not prove them or replace careful analysis.'],
+        ['Check the result', 'I inspect data quality, definitions, missing values, reporting changes, and whether the result is robust enough to support a conclusion. I also ask whether the analysis measures what I think it measures.', 'A clean chart cannot repair incomplete, biased, or misleading data.'],
+        ['Communicate clearly', 'I use AI to improve how I explain a finding to different audiences while keeping the evidence, uncertainty, and limitations visible. Good communication should make the reasoning easier to follow, not make the conclusion sound more certain than it is.', 'The conclusion must stay proportional to what the data can support.']
+      ]
+    }
+  };
+  const aiLabButtons = document.querySelectorAll('.ai-domain-button');
+  const aiStepButtons = document.querySelectorAll('.ai-step-button');
+  const aiLabStatus = document.getElementById('aiLabStatus');
+  const aiLabTitle = document.getElementById('aiLabTitle');
+  const aiLabText = document.getElementById('aiLabText');
+  const aiLabCheck = document.getElementById('aiLabCheck');
+  let selectedAiDomain = 'security';
+  let selectedAiStep = 0;
+
+  function updateAiLab(){
+    const content = aiLabContent[selectedAiDomain];
+    const step = content.steps[selectedAiStep];
+    aiLabStatus.textContent = content.status;
+    aiLabTitle.textContent = step[0];
+    aiLabText.textContent = step[1];
+    aiLabCheck.textContent = step[2];
+    aiStepButtons.forEach(button => {
+      const active = Number(button.dataset.aiStep) === selectedAiStep;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
+
+  aiLabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      if (!aiLabContent[button.dataset.aiDomain]) return;
+      selectedAiDomain = button.dataset.aiDomain;
+      aiLabButtons.forEach(item => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      updateAiLab();
+    });
+  });
+
+  aiStepButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      selectedAiStep = Number(button.dataset.aiStep);
+      updateAiLab();
+    });
+  });
+
+  document.querySelectorAll('.card[data-case]').forEach(card => {
+    card.addEventListener('click', () => openSheet(card.dataset.case, card));
+  });
+  projectNav?.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => openSheet(button.dataset.case));
+  });
+  document.getElementById('sheetClose').addEventListener('click', closeSheet);
+  scrim.addEventListener('click', closeSheet);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (aboutSheet?.classList.contains('open')) closeAboutDetail();
+      else closeSheet();
+    }
+  });
+
+</script>
+
+</body>
+</html>
