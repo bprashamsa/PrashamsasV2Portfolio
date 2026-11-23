@@ -748,10 +748,10 @@
   }
 
   /* section dividers: a line with a sprout in the middle */
-  section:not(.hero)::before{
+  body > section:not(.hero)::before{
     background:linear-gradient(90deg, transparent, var(--line) 15%, var(--line) 85%, transparent);
   }
-  section:not(.hero)::after{
+  body > section:not(.hero)::after{
     content:""; position:absolute; top:-6px; left:50%; width:12px; height:12px;
     transform:translateX(-50%) rotate(-45deg);
     border-radius:0 80% 0 80%; background:var(--bg); border:1.5px solid var(--gold);
@@ -782,8 +782,6 @@
     height:3px; border-radius:3px; animation:none; opacity:1;
     background:linear-gradient(90deg, var(--bark-lite), var(--bark) 70%, rgba(107,74,51,.2));
   }
-  .lane-node{ background:transparent; }
-  .lane-node span, .lane-node{ text-shadow:0 0 6px var(--canopy), 0 0 6px var(--canopy); }
   .lane-node::before{
     width:13px; height:13px; border-radius:0 80% 0 80%;
     background:var(--canopy); transform:rotate(-45deg);
@@ -856,8 +854,66 @@
 </header>
 
 <section class="hero" id="hero">
+  <div class="falling-leaves" aria-hidden="true">
+    <span style="--x:8%;  --t:16s; --d:0s;"></span>
+    <span style="--x:22%; --t:19s; --d:5s;  --c:var(--rust);"></span>
+    <span style="--x:41%; --t:14s; --d:9s;  --c:var(--leaf-deep);"></span>
+    <span style="--x:63%; --t:18s; --d:2s;"></span>
+    <span style="--x:78%; --t:15s; --d:7s;  --c:var(--rust);"></span>
+    <span style="--x:91%; --t:21s; --d:11s; --c:var(--leaf-deep);"></span>
+  </div>
   <div class="hero-inner">
     <div class="hero-copy">
+      <svg class="hero-tree" viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <path id="leafShape" d="M0 0 C4 -6 12 -7 17 0 C12 7 4 6 0 0Z"/>
+        </defs>
+        <line class="ground" x1="40" y1="210" x2="200" y2="210"/>
+        <path class="bark root grow" style="--len:50; --d:.1s" d="M120 206 C106 208 94 211 78 213"/>
+        <path class="bark root grow" style="--len:50; --d:.1s" d="M120 206 C134 208 148 211 164 213"/>
+        <g class="crown">
+          <path class="bark trunk grow" style="--len:90; --d:0s" d="M120 208 C117 182 123 160 120 126"/>
+          <path class="bark limb grow" style="--len:70; --d:.6s" d="M120 152 C102 138 86 122 70 100"/>
+          <path class="bark limb grow" style="--len:70; --d:.7s" d="M120 142 C140 128 156 113 172 95"/>
+          <path class="bark limb grow" style="--len:80; --d:.8s" d="M120 128 C117 104 123 80 120 55"/>
+          <path class="bark twig grow" style="--len:40; --d:1.2s" d="M80 113 C68 104 56 97 45 92"/>
+          <path class="bark twig grow" style="--len:40; --d:1.25s" d="M162 106 C176 100 188 96 200 90"/>
+          <path class="bark twig grow" style="--len:45; --d:1.3s" d="M120 88 C106 76 98 63 92 48"/>
+          <path class="bark twig grow" style="--len:45; --d:1.35s" d="M121 82 C134 70 144 58 152 44"/>
+
+          <g transform="translate(70 100) rotate(-140)"><use class="leaf l1" href="#leafShape" style="--d:1.5s"/></g>
+          <g transform="translate(66 104) rotate(165)"><use class="leaf l2" href="#leafShape" style="--d:1.55s"/></g>
+          <g transform="translate(45 92) rotate(-160)"><use class="leaf l3" href="#leafShape" style="--d:1.6s"/></g>
+          <g transform="translate(50 95) rotate(140)"><use class="leaf l1" href="#leafShape" style="--d:1.65s"/></g>
+          <g transform="translate(44 91) rotate(-115)"><use class="leaf l2" href="#leafShape" style="--d:1.7s"/></g>
+          <g transform="translate(172 95) rotate(-40)"><use class="leaf l1" href="#leafShape" style="--d:1.55s"/></g>
+          <g transform="translate(176 98) rotate(15)"><use class="leaf l2" href="#leafShape" style="--d:1.6s"/></g>
+          <g transform="translate(200 90) rotate(-20)"><use class="leaf l3" href="#leafShape" style="--d:1.65s"/></g>
+          <g transform="translate(196 92) rotate(30)"><use class="leaf l1" href="#leafShape" style="--d:1.7s"/></g>
+          <g transform="translate(201 89) rotate(-60)"><use class="leaf l2" href="#leafShape" style="--d:1.75s"/></g>
+          <g transform="translate(120 55) rotate(-90)"><use class="leaf l1" href="#leafShape" style="--d:1.6s"/></g>
+          <g transform="translate(118 58) rotate(-135)"><use class="leaf l2" href="#leafShape" style="--d:1.65s"/></g>
+          <g transform="translate(122 58) rotate(-45)"><use class="leaf l3" href="#leafShape" style="--d:1.7s"/></g>
+          <g transform="translate(92 48) rotate(-120)"><use class="leaf l1" href="#leafShape" style="--d:1.7s"/></g>
+          <g transform="translate(90 52) rotate(-165)"><use class="leaf l3" href="#leafShape" style="--d:1.75s"/></g>
+          <g transform="translate(93 47) rotate(-80)"><use class="leaf l2" href="#leafShape" style="--d:1.8s"/></g>
+          <g transform="translate(152 44) rotate(-60)"><use class="leaf l2" href="#leafShape" style="--d:1.7s"/></g>
+          <g transform="translate(154 47) rotate(-10)"><use class="leaf l1" href="#leafShape" style="--d:1.75s"/></g>
+          <g transform="translate(151 43) rotate(-100)"><use class="leaf l3" href="#leafShape" style="--d:1.8s"/></g>
+          <g transform="translate(98 132) rotate(-155)"><use class="leaf l2" href="#leafShape" style="--d:1.85s"/></g>
+          <g transform="translate(144 124) rotate(-25)"><use class="leaf l1" href="#leafShape" style="--d:1.9s"/></g>
+          <g transform="translate(108 74) rotate(-150)"><use class="leaf l3" href="#leafShape" style="--d:1.95s"/></g>
+          <g transform="translate(134 70) rotate(-30)"><use class="leaf l2" href="#leafShape" style="--d:2s"/></g>
+          <g transform="translate(119 104) rotate(-170)"><use class="leaf l1" href="#leafShape" style="--d:2.05s"/></g>
+          <g transform="translate(121 100) rotate(-10)"><use class="leaf l3" href="#leafShape" style="--d:2.1s"/></g>
+
+          <circle class="fruit" cx="86" cy="64" r="3.6" style="--d:2.3s"/>
+          <circle class="fruit amber" cx="160" cy="80" r="3.6" style="--d:2.4s"/>
+          <circle class="fruit" cx="60" cy="112" r="3.2" style="--d:2.5s"/>
+          <circle class="fruit amber" cx="134" cy="46" r="3.2" style="--d:2.6s"/>
+          <circle class="fruit" cx="186" cy="104" r="3" style="--d:2.7s"/>
+        </g>
+      </svg>
       <h1>Hey! I'm <span class="hero-name">Prashamsa</span>.</h1>
       <div class="role mono">data science · software</div>
       <p class="tag">need to add a new tagline here.</p>
@@ -926,13 +982,13 @@
       <span class="eyebrow">skills</span>
       <div>
         <h2>Tools I work with:</h2>
-        <p class="lede">Three signal paths, wired into one stack, try hovering over a node to see it light up.</p>
+        <p class="lede">Three branches growing from one trunk. Hover over a leaf to see it catch the light.</p>
       </div>
     </div>
     <div class="stack-schematic">
       <div class="stack-head">
-        <h3>Signal chain</h3>
-        <span class="mono">STACK.SCH · rev 03</span>
+        <h3>Skill tree</h3>
+        <span class="mono">3 branches · still growing</span>
       </div>
       <div class="stack-lane">
         <span class="lane-tag">LANG</span>
@@ -994,7 +1050,15 @@
   </div>
 </section>
 
-<footer>Prashamsa Bandarapu - 2026.</footer>
+<footer>
+  <svg class="footer-sprout" viewBox="0 0 28 28" aria-hidden="true">
+    <path d="M14 26 V13" stroke="var(--bark-lite)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M14 15 C8 15 5 11 5 6 C10 6 14 9 14 15Z" fill="var(--leaf-deep)"/>
+    <path d="M14 13 C14 7 18 4 23 4 C23 9 20 13 14 13Z" fill="var(--gold)"/>
+    <path d="M6 26 H22" stroke="var(--line)" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  Prashamsa Bandarapu - 2026.
+</footer>
 
 <!-- Case study sheet -->
 <div class="scrim" id="scrim"></div>
@@ -1029,7 +1093,7 @@
     <button class="sheet-close" id="aboutDetailClose" aria-label="Close about details">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
     </button>
-  </div
+  </div>
 
   <div class="about-panel is-active" data-panel="behind" role="tabpanel">
     <h3>How I work:</h3>
@@ -1086,7 +1150,7 @@
     <p class="lead">I treat AI as a research partner and thinking accelerator. It helps me move from a vague idea to a structured question, explore multiple directions, and get to a testable starting point faster. The value is not in accepting the first answer; it is in having a collaborator that helps me see the problem from more than one angle.</p>
     <div class="ai-lab" aria-label="How I use AI by discipline">
       <div class="ai-lab-head">
-        <h4>Choose a signal path</h4>
+        <h4>Choose a branch</h4>
         <span class="ai-lab-status" id="aiLabStatus">security mode</span>
       </div>
       <div class="ai-domain-controls" role="tablist" aria-label="AI use cases">
