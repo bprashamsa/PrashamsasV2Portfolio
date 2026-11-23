@@ -753,7 +753,7 @@
   }
   body > section:not(.hero)::after{
     content:""; position:absolute; top:-6px; left:50%; width:12px; height:12px;
-    transform:translateX(-50%) rotate(-45deg);
+    transform:translateX(-50%);
     border-radius:0 80% 0 80%; background:var(--bg); border:1.5px solid var(--gold);
   }
 
@@ -784,10 +784,10 @@
   }
   .lane-node::before{
     width:13px; height:13px; border-radius:0 80% 0 80%;
-    background:var(--canopy); transform:rotate(-45deg);
+    background:var(--canopy);
   }
   .lane-node:hover::before, .lane-node:focus-visible::before{
-    transform:rotate(-15deg) scale(1.4); background:var(--lane-color);
+    transform:rotate(-20deg) scale(1.4); background:var(--lane-color);
   }
   .lane-tag{ border-radius:3px; background:rgba(107,74,51,.18); }
 
