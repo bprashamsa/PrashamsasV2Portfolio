@@ -9,22 +9,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* forest palette — names kept so every rule below still works */
-    --bg:        #0E1410;   /* forest floor at night */
-    --canopy:    #16201A;   /* under the leaves */
-    --rust:      #C98B5A;   /* autumn leaf / amber */
-    --orange:    #9C4A5C;   /* wild berry */
-    --gold:      #9CCB5B;   /* new leaf */
-    --cta:       #A8D46A;
-    --leaf-deep: #5E8C3A;
-    --bark:      #6B4A33;
-    --bark-lite: #8A6446;
-    --ink:       #EEF0E2;
-    --ink-dim:   #B4BBA4;
-    --line:      #34443A;   /* moss */
-    --noir:      #1C2820;
-    --noir-line: #2C3A30;
-    --noir-ink:  #E6EAD5;
+    /* soft daylight palette — names kept so every rule below still works */
+    --bg:        #FBF8EF;   /* warm cream */
+    --canopy:    #FFFFFF;   /* card surface */
+    --rust:      #F2C14E;   /* sunshine yellow */
+    --orange:    #A9D18E;   /* light green */
+    --gold:      #2E5A88;   /* navy-blue accent (text-safe) */
+    --cta:       #F2C14E;
+    --sun:       #F6D36B;
+    --leaf:      #A9D18E;
+    --leaf-lite: #CBE5B4;
+    --leaf-deep: #6FA35A;
+    --berry:     #4A6FA5;
+    --bark:      #8B6A4E;
+    --bark-lite: #A98466;
+    --ink:       #1F2F4F;   /* navy */
+    --ink-dim:   #56637E;
+    --line:      #DCDDCC;
+    --noir:      #F2F5EA;
+    --noir-line: #DDE4D0;
+    --noir-ink:  #1F2F4F;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -32,8 +36,9 @@
 
   body{
     background:
-      radial-gradient(ellipse 80% 50% at 50% -5%, rgba(46,90,136,.10), transparent 70%),
-      radial-gradient(ellipse 60% 40% at 90% 30%, rgba(232,181,58,.05), transparent 70%),
+      radial-gradient(ellipse 70% 45% at 85% -5%, rgba(246,211,107,.28), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 0% 35%, rgba(169,209,142,.18), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 75%, rgba(74,111,165,.08), transparent 70%),
       var(--bg);
     color:var(--ink);
     font-family:'Inter', sans-serif;
