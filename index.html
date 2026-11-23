@@ -84,8 +84,8 @@
   .mark-email:hover::after, .mark-email:focus-visible::after{ opacity:1; transform:translate(-50%, 0); }
   .header-orb{
     position:relative; flex:none; width:10px; height:10px; border-radius:0 80% 0 80%;
-    background:linear-gradient(135deg, var(--cta), var(--leaf-deep));
-    box-shadow:0 0 8px rgba(46,90,136,0.55);
+    background:linear-gradient(135deg, var(--leaf), var(--leaf-deep));
+    box-shadow:0 0 0 3px rgba(169,209,142,.25);
     transform:rotate(-10deg);
   }
   .header-orb::after{
@@ -730,18 +730,18 @@
   .hero-tree .crown{ transform-box:view-box; transform-origin:120px 205px; animation:sway 7s ease-in-out 2.6s infinite; }
   @keyframes sway{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(1.2deg); } }
   .hero-tree .leaf{ transform-box:fill-box; transform-origin:0% 50%; transform:scale(0); animation:leaf-in .55s cubic-bezier(.34,1.56,.64,1) forwards; animation-delay:var(--d, 1.4s); }
-  .hero-tree .l1{ fill:var(--gold); }
+  .hero-tree .l1{ fill:var(--leaf); }
   .hero-tree .l2{ fill:var(--leaf-deep); }
-  .hero-tree .l3{ fill:var(--cta); opacity:.85; }
-  .hero-tree .fruit{ fill:var(--orange); transform-box:fill-box; transform-origin:center; transform:scale(0); animation:leaf-in .5s cubic-bezier(.34,1.56,.64,1) forwards; animation-delay:var(--d, 2.2s); }
-  .hero-tree .fruit.amber{ fill:var(--rust); }
+  .hero-tree .l3{ fill:var(--leaf-lite); }
+  .hero-tree .fruit{ fill:var(--sun); transform-box:fill-box; transform-origin:center; transform:scale(0); animation:leaf-in .5s cubic-bezier(.34,1.56,.64,1) forwards; animation-delay:var(--d, 2.2s); }
+  .hero-tree .fruit.amber{ fill:var(--berry); }
   .hero-tree .ground{ stroke:var(--line); stroke-width:1.5; stroke-linecap:round; }
   @keyframes leaf-in{ to{ transform:scale(1); } }
 
   .falling-leaves{ position:absolute; inset:0; pointer-events:none; z-index:0; }
   .falling-leaves span{
     position:absolute; top:-30px; left:var(--x); width:12px; height:12px;
-    border-radius:0 80% 0 80%; background:var(--c, var(--gold)); opacity:0;
+    border-radius:0 80% 0 80%; background:var(--c, var(--leaf)); opacity:0;
     animation:fall var(--t, 14s) linear var(--d, 0s) infinite;
   }
   @keyframes fall{
@@ -759,14 +759,14 @@
   body > section:not(.hero)::after{
     content:""; position:absolute; top:-6px; left:50%; width:12px; height:12px;
     transform:translateX(-50%);
-    border-radius:0 80% 0 80%; background:var(--bg); border:1.5px solid var(--gold);
+    border-radius:0 80% 0 80%; background:var(--leaf-lite); border:1.5px solid var(--leaf-deep);
   }
 
   /* leaf-shaped markers */
   .domain-row .dot{ border-radius:0 80% 0 80%; width:14px; height:14px; transition:transform .25s ease; }
   .domain-row:hover .dot{ transform:rotate(-30deg) scale(1.15); }
   .about-panel .detail-block li::before,
-  .sheet-body li::before{ border-radius:0 80% 0 80%; width:7px; height:7px; background:var(--gold); }
+  .sheet-body li::before{ border-radius:0 80% 0 80%; width:7px; height:7px; background:var(--leaf-deep); }
   .ai-lab-check::before{ border-radius:0 80% 0 80%; width:8px; height:8px; }
   .eyebrow::before{ content:""; display:inline-block; width:7px; height:7px; margin-right:8px; border-radius:0 80% 0 80%; background:currentColor; vertical-align:middle; transform:translateY(-1px); }
 
@@ -778,7 +778,7 @@
   }
   .card .fruit-dot::after{
     content:""; position:absolute; left:8px; top:-9px; width:9px; height:6px;
-    border-radius:0 80% 0 80%; background:var(--gold);
+    border-radius:0 80% 0 80%; background:var(--leaf-deep);
   }
 
   /* skills: branches with leaves */
@@ -802,11 +802,43 @@
   .circuit-node{ border-radius:50%; background:var(--bark); border-color:var(--bark-lite); }
   .circuit-led::before{
     content:""; inset:3px; border-radius:0 80% 0 80%;
-    background:linear-gradient(135deg, var(--cta), var(--leaf-deep));
+    background:linear-gradient(135deg, var(--leaf), var(--leaf-deep));
     text-shadow:none;
     box-shadow:0 0 10px rgba(143,209,106,.6);
   }
-  .project-circuit.is-complete .circuit-led::before{ background:linear-gradient(135deg, var(--rust), var(--orange)); }
+  .project-circuit.is-complete .circuit-led::before{ background:linear-gradient(135deg, var(--sun), var(--rust)); }
+
+
+  /* ---------- soft light-palette adjustments ---------- */
+  .scrim, .about-scrim{ background:rgba(31,47,79,.28); }
+  header{ box-shadow:0 1px 0 rgba(31,47,79,.04); }
+  .card, .domain-row, .stack-schematic, .elsewhere-card, .project-glance, .project-glance-detail,
+  .sheet-impact, .sheet-improvements, .about-panel .detail-block, .workflow-board{ border-radius:14px; }
+  .card, .domain-row{ border:1px solid var(--line); }
+  .btn{ color:var(--ink); border-radius:999px; }
+  .btn.ghost{ color:var(--ink); background:var(--sun); border-color:var(--sun); box-shadow:4px 4px 0 var(--leaf); }
+  .btn.ghost:hover{ color:var(--ink); border-color:var(--ink); box-shadow:4px 4px 0 var(--leaf-deep); }
+  nav a, .about-tab, .sheet-project-nav button, .ai-domain-button, .tags span, .sheet-tags span,
+  .about-detail-trigger, .sheet-repo, .lane-tag{ border-radius:999px; }
+  nav a{ background:rgba(255,255,255,.7); }
+  nav a:hover{ background:var(--sun); color:var(--ink); border-color:var(--sun); }
+  nav a:hover::before, nav a:focus-visible::before{ background:var(--leaf-deep); box-shadow:none; }
+  .about-detail-trigger{ background:#fff; }
+  .about-detail-trigger::before{ border-radius:0 80% 0 80%; background:var(--leaf-deep); box-shadow:none; }
+  .sheet-repo{ color:var(--ink); box-shadow:4px 4px 0 var(--sun); }
+  .domain-row:hover .label{ text-shadow:none; }
+  .lane-tag{ color:var(--ink); background:color-mix(in srgb, var(--lane-color) 22%, white); }
+  .stack-lane:nth-of-type(4){ --lane-color:var(--berry); }
+  .workflow-node::before{ color:var(--berry); }
+  .workflow-checkbox{ border-color:var(--berry); background:#fff; }
+  .status-led, .module-led{ background:var(--leaf-deep); box-shadow:0 0 0 3px rgba(111,163,90,.22); }
+  .elsewhere-card{ border-color:var(--leaf); box-shadow:8px 8px 0 var(--leaf); }
+  .elsewhere-link{ border-radius:10px; }
+  .elsewhere-link:hover, .elsewhere-link:focus-visible{ border-color:var(--sun); box-shadow:5px 5px 0 var(--sun); }
+  .mark-email:hover{ color:var(--berry); }
+  ::selection{ background:var(--sun); color:var(--ink); }
+  .sheet-deck-dot.is-active{ background:var(--sun); box-shadow:none; }
+  .sheet-improvements{ background:var(--noir); }
 
   footer{ position:relative; }
   .footer-sprout{ display:block; width:28px; height:28px; margin:0 auto 10px; }
@@ -1059,7 +1091,7 @@
   <svg class="footer-sprout" viewBox="0 0 28 28" aria-hidden="true">
     <path d="M14 26 V13" stroke="var(--bark-lite)" stroke-width="2" stroke-linecap="round" fill="none"/>
     <path d="M14 15 C8 15 5 11 5 6 C10 6 14 9 14 15Z" fill="var(--leaf-deep)"/>
-    <path d="M14 13 C14 7 18 4 23 4 C23 9 20 13 14 13Z" fill="var(--gold)"/>
+    <path d="M14 13 C14 7 18 4 23 4 C23 9 20 13 14 13Z" fill="var(--leaf)"/>
     <path d="M6 26 H22" stroke="var(--line)" stroke-width="1.5" stroke-linecap="round"/>
   </svg>
   Prashamsa Bandarapu - 2026.
