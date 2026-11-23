@@ -709,6 +709,105 @@
   }
   .sheet-preview-caption strong{ color:var(--gold); }
 
+  /* ================= tree theme ================= */
+
+  /* hero tree */
+  .hero{ overflow:hidden; }
+  .hero-copy{ position:relative; z-index:1; }
+  .hero-tree{ display:block; width:min(260px, 62vw); height:auto; margin:0 auto 18px; overflow:visible; }
+  .hero-tree .bark{ fill:none; stroke:var(--bark-lite); stroke-linecap:round; stroke-linejoin:round; }
+  .hero-tree .trunk{ stroke-width:9; }
+  .hero-tree .limb{ stroke-width:4.5; }
+  .hero-tree .twig{ stroke-width:2.4; }
+  .hero-tree .root{ stroke-width:3; stroke:var(--bark); }
+  .hero-tree .grow{ stroke-dasharray:var(--len, 120); stroke-dashoffset:var(--len, 120); animation:grow 1s cubic-bezier(.4,0,.2,1) forwards; animation-delay:var(--d, 0s); }
+  @keyframes grow{ to{ stroke-dashoffset:0; } }
+  .hero-tree .crown{ transform-box:view-box; transform-origin:120px 205px; animation:sway 7s ease-in-out 2.6s infinite; }
+  @keyframes sway{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(1.2deg); } }
+  .hero-tree .leaf{ transform-box:fill-box; transform-origin:0% 50%; transform:scale(0); animation:leaf-in .55s cubic-bezier(.34,1.56,.64,1) forwards; animation-delay:var(--d, 1.4s); }
+  .hero-tree .l1{ fill:var(--gold); }
+  .hero-tree .l2{ fill:var(--leaf-deep); }
+  .hero-tree .l3{ fill:var(--cta); opacity:.85; }
+  .hero-tree .fruit{ fill:var(--orange); transform-box:fill-box; transform-origin:center; transform:scale(0); animation:leaf-in .5s cubic-bezier(.34,1.56,.64,1) forwards; animation-delay:var(--d, 2.2s); }
+  .hero-tree .fruit.amber{ fill:var(--rust); }
+  .hero-tree .ground{ stroke:var(--line); stroke-width:1.5; stroke-linecap:round; }
+  @keyframes leaf-in{ to{ transform:scale(1); } }
+
+  .falling-leaves{ position:absolute; inset:0; pointer-events:none; z-index:0; }
+  .falling-leaves span{
+    position:absolute; top:-30px; left:var(--x); width:12px; height:12px;
+    border-radius:0 80% 0 80%; background:var(--c, var(--gold)); opacity:0;
+    animation:fall var(--t, 14s) linear var(--d, 0s) infinite;
+  }
+  @keyframes fall{
+    0%  { opacity:0; transform:translate(0, 0) rotate(0deg); }
+    10% { opacity:.55; }
+    50% { transform:translate(40px, 50vh) rotate(200deg); }
+    90% { opacity:.4; }
+    100%{ opacity:0; transform:translate(-20px, 100vh) rotate(420deg); }
+  }
+
+  /* section dividers: a line with a sprout in the middle */
+  section:not(.hero)::before{
+    background:linear-gradient(90deg, transparent, var(--line) 15%, var(--line) 85%, transparent);
+  }
+  section:not(.hero)::after{
+    content:""; position:absolute; top:-6px; left:50%; width:12px; height:12px;
+    transform:translateX(-50%) rotate(-45deg);
+    border-radius:0 80% 0 80%; background:var(--bg); border:1.5px solid var(--gold);
+  }
+
+  /* leaf-shaped markers */
+  .domain-row .dot{ border-radius:0 80% 0 80%; width:14px; height:14px; transition:transform .25s ease; }
+  .domain-row:hover .dot{ transform:rotate(-30deg) scale(1.15); }
+  .about-panel .detail-block li::before,
+  .sheet-body li::before{ border-radius:0 80% 0 80%; width:7px; height:7px; background:var(--gold); }
+  .ai-lab-check::before{ border-radius:0 80% 0 80%; width:8px; height:8px; }
+  .eyebrow::before{ content:""; display:inline-block; width:7px; height:7px; margin-right:8px; border-radius:0 80% 0 80%; background:currentColor; vertical-align:middle; transform:translateY(-1px); }
+
+  /* project cards: fruit on a stem */
+  .card .fruit-dot{ position:relative; margin-top:6px; }
+  .card .fruit-dot::before{
+    content:""; position:absolute; left:50%; top:-6px; width:1.5px; height:7px;
+    background:var(--bark-lite); transform:translateX(-50%) rotate(12deg);
+  }
+  .card .fruit-dot::after{
+    content:""; position:absolute; left:8px; top:-9px; width:9px; height:6px;
+    border-radius:0 80% 0 80%; background:var(--gold);
+  }
+
+  /* skills: branches with leaves */
+  .stack-schematic{ position:relative; }
+  .lane-track::before{
+    height:3px; border-radius:3px; animation:none; opacity:1;
+    background:linear-gradient(90deg, var(--bark-lite), var(--bark) 70%, rgba(107,74,51,.2));
+  }
+  .lane-node{ background:transparent; }
+  .lane-node span, .lane-node{ text-shadow:0 0 6px var(--canopy), 0 0 6px var(--canopy); }
+  .lane-node::before{
+    width:13px; height:13px; border-radius:0 80% 0 80%;
+    background:var(--canopy); transform:rotate(-45deg);
+  }
+  .lane-node:hover::before, .lane-node:focus-visible::before{
+    transform:rotate(-15deg) scale(1.4); background:var(--lane-color);
+  }
+  .lane-tag{ border-radius:3px; background:rgba(107,74,51,.18); }
+
+  /* project scroll indicator: trunk with a climbing leaf */
+  .project-circuit{ color:var(--bark); }
+  .circuit-track{ border-radius:3px; background:linear-gradient(180deg, var(--bark-lite), var(--bark)); }
+  .circuit-node{ border-radius:50%; background:var(--bark); border-color:var(--bark-lite); }
+  .circuit-led::before{
+    content:""; inset:3px; border-radius:0 80% 0 80%;
+    background:linear-gradient(135deg, var(--cta), var(--leaf-deep));
+    transform:rotate(-45deg); text-shadow:none;
+    box-shadow:0 0 10px rgba(143,209,106,.6);
+  }
+  .project-circuit.is-complete .circuit-led::before{ background:linear-gradient(135deg, var(--rust), var(--orange)); }
+
+  footer{ position:relative; }
+  .footer-sprout{ display:block; width:28px; height:28px; margin:0 auto 10px; }
+
   /* ---------- responsive ---------- */
   @media (max-width: 900px){
     .hero-inner{ flex-direction:column-reverse; text-align:center; }
@@ -732,6 +831,10 @@
   @media (prefers-reduced-motion: reduce){
     .hero-name{ animation:none; }
     html{ scroll-behavior:auto; }
+    .hero-tree .grow{ animation:none; stroke-dashoffset:0; }
+    .hero-tree .leaf, .hero-tree .fruit{ animation:none; transform:scale(1); }
+    .hero-tree .crown{ animation:none; }
+    .falling-leaves{ display:none; }
     * { cursor:auto !important; }
   }
 </style>
@@ -926,7 +1029,7 @@
     <button class="sheet-close" id="aboutDetailClose" aria-label="Close about details">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
     </button>
-  </div>
+  </div
 
   <div class="about-panel is-active" data-panel="behind" role="tabpanel">
     <h3>How I work:</h3>
