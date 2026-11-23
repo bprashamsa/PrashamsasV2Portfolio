@@ -775,9 +775,9 @@
   .domain-row .dot{ border-radius:0 80% 0 80%; width:14px; height:14px; transition:transform .25s ease; }
   .domain-row:hover .dot{ transform:rotate(-30deg) scale(1.15); }
   .about-panel .detail-block li::before,
-  .sheet-body li::before{ border-radius:0 80% 0 80%; width:7px; height:7px; background:var(--leaf-deep); }
-  .ai-lab-check::before{ border-radius:0 80% 0 80%; width:8px; height:8px; }
-  .eyebrow::before{ content:""; display:inline-block; width:7px; height:7px; margin-right:8px; border-radius:0 80% 0 80%; background:currentColor; vertical-align:middle; transform:translateY(-1px); }
+  .sheet-body li::before{ border-radius:50%; width:6px; height:6px; background:var(--ink-dim); }
+  .ai-lab-check::before{ border-radius:50%; width:6px; height:6px; background:var(--ink-dim); box-shadow:none; }
+  .eyebrow::before{ content:""; display:inline-block; width:6px; height:6px; margin-right:8px; border-radius:50%; background:currentColor; vertical-align:middle; transform:translateY(-1px); }
 
   /* project cards: fruit on a stem */
   .card .fruit-dot{ position:relative; margin-top:6px; }
@@ -860,7 +860,7 @@
   .project-glance-detail h5, .sheet-repo, .sheet-facts dt, .sheet-tags span, .sheet-impact span,
   .sheet-preview-title, .sheet-preview-pill, .sheet-preview-caption,
   .mark-email::after, .elsewhere-link::after{
-    -webkit-text-stroke:0.035em currentColor;
+    -webkit-text-stroke:0.09em currentColor;
     paint-order:stroke fill;
   }
 
