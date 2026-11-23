@@ -730,8 +730,12 @@
   .hero-copy{ position:relative; z-index:1; }
   .hero-tree{ display:block; width:min(260px, 62vw); height:auto; margin:0 auto 18px; overflow:visible; }
   /* bark grows upward with one smooth reveal */
-  .hero-tree{ clip-path:inset(100% -30px -30px -30px); animation:grow-up 1.8s cubic-bezier(.33,.1,.25,1) .1s forwards; }
-  @keyframes grow-up{ to{ clip-path:inset(-30px -30px -30px -30px); } }
+  /* reveal runs once, then the clip is dropped (fill-mode: backwards) so the sway can render */
+  .hero-tree{ animation:grow-up 1.8s cubic-bezier(.33,.1,.25,1) .1s backwards; }
+  @keyframes grow-up{
+    from{ clip-path:inset(100% -30px -30px -30px); }
+    to{ clip-path:inset(-30px -30px -30px -30px); }
+  }
   .hero-tree .crown{ transform-box:view-box; transform-origin:120px 205px; animation:sway 7s ease-in-out 2.6s infinite; }
   @keyframes sway{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(1.2deg); } }
   .hero-tree .leaf{ transform-box:fill-box; transform-origin:0% 50%; transform:scale(0); animation:leaf-in .55s cubic-bezier(.34,1.56,.64,1) forwards; animation-delay:var(--d, 1.4s); }
@@ -973,10 +977,10 @@
           <g transform="translate(119 104) rotate(-170)"><use class="leaf l1" href="#leafShape" style="--d:2.05s"/></g>
           <g transform="translate(121 100) rotate(-10)"><use class="leaf l3" href="#leafShape" style="--d:2.1s"/></g>
 
-          <circle class="fruit" cx="86" cy="64" r="3.6" style="--d:2.3s"/>
-          <circle class="fruit amber" cx="160" cy="80" r="3.6" style="--d:2.4s"/>
+          <circle class="fruit" cx="103" cy="72" r="3.6" style="--d:2.3s"/>
+          <circle class="fruit amber" cx="156" cy="118" r="3.6" style="--d:2.4s"/>
           <circle class="fruit" cx="60" cy="112" r="3.2" style="--d:2.5s"/>
-          <circle class="fruit amber" cx="134" cy="46" r="3.2" style="--d:2.6s"/>
+          <circle class="fruit amber" cx="139" cy="70" r="3.2" style="--d:2.6s"/>
           <circle class="fruit" cx="186" cy="104" r="3" style="--d:2.7s"/>
         </g>
       </svg>
