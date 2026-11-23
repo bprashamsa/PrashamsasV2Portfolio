@@ -849,6 +849,21 @@
   .sheet-deck-dot.is-active{ background:var(--sun); box-shadow:none; }
   .sheet-improvements{ background:var(--noir); }
 
+  /* ---------- bolder handwriting ----------
+     The font has one weight, so thicken it with a stroke that scales with text size. */
+  h1, h2, h3, .mono, .mark, nav a, .btn, .eyebrow, .about-detail-trigger, .about-tab,
+  .about-panel .detail-block h4, .ai-lab-status, .ai-domain-button, .ai-step-button, .ai-lab-output h5,
+  .workflow-node h4, .workflow-node::before, .domain-row .label, .domain-row .sub,
+  .card .domain-tag, .tags span, .card .link, .stack-head span, .lane-tag, .lane-node,
+  .elsewhere-status, .module-top, .module-label, .module-meta span, .module-icon .glyph, footer,
+  .sheet-tag, .sheet-project-nav button, .project-glance h4, .project-glance-item span,
+  .project-glance-detail h5, .sheet-repo, .sheet-facts dt, .sheet-tags span, .sheet-impact span,
+  .sheet-preview-title, .sheet-preview-pill, .sheet-preview-caption,
+  .mark-email::after, .elsewhere-link::after{
+    -webkit-text-stroke:0.035em currentColor;
+    paint-order:stroke fill;
+  }
+
   footer{ position:relative; }
   .footer-sprout{ display:block; width:28px; height:28px; margin:0 auto 10px; }
 
