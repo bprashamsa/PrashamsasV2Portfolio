@@ -8,6 +8,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* custom handwriting font — scaled up a bit because its letters run small */
+  @font-face{
+    font-family:'PB Handwriting';
+    src:url('assets/PBHandwritingThick.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:swap;
+    size-adjust:122%;
+  }
+  html{ font-synthesis:none; } /* no fake bold on the single-weight handwriting font */
+
   :root{
     /* soft daylight palette — names kept so every rule below still works */
     --bg:        #FBF8EF;   /* warm cream */
